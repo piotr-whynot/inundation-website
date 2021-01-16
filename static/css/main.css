@@ -1,0 +1,85 @@
+/* Reset */
+header, footer, article, nav, section, aside, time, hgroup {
+    display : block;
+}
+
+html, body, header, article, nav, section, aside, time, h1, h2, h3, p, a, ul, li, dl, dd, dt, table, thead, tfoot, tbody, th, tr, td {
+}
+
+/* BASICS */
+body{
+    margin-bottom:300px;
+}
+
+#input_outcome{
+    width:90%;
+}
+
+.contained{
+    width:90%;
+}
+
+#shade {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top:0px;
+    left:0px;
+    z-index: 10010;
+    background: white;
+    opacity: 0.3;
+}
+
+#shade img{
+    display: block;
+    margin: auto;
+    width: 100px;
+    padding: 100px 0; 
+ }
+
+.clickable {
+    font-weight: bold;
+    color: black;
+    cursor:pointer;
+}
+
+.clickable:hover{
+    color: blue;
+}
+
+th{
+    font-weight:bold;
+}
+
+.label{
+    color: gray;
+}
+
+.centered{
+    text-align:center;
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+    float :none;
+}
+
+#floatFaq{
+    position: fixed;
+    margin-left:5px;
+    bottom:25px;
+    left:5px;
+    font-size:35px;
+    color: orange;
+    cursor: pointer;
+}
+
+#allContents{
+    padding-bottom:30px;
+}
+
+.panel-heading{
+    font-size:15pt;
+}
+
+

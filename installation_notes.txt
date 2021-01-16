@@ -1,0 +1,4 @@
+
+cython needs to compiled locally
+uploads directory has to have permissions allowing apache to write to
+

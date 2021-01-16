@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delta inundation model</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="/inundation/static/img/favicon.ico" />
+
+    <script type="text/javascript" src="/inundation/static/js/jquery/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/inundation/static/js/jquery/jquery-ui-1.12.1.min.js"></script>
+    <script type="text/javascript" src="/inundation/static/js/custom/popup.js"></script>
+    <script type="text/javascript" src="/inundation/static/js/custom/main.js"></script>
+    <script type="text/javascript" src="/inundation/static/js/custom/graph.js"></script>
+    <script type="text/javascript" src='/inundation/static/js/highstock/highstock-7.1.2.js'></script>
+<!--    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script type="text/javascript" src="/inundation/js/jquery.form.min.js"></script>
+    <script type="text/javascript" src="/inundation/js/upload.js"></script> -->
+    <link rel="stylesheet" href='/inundation/static/css/popup.css'>
+    <link rel="stylesheet" href='/inundation/static/css/main.css'>
+    <link rel="stylesheet" href='/inundation/static/css/graph.css'>
+
+<style>
+</style>
+
+<script type="text/javascript">
+
+</script>
+
+</head>
+
+<body onLoad='initialize();'>
+
+<?php echo session_id();?>
+
+<div class=introBlock><h1>Introduction</h1><span class='showhideDiv clickable' id=showhide-intro>[open]</span></div>
+<div id=intro_container class="container introBlock">
+</div>
+
+<div class=inputBlock><h1>Input data</h1><span class='showhideDiv clickable' id=showhide-input>[open]</span></div>
+<div id=input_container class="container inputBlock">
+</div>
+
+<div class=parametersBlock><h1>Parameters <i>(optional)</i></h1><span class='showhideDiv clickable' id=showhide-parameters>[open]</span></div>
+<div id=parameters_container class="container parametersBlock">
+</div>
+
+<div class=initcondBlock><h1>Initial conditions <i>(optional)</i></h1><span class='showhideDiv clickable' id=showhide-initcond>[open]</span></div>
+<div id=initcond_container class="container initcondBlock">
+</div>
+
+
+<div class=runBlock><h1>Run model</h1><span class='showhideDiv clickable' id=showhide-run>[open]</span></div>
+<div id=run_container class="container runBlock">
+</div>
+
+<div class=resultsBlock><h1>Results</h1><span class='showhideDiv clickable' id=showhide-results>[open]</span></div>
+<div id=results_container class="container resultsBlock">
+</div>
+
+</body>
+</html>

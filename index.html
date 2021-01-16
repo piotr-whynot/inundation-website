@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delta inundation model</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="/inundation/static/img/favicon.ico" />
+
+    <script type="text/javascript" src="/inundation/static/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/inundation/static/js/jquery-ui-1.12.1.min.js"></script>
+    <script type="text/javascript" src="/inundation/static/js/popup.js"></script>
+    <script type="text/javascript" src="/inundation/static/js/main.js"></script>
+    <script type="text/javascript" src="/inundation/static/js/graph.js"></script>
+    <script type="text/javascript" src='/inundation/static/js/highstock-7.1.2.js'></script>
+
+    <script type="text/javascript" src="/inundation/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/inundation/static/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/inundation/static/js/dataTables.bootstrap.min.js"></script>
+<!--    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script type="text/javascript" src="/inundation/js/jquery.form.min.js"></script>
+    <script type="text/javascript" src="/inundation/js/upload.js"></script> -->
+    <link rel="stylesheet" href="/inundation/static/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/inundation/static/css/bootstrap-3.4.1.min.css">
+    <link rel="stylesheet" href="/inundation/static/css/bootstrap-datetimepicker.css">
+
+    <link rel="stylesheet" href='/inundation/static/css/popup.css'>
+    <link rel="stylesheet" href='/inundation/static/css/main.css'>
+    <link rel="stylesheet" href='/inundation/static/css/graph.css'>
+    <link rel="stylesheet" href='/inundation/static/css/tabs.css'>
+
+
+<style>
+</style>
+
+<script type="text/javascript">
+
+</script>
+
+</head>
+
+<body onLoad='initialize();'>
+
+<!-- Navbar -->
+   <nav class='navbar navbar-inverse'>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" onClick=showHome() data-id=home>Okavango Inundation Model</a>
+            </div>
+            <ul class='nav navbar-nav'>
+                <li>
+                <a class=nav-link href=# onClick=showDocs() data-id=docs>Documentation</a>
+                </li>
+                <li>
+                <a class=nav-link href=# onClick=showModel() data-id=model>Model</a>
+                </li>
+            </ul>
+    <!--
+                <ul class="nav navbar-nav navbar-right" id=loginContainer>
+                    <li><a href="#" onClick='registerForm()'><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="#" onClick='loginForm()'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+    -->
+        </div>
+    </nav>
+
+
+<!-- all contents -->
+    <div id='allContents' class='container'>
+        <div id='mainContents' class='container-fluid'>
+            <div id='homeContents' class=contentsDiv>showing Home</div>
+            <div id='docsContents'>showing Docs</div>
+            <div id='modelContents'>
+                <div class='panel panel-default'>
+                    <div class=panel-heading>
+                        <a data-toggle="collapse" href="#collapse6">Experiment Info</a>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div id=experimentContainer class="container contained"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='panel panel-default'>
+                    <div class=panel-heading>
+                        <a data-toggle="collapse" href="#collapse1">Input Data</a>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div id=inputContainer class="container contained"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='panel panel-default'>
+                    <div class=panel-heading>
+                        <a data-toggle="collapse" href="#collapse5">Parameters</a>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div id=paramContainer class="container contained"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='panel panel-default'>
+                    <div class=panel-heading>
+                        <a data-toggle="collapse" href="#collapse2">Initial conditions</a>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div id=initcondContainer class="container contained"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='panel panel-default'>
+                    <div class=panel-heading>
+                        <a data-toggle="collapse" href="#collapse3">Simulation options</a>
+                    </div>
+                    <div id="collapse5" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div id=optContainer class="container contained"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='panel panel-default'>
+                    <div class=panel-heading>
+                        <a data-toggle="collapse" href="#collapse3">Run model</a>
+                    </div>
+                    <div id="collapse6" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div id=runContainer class="container contained"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='panel panel-default'>
+                    <div class=panel-heading>
+                        <a data-toggle="collapse" href="#collapse4">Simulation results</a>
+                    </div>
+                    <div id="collapse7" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div id=resultsContainer class="container contained"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Footer -->
+    <div id='footer' class='col-sm-12 navbar-fixed-bottom bg-default'>
+        <ul class='list-inline pull-right mb-0'>
+            <li><span class=text-muted>this site does not use cookies!</li>
+            <li><a href='#' onClick='pageinModal("termsofuse_contents", "Terms of use");'><span class="glyphicon glyphicon-copyright-mark"></span>&nbsp Terms of use</a></li>
+            <li><a href='#' onClick='pageinModal("disclaimer_contents", "Disclaimer");'><span class="glyphicon glyphicon-alert"></span>&nbsp Disclaimer</a></li>
+            <li><a href='#' onClick='pageinModal("contactus_contents", "Contact Us");'><span class="glyphicon glyphicon-envelope"></span>&nbsp Contact Us</a></li>
+        </ul>
+    </div>
+
+
+<!-- stuff -->
+    <div id=floatFaq><span class="glyphicon glyphicon-question-sign"></div>
+    <div id="shade"></div>
+    <div id='popupBackground'></div>
+    <div id='popupWindow'><div id=popupWindowClose>&times</div><div id='popupWindowContents'></div></div>
+
+
+<!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<?php echo session_id();?>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+/* popup for network maps */
+
+
+#popupBackground{
+	display:none;
+	position:fixed;
+	_position:absolute; /* hack for internet explorer 6*/
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	background:#000000;
+	border:1px solid #cecece;
+	z-index:10000;
+}
+
+#popupwindowClose{
+    position:absolute; 
+    right:15px; 
+    top:4px;
+    cursor:pointer;
+    font-size:20px;
+    font-weight: bold;
+    color:#d3d3d3;
+    width: 1.2em; height: 1.2em;
+    border-radius: 12px;
+    background-color: rgb(255,255,255,1);
+    text-align: center;
+    z-index: 10002;
+  }
+
+#popupwindowClose:hover{
+    color:#888888;
+}
+
+#popupWindow{	
+    display:none;
+    position:relative;
+    _position:absolute; /* hack for internet explorer 6*/
+    background:#FFFFFF;
+    border: 0px solid #cecece;
+    z-index: 10001;
+    font-size: 13px;
+    padding-bottom: 10px;
+    border-radius: 12px;	
+}
+
+#popupWindowContents{
+    position:absolute;
+    margin:auto;
+    height:95%;
+    width:96%;
+    overflow:auto;
+    padding-left:2%;
+    padding-right:2%;
+}

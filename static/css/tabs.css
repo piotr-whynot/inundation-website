@@ -1,0 +1,31 @@
+.mb-0{
+    margin-bottom: 0px;
+}
+.bg-default{
+    background: #F8F8F8;
+}
+.pt-4{
+    padding-top: 40px;
+}
+.pb-1{
+    padding-bottom: 10px;
+}
+.pt-1{
+    padding-top: 10px;
+}
+.my-1{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+ .my-2{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.mx-1{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+ .text-white{
+    color: white;
+}
+
