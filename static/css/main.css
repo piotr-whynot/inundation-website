@@ -82,4 +82,35 @@ th{
     font-size:15pt;
 }
 
+.panel-heading-small{
+    font-size:11pt;
+    color: black;
+}
+
+.btn-custom.active{ 
+    background:#eee !important; 
+    box-shadow:none !important; 
+} 
+
+.help {
+    display: inline-block;
+    text-align:center;
+    font-size:15px;
+    font-family: 'arial';
+    line-height:15px;
+    margin-left:20px;
+    margin-top:0px;
+    color: orange;
+    font-weight: bold;
+    border-radius: 10px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: orange;
+    width:18px;
+    height:18px;
+    cursor: pointer;
+}
+.help:hover{
+    color: orange;
+}
 

@@ -10,16 +10,19 @@ import pandas as pd
 import pyximport; pyximport.install()
 import hydro_model_cython as hcy
 
+from pandas.tseries.offsets import DateOffset
+
 #*****************************************************************************
 #definition of paramater and input files 
     
 file_modset = "./config/modset.dat"
 
+debug=True
 
 file_modpar = sys.argv[1] 
 file_init = sys.argv[2] 
 file_input = sys.argv[3] 
-spinup = sys.argv[4]
+spinup = int(sys.argv[4])
 
 if file_modpar=="default":
     file_modpar = "./config/modpar.dat"
@@ -82,27 +85,37 @@ def read_modset(file_modset):
    
 
  
-def read_input(file_input):
+def read_input(file_input, spinup):
     global glrecdate, glinflow, glprec, glpet, gltminmax, glnoftsteps,glstatratio
 
     print ("reading input data from: "+file_input)
     inputData=pd.read_csv(file_input, index_col=0, parse_dates=True)
     
     glrecdate=inputData.index.strftime("%Y-%m-%d")
-    glinflow=inputData['Inflow-Mohembo'].values
-    prec=inputData[['Rainfall-Maun', 'Rainfall-Shakawe']].values
+    glinflow=inputData['Inflow-Mohembo'].values.astype(float)
+    prec=inputData[['Rainfall-Maun', 'Rainfall-Shakawe']].values.astype(float);
     if inputData.shape[1]==4:
-        glpet=inputData['PET-Maun'].values
+        glpet=inputData['PET-Maun'].values.astype(float)
     else:
-        gltmin=inputData['MinTemperature-Maun'].values
-        gltmax=inputData['MaxTemperature-Maun'].values
+        gltmin=inputData['MinTemperature-Maun'].values.astype(float)
+        gltmax=inputData['MaxTemperature-Maun'].values.astype(float)
         evap_calc()
     glnoftsteps=inputData.shape[0]
     
     #calculating unit rainfall
     ratios=np.tile(np.array(glstatratio).reshape(-1,1),glnoftsteps).T
     glprec=prec[:,0].reshape(-1,1)*ratios+prec[:,1].reshape(-1,1)*(1-ratios)
-
+    if spinup>0:
+        #spinup in years
+        nspinmon=12*spinup
+        prepdates=pd.date_range(inputData.index[0]-DateOffset(months=nspinmon), freq="M", periods=nspinmon)
+        prepdates=prepdates.union(inputData.index)
+        glrecdate=prepdates.strftime("%Y-%m-%d")
+        for i in range(spinup):
+            glinflow=np.append(glinflow[0:12], glinflow, axis=0)
+            glprec=np.append(glprec[0:12,:], glprec, axis=0)
+            glpet=np.append(glpet[0:12], glpet, axis=0)
+        glnoftsteps=glnoftsteps+nspinmon
     print (str(glnoftsteps) + " time steps read")
 
 
@@ -231,30 +244,30 @@ def write_output_cellinundation(file_output):
     global glout_sa
     print ("writing surface area output file...")
     glout_sa.astype(int).to_csv(file_output)
-    print ("done")
+    print ("written "+str(glout_sa.shape[0])+" time steps")
 
 def write_output_totalinundation(file_output):
     global glout_sa
     print ("writing surface area output file...")
     glout_sa.sum(0).astype(int).to_csv(file_output)
-    print ("done")
+    print ("written "+str(glout_sa.shape[0])+" time steps")
 
 
 def write_output_cellvolume(file_output):
     global glout_sv
     print ("writing surface volume output file...")
     glout_sv.astype(int).to_csv(file_output)
-    print ("done")
+    print ("written "+str(glout_sv.shape[0])+" time steps")
 
 def write_output_cellq(file_output):
 #write discharges for each cell
     global glout_sqout
     print ("writing discharge output file...")
     glout_sqout.astype(int).to_csv(file_output)
-    print ("done")
+    print ("written "+str(glout_sqout.shape[0])+" time steps")
 
 
-def mergecells(glvar):
+def mergecells(glvar, spinup):
     #write areas for each cell
     global gloutputflag, glswcellname, glrecdate
     selcells=glvar[:,np.array(gloutputflag)==1]
@@ -272,6 +285,8 @@ def mergecells(glvar):
             current=current+selcells[:,i]
         outputtable=outputtable+[current]
     outputFrame=pd.DataFrame(np.array(outputtable).T, index=pd.to_datetime(glrecdate), columns=outputcellnames)    
+    if spinup>0:
+        outputFrame=outputFrame.iloc[spinup*12:,:]
     return outputFrame
 
 
@@ -531,36 +546,47 @@ def inund_calc(outputfile):
 
 
 
-print ("parameters",file_modpar)
-print ("initialization", file_init)
-print ("input",file_input)
-print ("spinup", spinup)
-print ("output", outputfiles)
-
-#t0 = timeit.default_timer()
+print ("Initializing inundaion model with the following:")
+print ("parameters:",file_modpar)
+print ("initial condiions:", file_init)
+print ("input:",file_input)
+print ("spinup:", spinup, "years")
+print ("requested output files:", outputfiles)
+print("done")
+print ()
 
 read_modset(file_modset)                                #reading model configuration
+print ()
 read_modpar(file_modpar)                                #reading model parameters
-read_input(file_input)                                  #reading inputs
+print ()
+read_input(file_input, spinup)                                  #reading inputs
+print ()
 read_init(file_init)                                    #reading initial conditions
+print ()
 
 
 
+
+print("calculating...")
+if debug:
+    print (glinflow.shape, glprec.shape, glpet.shape, glsv_init.shape, glfv_init.shape, gliv_init.shape, glunitpar.shape, glgwpar.shape)                                            #this is when the model is actually run
 
 result=hcy.model_calc(glinflow, glprec, glpet, glsv_init, glfv_init, gliv_init, glunitpar, glgwpar)                                            #this is when the model is actually run
+print ("done")
+print ()
 
+print("preparing output...")
 glfin_sqin, glfin_sa, glfin_sv, glfin_sev, glfin_spre, glfin_sqout,glfin_sinf,\
 glfin_fv, glfin_fev,glfin_fpre,glfin_fgwout,glfin_finf,\
 glfin_iv, glfin_iev,glfin_ipre=result
 
-
-
-glout_sa=mergecells(glfin_sa)
-glout_sv=mergecells(glfin_sv)
-glout_sqout=mergecells(glfin_sqout)
-glout_sev=mergecells(glfin_sev)
-glout_sinf=mergecells(glfin_sinf)
-
+glout_sa=mergecells(glfin_sa, spinup)
+glout_sv=mergecells(glfin_sv, spinup)
+glout_sqout=mergecells(glfin_sqout, spinup)
+glout_sev=mergecells(glfin_sev, spinup)
+glout_sinf=mergecells(glfin_sinf, spinup)
+print("done")
+print ()
 
 for outputfile in outputfiles:
     if "allinundation" in outputfile:
@@ -574,7 +600,9 @@ for outputfile in outputfiles:
         write_output_totalecoregions(outputfile)                       #ecoregions
     if "animatedinundation" in outputfile:
         inund_calc(outputfile)
+    print ()
 #        write_output_animatedinundation(outputfile)                       #inundation movie
 
+print ()
 print("success")
 

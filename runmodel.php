@@ -6,6 +6,7 @@ $initcondFile = $_GET['initcond'];
 $outputs= $_GET['outputs'];
 $spinup = $_GET['spinup'];
 $expID = $_GET['expID'];
+$expCode = $_GET['expCode'];
 
 if(isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST"){
     if($paramFile=="default"){
@@ -17,10 +18,10 @@ if(isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST"){
 
 
     //echo $inputFIle.$initcondFile.$paramFile;
- 
+    $outputs=explode(",",$outputs);
     $outfiles="";
     foreach($outputs as $output){
-        $outfiles=$outfiles." ../uploads/".$expID."/".$expID."-".$output;
+        $outfiles=$outfiles." ../public/".$expID."/".$expCode."-".$output.".csv";
     }
 
     #$outfile="results/".$sessionID."-".$runID."_alloutflows.csv";

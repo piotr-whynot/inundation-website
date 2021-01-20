@@ -4,12 +4,15 @@ var serverparamFile;
 var serverinputFile;
 var serverinitcondFile;
 var expID=Math.floor(Math.random()*100000000);
-var resultsDir="uploads/";
-var uploadsDir="uploads/";
+var resultsDir="public/";
+var uploadsDir="public/";
 var maxfileSize=1000000;
-var maxts=1200;
+var maxts=600;
 var inputQC=false;
 var modelRun=false;
+var modelChecked=false;
+var modelUnits=16
+var modelsubUnits=5
 
 var outputsList=JSON.parse('{"alloutflows": ["Outflows from all model units", "checked", "csv", "Mm3/month"], "allinundation":["Inundated area of all model units", "checked", "csv", "km2"], "totalinundation":["Total inundated area", "checked", "csv", "km2"], "totalecoregions":["Eco-hydrological regions for the entire system", "", "csv", "km2"], "animatedinundation": ["Animation of inundated area", "", "gif", "km2"]}');
 
@@ -19,21 +22,21 @@ function initialize () {
     txt="";
     txt+="<form id='expForm' method='post' enctype='multipart/form-data' action='upload.php' autocomplete='off'>";
     txt+="<div class=form-group>";
-    txt+="<label for=sessionID>Experiment ID (automatically assigned):</label>";
+    txt+="<label for=sessionID>Experiment ID (automatically assigned):</label><a href='#' class=help data-pload='expIDinfo'>?</a>";
     txt+="<input type=text class='form-control contained' id=expID value="+expID+" disabled hidden>";
     txt+="</div>";
     txt+="<div class=form-group>";
     txt+="<label for=expCode>Experiment code: </label>";
-    txt+="<input type=text class='form-control contained' id=expCode value=test1>";
+    txt+="<input type=text class='form-control contained activeInput' id=expCode value=test1>";
     txt+="</div>";
-    txt+="<div class=form-group>";
-    txt+="<label for=expDescription>Experiment description: </label>";
-    txt+="<textarea class='form-control contained' rows=5 id=expDescription></textarea>";
-    txt+="</div>";
-    txt+="<div class=form-group>";
-    txt+="<label for=userName>User name: </label>";
-    txt+="<input class='form-control contained' id=userName>";
-    txt+="</div>";
+//    txt+="<div class=form-group>";
+//    txt+="<label for=expDescription>Experiment description: </label>";
+//    txt+="<textarea class='form-control contained' rows=5 id=expDescription></textarea>";
+//    txt+="</div>";
+//    txt+="<div class=form-group>";
+//    txt+="<label for=userName>User name: </label>";
+//    txt+="<input class='form-control contained' id=userName>";
+//    txt+="</div>";
 //    txt+="<input type=button class='btn btn-info' value='Load previous experiment'>";
     txt+="</form>";
 
@@ -43,12 +46,12 @@ function initialize () {
     txt="" 
     txt+="<form id='inputForm' method='post' enctype='multipart/form-data' action='upload.php' autocomplete='off'>";
     txt+="<div class='input-group'>";
-    txt+="<input class='form-control fileName' type='text' id=inputFileName name=input>";
+    txt+="<input class='form-control fileName activeInput' type='text' id=inputFileName name=input>";
     txt+="<div class='input-group-btn'>";
-    txt+="<label for='inputFileSelector' class='btn btn-primary'>Browse</label>";
+    txt+="<label for='inputFileSelector' class='btn btn-primary activeInput'>Browse</label>";
     txt+="</div>";
     txt+="</div>";
-    txt+="<input type='file' name='input' id='inputFileSelector' class='fileSelector' style='visibility:hidden'>";
+    txt+="<input type='file' name='input' id='inputFileSelector' class='fileSelector activeInput' style='visibility:hidden'>";
     txt+="<div id=inputError></div>";
     txt+="<div class='hidden' id=inputFileInfo>";
     txt+="<p>Input file has <span id=nts></span> time steps, spanning the period of <span id=firstDate></span> to <span id=lastDate></span>";
@@ -62,10 +65,10 @@ function initialize () {
     txt="";
     txt+="<form id='paramForm' method='post' enctype='multipart/form-data' action='upload.php' autocomplete='off'>";
     txt+=" <div class='radio'>";
-    txt+="  <label><input type='radio' name='optparamFile' checked value=default>Use default</label>";
+    txt+="  <label><input class=activeInput type='radio' name='paramFileOpt' checked value=default>Use default</label>";
     txt+=" </div>";
     txt+=" <div class='radio'>";
-    txt+="  <label><input type='radio' name='optparamFile' value=file>Load from file</label>";
+    txt+="  <label><input class=activeInput type='radio' name='paramFileOpt' value=file>Load from file</label>";
     txt+=" </div>";
     txt+=" <div id=paramFileLoader>";
     txt+="  <div class='input-group'>";
@@ -74,7 +77,7 @@ function initialize () {
     txt+="    <label for='paramFileSelector' class='btn btn-primary'>Browse</label>";
     txt+="   </div>";
     txt+="  </div>";
-    txt+="  <input type='file' name='param' id='paramFileSelector' class='fileSelector actveInput' style='visibility:hidden'>";
+    txt+="  <input type='file' name='param' id='paramFileSelector' class='fileSelector activeInput' style='visibility:hidden'>";
     txt+=" </div>";
     txt+="</form>";
     txt+="<div id=paramError></div>";
@@ -87,16 +90,16 @@ function initialize () {
     txt="";
     txt+="<form id='initcondForm' method='post' enctype='multipart/form-data' action='upload.php' autocomplete='off'>";
     txt+=" <div class='radio'>";
-    txt+="  <label><input type='radio' name='optinitcondFile' value=default checked>Use default</label>";
+    txt+="  <label><input class=activeInput type='radio' name='initcondFileOpt' value=default checked>Use default</label>";
     txt+=" </div>";
     txt+=" <div class='radio'>";
-    txt+="  <label><input type='radio' name='optinitcondFile' value=file>Load from file</label>";
+    txt+="  <label><input class=activeInput type='radio' name='initcondFileOpt' value=file>Load from file</label>";
     txt+=" </div>";
     txt+=" <div id=initcondFileLoader>";
     txt+="<div class='input-group'>";
-    txt+="<input class='form-control fileName' type='text' id=initcondFileName name=initcond>";
+    txt+="<input class='form-control fileName activeInput' type='text' id=initcondFileName name=initcond>";
     txt+="<div class='input-group-btn'>";
-    txt+="<label for='initcondFileSelector' class='btn btn-primary'>Browse</label>";
+    txt+="<label for='initcondFileSelector' class='btn btn-primary activeInput'>Browse</label>";
     txt+="</div>";
     txt+="</div>";
     txt+="<input type='file' name='initcond' id='initcondFileSelector' class='fileSelector' style='visibility:hidden'>";
@@ -110,8 +113,8 @@ function initialize () {
     txt="";
     txt+="<form id='optForm' method='post' enctype='multipart/form-data' action='upload.php' autocomplete='off'>";
     txt+="<div class=form-group>";
-    txt+="<label for=spinup>Spin-up months (will be skipped from output, 0 for no spin-up):</label>";
-    txt+="<input type=text class='form-control contained activeInput' id=spinup value=12>";
+    txt+="<label for=spinup>Spin-up years (0 for no spin-up, not more than 5):</label>";
+    txt+="<input type=text class='form-control contained activeInput' id=spinup value=5>";
     txt+="</div>";
     txt+="<b>Model output</b>";
     txt+="<div class='input-group' id=outputs>";
@@ -128,43 +131,35 @@ function initialize () {
     txt="";
     txt+="<form id='runForm' method='post' enctype='multipart/form-data' action='upload.php' autocomplete='off'>";
     txt+="<div class='input-group'>";
-    txt+="<input type=button class='btn btn-primary mx-1 my-1' id=checkinputButton value='Check required data' onClick=populatecheckRunData()>";
-    txt+="</div>";
-    txt+="<div id=runError></div>";
+    txt+="<input type=button class='btn btn-primary mx-1 my-1' id=checkrunButton value='Check required data'>";
     txt+="<input type=button class='btn btn-primary mx-1 my-1 disabled' id=runmodelButton value='Run model' disabled>";
+    txt+="</div>";
     txt+="</form>";
+    txt+="<div id=runError></div>";
     txt+="<div id=runOutcome></div>";
     $("#runContainer").html(txt);
-
-
 
     txt="";
     txt+="<div id=resultsError><div>";
     txt+="<div id=resultsOutcome>Nothing to see here yet. Run the model first<div>";
     $("#resultsContainer").html(txt);
+
     if (debug){ 
         showModel(); //opens model tab
     }
-
-    $('.fileName').on('click', function() {
-        fileType=this.name;
-        console.log(fileType);
-        $('#'+fileType+'FileSelector').trigger('click');
-    });
-
-
 }
 
 
+// switching between default and file source of parameters and initial conditions
 $(document).on('change','input[type=radio]', function(event){
-    if (this.name=="optinitcondFile"){
+    if (this.name=="initcondFileOpt"){
         if (this.value=="file"){
             $("#initcondFileLoader").show();
         }else{
             $("#initcondFileLoader").hide();
         }
     }
-    if (this.name=="optparamFile"){
+    if (this.name=="paramFileOpt"){
         if (this.value=="file"){
             $("#paramFileLoader").show();
         }else{
@@ -174,28 +169,39 @@ $(document).on('change','input[type=radio]', function(event){
 });
 
 
+//binding exposed file input field to the proper but hidden file selector element
+$(document).on('click','.fileName', function(event){
+    fileType=this.name;
+    console.log(fileType);
+    $('#'+fileType+'FileSelector').trigger('click');
+});
 
+
+// file loading event
 $(document).on('change','.fileSelector', function(event){
+    //console.log("checking");
     var file=event.target.files[0];
     if(event.target.files.length>0){
         fileType=event.target.name;
-        errorDiv=fileType+"Error";
         //resetting fields
-        $("#"+errorDiv).html("");
+        $("#"+fileType+"Error").html("");
         $("#"+fileType+"Outcome").html("");
         $("#"+fileType+"FileName").val("");
         size=file.size;
         tmp=file.name.split(".");
         ext=tmp[tmp.length-1];
         if(size>maxfileSize){
-            showfileloadError(fileType, "File size too large. Expected <"+maxfileSize+" Bytes, file "+file.name+" is "+size+ "Bytes large", true);
+            showError(fileType, "File size too large. Expected <"+maxfileSize+" Bytes, file "+file.name+" is "+size+ "Bytes large", true);
             $("#"+fileType+"FileSelector").val(null);
-        }else if (ext!="csv"){
-            showfileloadError(fileType, "Wrong file type (extension). Expected csv, file "+file.name+" has "+ext, true);
-            $("#"+fileType+"FileSelector").val(null);
-        }else{
-            getAsText(file, fileType);
+            return false
         }
+        if (ext!="csv"){
+            showError(fileType, "Wrong file type (extension). Expected csv, file "+file.name+" has "+ext, true);
+            $("#"+fileType+"FileSelector").val(null);
+            return false
+        }
+        // reading file
+        getAsText(file, fileType);
         //reset error in run check, if any
         $("#runError").html("");
     }
@@ -204,17 +210,19 @@ $(document).on('change','.fileSelector', function(event){
 
 
 
-function showfileloadError(fileType, message, iserror){
+function showError(errorField, message, iserror){
     if (iserror){
-        alertType="alert-warning";
+        alertStyle="alert-warning";
+        prefix="Error: ";
     }else{
-        alertType="alert-success";
+        alertStyle="alert-success";
+        prefix="Success: ";
     }
-    txt="<div class='alert "+alertType+" alert-dismissible'>";
+    txt="<div class='alert "+alertStyle+" alert-dismissible'>";
     txt+="<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
-    txt+="<strong>"+message;
+    txt+="<strong>"+prefix+message;
     txt+="</div>";
-    $("#"+fileType+"Error").html(txt);
+    $("#"+errorField+"Error").html(txt);
 }
 
 
@@ -234,39 +242,152 @@ function getAsText(aFile, fileType) {
         var fileString = evt.target.result;
         if(fileType=="input"){
             $("#inputFileName").val(aFile.name);
-            showInput(fileString, aFile.name);
+            parseInput(fileString, aFile.name);
         }else if(fileType=="initcond"){
             $("#initcondFileName").val(aFile.name);
-            showinitCond(fileString);
+            parseinitCond(fileString);
         }else if(fileType=="param"){
             $("#paramFileName").val(aFile.name);
-            showParam(fileString);
+            parseParam(fileString);
         }
     };
     reader.onerror = function(){
         console.log("error");
         console.log(reader.error);
-        showfileloadError(fileType, "error reading file:</br>"+reader.error);
+        showError(fileType, "error reading file:</br>"+reader.error);
     };
 }
 
 
 
 
-function showParam(rawdata){
-    outcome=false;
-    $("#paramOutcome").html(rawdata);
+function parseParam(rawdata){
+    arraydata=parseCSV(rawdata);
+    //console.log(arraydata.length)
+    //checking if values numeric and in numbers corresponding to expectations
+    nrows=arraydata.length
+    for(var r=0, lenr=nrows; r < lenr; r++){
+        rowdata=arraydata[r];
+        ncol=rowdata.length;
+        nvals=0
+        for(var c=0, lenc=ncol; c < lenc; c++){
+            curval=rowdata[c];
+            //console.log(curval);
+            if(curval===""){
+                if (nvals>=2){
+                    //allwell
+                }else{
+                    message="in row "+(r+1)+" column "+(c+1)+" there is empty value";
+                    showError("param",message,true);
+                    $("#paramOutcome").html("");
+                    return false
+                }
+            }else{
+                nvals=nvals+1
+                if (c>0){
+                    curval=parseFloat(rowdata[c]);
+                    //console.log("nonempty ", curval);
+                    if(isNaN(curval)){
+                        message="in row "+(r+1)+" column "+(c+1)+" there is a non-numeric entry";
+                        showError("param",message,true);
+                        $("#paramOutcome").html("");
+                        return false
+                    }
+                }
+            }
+        }
+    }
+
+    message="File appears to be correct";
+    showError("param",message,false);
+ 
+    txt="";
+    for(var r=0, lenr=arraydata.length; r < lenr; r++){
+        rowdata=arraydata[r];
+        txt+=rowdata+"</br>";
+    }
+    panelTxt=generatePanel(txt,"paramPanel", false, "Preview file contents")
+    $("#paramOutcome").html(panelTxt);
 }
 
 
 
-function showinitCond(rawdata){
-    outcome=false;
+function parseinitCond(rawdata){
+    arraydata=parseCSV(rawdata);
+    //console.log(arraydata.length)
+
+    //checking number of rows
+    nrow=arraydata.length;
+    if (nrow!=modelUnits*3){
+        message="expected "+modelUnits+" rows in csv file, this one has "+nrow;
+        error=true;
+        showError("initcond",message,true);
+        $("#initcondOutcome").html("");
+        return false
+    }
+
+    //checking if values numeric and in numbers corresponding to expectations
+    for(var r=0, lenr=modelUnits*3; r < lenr; r++){
+        rowdata=arraydata[r];
+        ncol=rowdata.length;
+        if (r<modelUnits){
+            expCol=2;
+        }else{
+            expCol=6;
+        }
+        nvals=1
+        for(var c=1, lenc=ncol; c < lenc; c++){
+            curval=rowdata[c];
+            //console.log(curval);
+            if(curval===""){
+                if (nvals>=expCol){
+                    //allwell
+                }else{
+                    //console.log(nvals,expCol);
+                    error=true;
+                    message="in row "+(r+1)+" column "+(c+1)+" there is empty value";
+                    showError("initcond",message,true);
+                    $("#initcondOutcome").html("");
+                    return false
+                }
+            }else{
+                nvals=nvals+1
+                curval=parseFloat(rowdata[c]);
+                //console.log("nonempty ", curval);
+                if(isNaN(curval)){
+                    error=true;
+                    message="in row "+(r+1)+" column "+(c+1)+" there is a non-numeric entry";
+                    showError("initcond",message,true);
+                    $("#initcondOutcome").html("");
+                    return false
+                }
+            }
+        }
+        if(nvals!=expCol){
+            //console.log("ncol");
+            error=true;
+            message="in row "+(r+1)+" there are "+nvals+" values. Expected "+expCol;
+            showError("initcond",message,true);
+            $("#initcondOutcome").html("");
+            return false
+        }
+    }
+
+    message="File appears to be correct";
+    showError("initcond",message,false);
+    txt="";
+    for(var r=0, lenr=modelUnits*3; r < lenr; r++){
+        rowdata=arraydata[r];
+        txt+=rowdata+"</br>";
+    }
+
+    panelTxt=generatePanel(txt,"initcondPanel", false, "Preview file contents")
+    $("#initcondOutcome").html(panelTxt);
 }
 
 
 
-function showInput(rawdata, filename){
+function parseInput(rawdata, filename){
     error=false;
     arraydata=parseCSV(rawdata);
 
@@ -274,162 +395,161 @@ function showInput(rawdata, filename){
     //checking number of columns
     ncol=arraydata[0].length;
     nts=arraydata.length-1; //because of header
+
+//    $("#inputOutcome").html("");
+//    $("#inputFileName").val(null);
+//    $("#inputFileSelector").val(null);
+    //resetting run form
+    $("#firstDate").html("undefined");
+    $("#lastDate").html("undefined");
+    $("#nts").html("undefined");
+    $("#runmodelButton").addClass("disabled");
+    $('#inputFileInfo').addClass("hidden");
+
+
     if (ncol==5){
         colnames=inputColNames['PET'];
     }else if(ncol==6){
         colnames=inputColNames['Temp'];
     }else{
-        response="expected 5 or 6 columns in csv file, "+filename+" has "+ncol;
-        error=true;
+        message="expected 5 or 6 columns in csv file, "+filename+" has "+ncol;
+        showError("input", message, true);
+        return false;
     }
+
     //checking if columns named as expected
-    if (error==false){
-        for(var c=0, len=ncol; c < len; c++){
-            if(colnames[c]!=arraydata[0][c]){
-                error=true;
-                col=c+1;
-                response="in column "+col+" expected "+colnames[c]+", "+filename+" has "+arraydata[0][c];
-            }
+    for(var c=0, len=ncol; c < len; c++){
+        if(colnames[c]!=arraydata[0][c]){
+            col=c+1;
+            message="in column "+col+" expected "+colnames[c]+", "+filename+" has "+arraydata[0][c];
+            showError("input", message, true);
+            return false;
         }
     }
 
     //checking time steps limit
-    if (error==false){
-        if(nts>maxts){
-            error=true;
-            response="there are "+nts+" time steps in "+filename+". Maximum allowed is"+maxts;
-        }
+    if(nts>maxts){
+        message="there are "+nts+" time steps in "+filename+". Maximum allowed is"+maxts;
+        showError("input", message, true);
+        return false;
     }
 
     //checking if values are numeric
-    if (error==false){
-        for(var r=1, lenr=nts; r <= lenr; r++){
-            for(var c=1, lenc=ncol; c < lenc; c++){
-                 curval=arraydata[r][c];
-                 if(isNaN(curval) | curval==""){
-                     error=true;
-                     response="in row "+r+" column "+c+" of "+filename+" there is a non-numeric or empty value";
-                 }
+    for(var r=1, lenr=nts; r <= lenr; r++){
+        for(var c=1, lenc=ncol; c < lenc; c++){
+            curval=arraydata[r][c];
+            if(isNaN(curval) | curval==""){
+                message="in row "+r+" column "+c+" of "+filename+" there is a non-numeric or empty value";
+                showError("input", message, true);
+                return false;
             }
         }
     }
 
     //checking if dates are OK
-    if (error==false){
-        for(var r=1, lenr=nts; r <= lenr; r++){
-             curdate=new Date(arraydata[r][0]);
-             if(isNaN(curdate)){
-                 error=true;
-                 response="in row "+r+" of "+filename+" there is a non valid date, "+arraydata[r][0];
-             }
-        }
+    for(var r=1, lenr=nts; r <= lenr; r++){
+         curdate=new Date(arraydata[r][0]);
+         if(isNaN(curdate)){
+            message="in row "+r+" of "+filename+" there is a non valid date, "+arraydata[r][0];
+            showError("input", message, true);
+            return false;
+         }
     }
 
+    //success
+    showError("input", "file read successfuly", false); 
 
-    if (error==true){
-       //resetting
-       $("#inputOutcome").html("");
-       $("#inputFileName").val(null);
-       $("#inputFileSelector").val(null);
-       showfileloadError("input", response, true);
-       //resetting run form
-       $("#serverinputFile").val(null);
-       $("#serverinitcondFile").val(null);
-       $("#serverparamFile").val(null);
-       $("#serverinputFileName").html("undefined");
-       $("#serverinitcondFileName").html("undefined");
-       $("#serverparamFileName").html("undefined");
-       $("#firstDate").html("undefined");
-       $("#lastDate").html("undefined");
-       $("#nts").html("undefined");
-       $("#runmodelButton").addClass("disabled");
-       $('#inputFileInfo').addClass("hidden");
-
-    }else{
-       showfileloadError("input", "file read successfuly", false); 
-        seriesData=[];
-        allData=[];
-        seriesNames=[];
-        ncol=arraydata[0].length;
-        nrow=arraydata.length;
-        $("#nts").html(nrow-1);
-        for(var c=1, len=ncol; c < len; c++){
-          //get var names
-            seriesNames.push(arraydata[0][c]);
-            allData.push(new Array());
-        }
-        var dteoptions = { year: 'numeric', month: 'short'}
-        for(var r=1, lenr=nrow; r < lenr; r++){
-            dte=new Date(arraydata[r][0]);
-            if (r==1){
-                var firstDate=Intl.DateTimeFormat('en-GB', dteoptions).format(dte)
-                $("#firstDate").html(firstDate);
-            }
-            if (r==nrow-1){
-                var lastDate=Intl.DateTimeFormat('en-GB', dteoptions).format(dte)
-                $("#lastDate").html(lastDate);
-            }
-            dte=dte.valueOf();
-            for(var c=1, lenc=ncol; c < lenc; c++){
-                allData[c-1].push([dte, parseFloat(arraydata[r][c])])
-            }
-        }
-        for(var c=1, len=ncol; c < len; c++){
-            seriesData.push({id: c, name: seriesNames[c-1], data: allData[c-1], showInLegend:true});
-        }
-        $('#inputFileInfo').removeClass("hidden");
-        plotTimeSeries("inputOutcome", seriesData, "Input data", "Inflow: [Mm3/month] <br>others: [mm/month]");
+    //converting data to highcharts format
+    seriesData=[];
+    allData=[];
+    seriesNames=[];
+    ncol=arraydata[0].length;
+    nrow=arraydata.length;
+    $("#nts").html(nrow-1);
+    for(var c=1, len=ncol; c < len; c++){
+      //get var names
+        seriesNames.push(arraydata[0][c]);
+        allData.push(new Array());
     }
+    var dteoptions = { year: 'numeric', month: 'short'}
+    for(var r=1, lenr=nrow; r < lenr; r++){
+        dte=new Date(arraydata[r][0]);
+        if (r==1){
+            var firstDate=Intl.DateTimeFormat('en-GB', dteoptions).format(dte)
+            $("#firstDate").html(firstDate);
+        }
+        if (r==nrow-1){
+            var lastDate=Intl.DateTimeFormat('en-GB', dteoptions).format(dte)
+            $("#lastDate").html(lastDate);
+        }
+        dte=dte.valueOf();
+        for(var c=1, lenc=ncol; c < lenc; c++){
+            allData[c-1].push([dte, parseFloat(arraydata[r][c])])
+        }
+    }
+    for(var c=1, len=ncol; c < len; c++){
+        seriesData.push({id: c, name: seriesNames[c-1], data: allData[c-1], showInLegend:true});
+    }
+    $('#inputFileInfo').removeClass("hidden");
+
+    txt="";
+    for(var r=0, lenr=arraydata.length; r < lenr; r++){
+        rowdata=arraydata[r];
+        txt+=rowdata+"</br>";
+    }
+    txt=generatePanel(txt,"inputPanel", false, "Preview file contents")
+    txt="<div id=inputOutcome-graph></div>"+txt;
+
+    $("#inputOutcome").html(txt);
+
+
+    plotTimeSeries("inputOutcome-graph", seriesData, "Input data", "Inflow: [Mm3/month] <br>others: [mm/month]");
 }
 
 
 
 
-function populatecheckRunData(){
-    expCode=$("#expCode").val();
-    inputFile=$("#inputFileSelector").val();
-    paramOpt=$('input[name="paramOption"]:checked').val();
-    initcondOpt=$('input[name="initcondOption"]:checked').val();
-    firstDate=$("#firstDate").val();
-    lastDate=$("#lastDate").val();
-    nts=$("#nts").val();
-    error=false;
-    message="";
+// checking all data required to run model
+$(document).on('click','#checkrunButton', function(event){
     $("#runError").html("");
 
-    //checking if input file is defined
+    //checking experiment code
+    expCode=$("#expCode").val();
     if (expCode==""){
         message="Experiment code missing";
-        showfileloadError("run",message,true);
-        error=true;
+        showError("run",message,true);
         return false;
     }
 
+    //checking if input file is defined
+    inputFile=$("#inputFileSelector").val();
+    console.log(inputFile);
     if(inputFile==""){
         message="File with input data missing";
-        showfileloadError("run",message,true);
-        error=true;
+        showError("run",message,true);
         return false;
     }
 
     //checking if param file is defined
+    paramOpt=$('input[name="paramFileOpt"]:checked').val();
+    console.log(paramOpt);
     if (paramOpt=="file"){
         paramFile=$("#paramFileSelector").val();
+        console.log(paramFile);
         if (paramFile==""){
             message="Parameters are to be read from file, but file with parameters not provided";
-            showfileloadError("run",message,true);
-            error=true;
+            showError("run",message,true);
             return false;
         }
     }
 
     //checking if initcondfile is defined
+    initcondOpt=$('input[name="initcondFileOpt"]:checked').val();
     if (initcondOpt=="file"){
         initcondFile=$("#initcondFileSelector").val();
         if (initcondFile==""){
             message="Initial conditions are to be read from file, but file with initial condition data not provided";
-            showfileloadError("run",message,true);
-            error=true;
+            showError("run",message,true);
             return false;
         }
     }
@@ -440,10 +560,16 @@ function populatecheckRunData(){
     spinup=parseFloat($("#spinup").val());
     nts=parseFloat($("#nts").html());
 
-    if (isNaN(spinup) || !isFinite(spinup) || spinup>nts){
-        message="Value for spinup should be a numeric value between 0 and "+nts;
-        showfileloadError("run",message,true);
-        error=true;
+    if (isNaN(spinup) || !isFinite(spinup) || spinup>5){
+        message="Value for spinup should be a numeric value between 0 and 5";
+        showError("run",message,true);
+        return false;
+    }
+
+    nmons=spinup*12+nts
+    if (nmons>maxts){
+        message="Maximum number of months that can be simulated (input plus spinup) is "+maxts+". Currently there are "+nmons;
+        showError("run",message,true);
         return false;
     }
 
@@ -451,8 +577,7 @@ function populatecheckRunData(){
     nboxes=$("input[name='outputs[]']:checked").length;
     if(nboxes==0){
         message="There should be some outputs selected";
-        showfileloadError("run",message,true);
-        error=true;
+        showError("run",message,true);
         return false;
     }
 
@@ -467,8 +592,7 @@ function populatecheckRunData(){
             response=data[0]['response'];
             fileType=data[0]['fileType'];
             if (uploaderror){
-                error=true;
-                showfileloadError("run", response, true);
+                showError("run", response, true);
                 return false;
             }
             if(fileType=="input"){serverinputFile=response;}
@@ -476,12 +600,11 @@ function populatecheckRunData(){
             if(fileType=="initcond"){serverinitcondFile=response;}
         }
 
-
-        showfileloadError("run", "All appears to be OK. You can run the model now.", false);
-        $("#runmodelButton").removeClass("disabled").removeAttr('disabled')
-        $("#runOutcome").show();
+        showError("run", "All appears to be OK. You can run the model now", false);
+        $("#runmodelButton").removeClass("disabled").removeAttr('disabled');
+        modelChecked=true;
     });
-}
+});
 
 
 
@@ -516,7 +639,6 @@ async function uploadallFiles(){
     promises.push(await uploadFile("input"));
     promises.push(await uploadFile("initcond"));
     promises.push(await uploadFile("param"));
-    //await Promise.all(response)
     return promises;
 }
 
@@ -532,11 +654,10 @@ $(document).on('click','#runmodelButton', function(event){
     $('#outputs input:checked').each(function() {
         outputs=outputs+","+$(this).attr('value');
     });
-    console.log(outputs)
+    //console.log(outputs)
     $("#runOutcome").html('<img src="./img/ajax-loader.gif" alt="Calculating...." class=centered>');
-    console.log(serverinputFile,serverinitcondFile,serverparamFile);
     $.ajax({
-        url: "runmodel.php?expID="+expID+"&spinup="+spinup+"&input="+serverinputFile+"&initcond="+serverinitcondFile+"&param="+serverparamFile+"&outputs="+outputs,
+        url: "runmodel.php?expID="+expID+"&expCode="+expCode+"&spinup="+spinup+"&input="+serverinputFile+"&initcond="+serverinitcondFile+"&param="+serverparamFile+"&outputs="+outputs,
         method: "POST",
         data: formdata,
         processData: false,
@@ -547,15 +668,21 @@ $(document).on('click','#runmodelButton', function(event){
             data=JSON.parse(data);
             outcome=data[0]['outcome'];
             response=data[0]['response'];
-            if (outcome!="success"){
-                $("#runOutcome").html(outcome);
-            }else{
-                txt="";
-                for (line in response){
+            txt="";
+            for (line in response){
                 txt+=response[line]+"<br>";
-                }
-                $("#runOutcome").html(txt);
-                populateResults(expID);
+            }
+
+            txt=generatePanel(txt,"runout1", false, "Model run log")
+
+            $("#runOutcome").html(txt);
+
+            if (outcome!="success"){
+                showError("run", outcome, true);
+                modelRun=false;
+            }else{
+                showError("run", "Model run completed, apparently successfully. Check run log below and see results in the next panel", false);
+                populateResults(expCode);
                 modelRun=true;
             }
         }
@@ -563,39 +690,49 @@ $(document).on('click','#runmodelButton', function(event){
 });
 
 
-function checkRunData(){
-    runID=$("#runID").val();
-    nboxes=$("input[name='outputs[]']:checked").length;
-    isInt=Number.isInteger(parseInt($("#spinup").val()));
-    nts=$("#nts").val();
-    if(isInt){
-        isLow=parseInt($("#spinup").val())<parseInt(nts);
-    }else{
-        isLow=false;
-    }
-    if(runID!="" && nboxes>0 && isInt && isLow){
-        outcome=true;
-    }else{
-        outcome=false;
-    }
-    return outcome;
+
+function generatePanel(text, panelID, isin, title){
+    if (isin){isin="in"}else{isin=""};
+    _txt="<div class='panel panel-default'>";
+    _txt+="<div class='panel-heading panel-heading-small'>";
+    _txt+="<a data-toggle='collapse' href='#"+panelID+"'>"+title+"</a>";
+    _txt+="</div>";
+    _txt+="<div id='"+panelID+"' class='panel-collapse collapse "+isin+"'>";
+    _txt+="<div class='panel-body'>";
+    _txt+="<div id=runlog class='container contained'>";
+    _txt+=text;    
+    _txt+="</div>";
+    _txt+="</div>";
+    _txt+="</div>";
+    _txt+="</div>";
+
+    return _txt;
 }
 
 
 
-
-function populateResults(runID){
-    txt="<h4>Available outputs</h4>";
+function populateResults(expCode){
+    txt="";
     files=$("input[name='outputs[]']:checked");
     nfiles=files.length;
     for(var c=0, len=nfiles; c < len; c++){
         fileCode=files[c].value;
         key=fileCode.split(".")[0];
         ext=outputsList[key][2];
-        resultsFile=resultsDir+"/"+expID+"/"+expID+"-"+key+"."+ext;
-        txt+="<b>"+outputsList[key][0]+": </b><label> plot <input type=checkbox class=previewResults name=res-"+key+" id=res-"+key+" value="+resultsFile+"></label>";
-        txt+=" or download output file: <a href="+resultsFile+">"+expID+"-"+key+"."+ext+"</a><br>";
-        txt+="<div id=resultsOutcome-"+key+" class=outcome></div>";
+        resultFile=resultsDir+"/"+expID+"/"+expCode+"-"+key+"."+ext;
+        txtin="";
+        txtin="<div class='input-group'>";
+        //txt+="<input type=button class='btn btn-primary mx-1 my-1' class=previewResults id=previewResults value='Check required data'>";
+
+        txtin+="<input type=button class='btn btn-default mx-1 my-1 plotResults btn-custom btn-"+key+"' data-file="+resultFile+" data-key="+key+" id=plot-"+key+" value='Plot data'>";
+        txtin+="<input type=button class='btn btn-default mx-1 my-1 previewResults' data-file="+resultFile+" data-key="+key+" id=download-"+key+" value='Preview data'>";
+        txtin+="<input type=button class='btn btn-default mx-1 my-1 downloadResults' data-file="+resultFile+" data-key="+key+" id=download-"+key+" value=Download file>";
+        txtin+="</div>";
+        txtin+="<div id=resultsOutcome-"+key+" class=outcome>";
+        txtin+="<div id=resultsOutcome-"+key+"-graph></div>";
+        txtin+="<div id=resultsOutcome-"+key+"-data></div>";
+        txtin+="</div>";
+        txt+=generatePanel(txtin,key+"result",true, outputsList[key][0]);
     }
  
     $("#resultsContainer").html(txt);
@@ -604,17 +741,57 @@ function populateResults(runID){
 }
 
 
-
-
-$(document).on('change','.previewResults', function(event){
-    resID=$(this).attr("id");
-    resID=resID.split("-")[1];
-    resultFile=$(this).attr("value");
-    if ($(this).is(':checked')==false){
-        $("#resultsOutcome-"+resID).html("");
+$(document).on('click','.downloadResults', function(event){
+    resID=this.getAttribute('data-key');
+    $(this).blur();
+    resultFile=this.getAttribute('data-file');
+    var retVal = confirm("Downloading "+resultFile+". Do you want to continue ?");
+    if( retVal == true ) {
+        window.location.href = resultFile;
+        return true;
     }else{
-        ext=resultFile.substring(resultFile.length - 3, resultFile.length);
-        console.log(ext);
+        return false;
+    }
+});
+
+$(document).on('click','.previewResults', function(event){
+    resID=this.getAttribute('data-key');
+    $(this).toggleClass("active");
+    $(this).blur();
+    $('#resultsOutcome-'+resID+"-data").collapse('toggle');
+    resultFile=this.getAttribute('data-file');
+    if($('#resultsOutcome-'+resID+"-data").html()==""){
+        $("#resultsOutcome-"+resID+"-data").html('<img src="./static/img/ajax-loader.gif" alt="Uploading...." class=centered>');
+        tmp=resultFile.split(".");
+        ext=tmp[tmp.length-1];
+        if(ext=="csv"){
+            readFile(resultFile, function(rawdata){
+                arraydata=parseCSV(rawdata);
+                txt="";
+                for(var r=0, lenr=arraydata.length; r < lenr; r++){
+                    rowdata=arraydata[r];
+                    txt+=rowdata+"</br>";
+                }
+                $("#resultsOutcome-"+resID+"-data").html(txt);
+            });
+        }else{
+                $("#resultsOutcome-"+resID+"-data").html("cannot handle this at the moment");
+        }
+    }
+});
+
+
+
+$(document).on('click','.plotResults', function(event){
+    resID=this.getAttribute('data-key');
+    $(".btn-"+resID).blur();
+    $(this).toggleClass("active");
+    $('#resultsOutcome-'+resID+"-graph").collapse('toggle');
+    resultFile=this.getAttribute('data-file');
+    if($('#resultsOutcome-'+resID+"-graph").html()==""){
+        $("#resultsOutcome-"+resID+"-graph").html('<img src="./static/img/ajax-loader.gif" alt="Uploading...." class=centered>');
+        tmp=resultFile.split(".");
+        ext=tmp[tmp.length-1];
         if(ext=="csv"){
             readFile(resultFile, function(rawdata){
                 arraydata=parseCSV(rawdata);
@@ -643,13 +820,14 @@ $(document).on('change','.previewResults', function(event){
                 console.log(resID);
 
                 label=outputsList[resID][0]+"<br>"+outputsList[resID][3];
-                outcome=plotTimeSeries("resultsOutcome-"+resID, seriesData, "Model results", label);
+                title=outputsList[resID][0];;
+                outcome=plotTimeSeries("resultsOutcome-"+resID+"-graph", seriesData, title, label);
                 if (outcome != true){
-                   $("#resultsOutcome-"+resID).html("<span class=alert>"+response+"</span>");
+                   $("#resultsOutcome-"+resID+"-graph").html("<span class=alert>"+outcome+"</span>");
                 };
             });
         }else{
-                   $("#resultsOutcome-"+resID).html("<img src="+resultFile+">");
+            $("#resultsOutcome-"+resID+"-graph").html("<img src="+resultFile+">");
         }
     }
 });
@@ -657,6 +835,7 @@ $(document).on('change','.previewResults', function(event){
 
 
 $(document).on('click','.activeInput', function(event){
+//    console.log("results reset needed?");
     if (modelRun){
         var retVal = confirm("Changing this will reset model output. Do you want to continue ?");
         if( retVal == true ) {
@@ -668,8 +847,23 @@ $(document).on('click','.activeInput', function(event){
             return false;
         }
     }
-
 });
+
+
+
+
+$(document).on('change','.activeInput', function(event){
+    //console.log("check reset needed?");
+    if (modelChecked){
+        console.log("resetting check");
+        $("#runmodelButton").addClass("disabled").attr('disabled','disabled');
+        $("#runError").html("");
+        modelChecked=false;
+    }
+});
+
+
+
 
 
 function readFile(_file, callback){
@@ -735,7 +929,7 @@ function showModel(){
 }
 
 function pageinModal(page,title){ 
-    $.get(page, function(data){
+    $.get("./text/"+page, function(data){
         $(".modal-title").html(title);
         $(".modal-body").html(data);
         $('#myModal').modal('show');
@@ -747,6 +941,20 @@ function textinModal(txt,title){
     $(".modal-body").html(txt);
     $('#myModal').modal('show');
 }
+
+$(document).on('click','*[data-pload]', function() {
+    var e = $(this);
+    e.off('hover');
+    page="./text/"+this.dataset.pload;
+    $.get(page, function(data){
+        e.popover({
+            html: true,
+            content: data,
+            trigger: "focus"
+        }).popover('show');
+    });
+});
+
 
 function listsavedExp(){
     txt="<div>";

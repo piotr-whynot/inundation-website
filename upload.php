@@ -7,7 +7,7 @@ if(isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST"){
     $expID=$_GET['expID'];
     $expCode=$_GET['expCode'];
 
-    $path = "uploads/".$expID."/";
+    $path = "public/".$expID."/";
 
     mkdir($path,0777,true);
 
