@@ -1,33 +1,31 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 import sys
 import numpy as np
 import datetime
 import pandas as pd
-#from pandas.plotting import register_matplotlib_converters
-#register_matplotlib_converters()
-#from netCDF4 import Dataset
-#import timeit
-#from matplotlib import pyplot as plt
+import timeit
 import pyximport; pyximport.install()
 import hydro_model_cython as hcy
-
 from pandas.tseries.offsets import DateOffset
 
 #*****************************************************************************
 #definition of paramater and input files 
-    
+
 file_modset = "./config/modset.dat"
 
 debug=True
 
-file_modpar = sys.argv[1] 
-file_init = sys.argv[2] 
-file_input = sys.argv[3] 
+file_modpar = sys.argv[1]
+file_init = sys.argv[2]
+file_input = sys.argv[3]
 spinup = int(sys.argv[4])
 
 if file_modpar=="default":
-    file_modpar = "./config/modpar.dat"
+    file_modpar = "./config/modpar.csv"
 if file_init=="default":
-    file_init="./config/init.dat"
+    file_init="./config/init.csv"
 
 
 outputfiles=[]
@@ -81,70 +79,10 @@ def read_modset(file_modset):
         glfinalsumflag=np.array(glfinalsumflag)
     print("done")
 
-#*****************************************************************************
+
+
+
    
-
- 
-def read_input(file_input, spinup):
-    global glrecdate, glinflow, glprec, glpet, gltminmax, glnoftsteps,glstatratio
-
-    print ("reading input data from: "+file_input)
-    inputData=pd.read_csv(file_input, index_col=0, parse_dates=True)
-    
-    glrecdate=inputData.index.strftime("%Y-%m-%d")
-    glinflow=inputData['Inflow-Mohembo'].values.astype(float)
-    prec=inputData[['Rainfall-Maun', 'Rainfall-Shakawe']].values.astype(float);
-    if inputData.shape[1]==4:
-        glpet=inputData['PET-Maun'].values.astype(float)
-    else:
-        gltmin=inputData['MinTemperature-Maun'].values.astype(float)
-        gltmax=inputData['MaxTemperature-Maun'].values.astype(float)
-        evap_calc()
-    glnoftsteps=inputData.shape[0]
-    
-    #calculating unit rainfall
-    ratios=np.tile(np.array(glstatratio).reshape(-1,1),glnoftsteps).T
-    glprec=prec[:,0].reshape(-1,1)*ratios+prec[:,1].reshape(-1,1)*(1-ratios)
-    if spinup>0:
-        #spinup in years
-        nspinmon=12*spinup
-        prepdates=pd.date_range(inputData.index[0]-DateOffset(months=nspinmon), freq="M", periods=nspinmon)
-        prepdates=prepdates.union(inputData.index)
-        glrecdate=prepdates.strftime("%Y-%m-%d")
-        for i in range(spinup):
-            glinflow=np.append(glinflow[0:12], glinflow, axis=0)
-            glprec=np.append(glprec[0:12,:], glprec, axis=0)
-            glpet=np.append(glpet[0:12], glpet, axis=0)
-        glnoftsteps=glnoftsteps+nspinmon
-    print (str(glnoftsteps) + " time steps read")
-
-
-
-#*****************************************************************************
-def read_init(file_init):
-    global glsv_init, glfv_init, gliv_init, glnofswcells, glnofgwcells
-    
-    print ("reading initial condition from: "+file_init)
-    with open(file_init, "r") as finit:
-        data=finit.readlines()
-        # initial storage of surface cells
-    temp=data[0:glnofswcells]
-    temp=np.array([x.strip().split(",") for x in temp])
-    glsv_init=temp[:,1].astype(float)
-        
-    #initial storage of groundwater cells
-    temp=data[glnofswcells:(glnofswcells*2)]
-    temp=np.array([x.strip().split(",") for x in temp])
-    glfv_init=temp[:,1:].astype(float)
-    
-    temp=data[(glnofswcells*2):(glnofswcells*3)]
-    temp=np.array([x.strip().split(",") for x in temp])
-    gliv_init=temp[:,1:].astype(float)
-    
-    print("done")
-
-
-#*****************************************************************************
 def read_modpar(file_modpar):
     global glgwpar, glunitpar, glexponent, glbpar, glk, glV, gldelay,glstatratio,glfa, glia,glkgw,glfa_total,glnofgwcells,glnofswcells, glnoflinks
     print ("reading model parameters from: "+file_modpar)
@@ -201,7 +139,7 @@ def read_modpar(file_modpar):
             glfa_total.append(float(temp[1])*glnofgwcells)
             
             
-    outletpar=np.zeros([16,30])
+    outletpar=np.zeros([15,30])
     for i,k in enumerate(glk):
         for ii,kk in enumerate(k):
             outletpar[i,ii]=kk
@@ -219,14 +157,76 @@ def read_modpar(file_modpar):
     glunitpar=np.append(glunitpar, np.array(glfa).reshape(-1,1), axis=1)
     glunitpar=np.append(glunitpar, np.array(glia).reshape(-1,1), axis=1)
     glunitpar=np.append(glunitpar, np.array(glkgw).reshape(-1,1), axis=1)
+    print(glunitpar.shape, outletpar.shape)
     glunitpar=np.append(glunitpar, outletpar, axis=1)
 
     glgwpar=np.array([fdet,fpor,idet,ipor])
     print ("done")
 
     
+
+ 
+def read_input(file_input,spinup):
+    global glrecdate, glinflow, glprec, glpet, gltminmax, glnoftsteps,glstatratio
+
+    print ("reading input data from: "+file_input)
+    inputData=pd.read_csv(file_input, index_col=0, parse_dates=True)
     
-#*****************************************************************************
+    glrecdate=inputData.index.strftime("%Y-%m-%d")
+    glinflow=inputData['Inflow-Mohembo'].values.astype("float")
+    prec=inputData[['Rainfall-Maun', 'Rainfall-Shakawe']].values.astype("float")
+    if inputData.shape[1]==4:
+        glpet=inputData['PET-Maun'].values.astype("float")*0.85
+    else:
+        gltmin=inputData['MinTemperature-Maun'].values
+        gltmax=inputData['MaxTemperature-Maun'].values
+        evap_calc()
+    glnoftsteps=inputData.shape[0]
+    
+    #calculating unit rainfall
+    ratios=np.tile(np.array(glstatratio).reshape(-1,1),glnoftsteps).T
+    glprec=prec[:,0].reshape(-1,1)*ratios+prec[:,1].reshape(-1,1)*(1-ratios)
+    if spinup>0:
+        #spinup in years
+        nspinmon=12*spinup
+        prepdates=pd.date_range(inputData.index[0]-DateOffset(months=nspinmon), freq="M", periods=nspinmon)
+        prepdates=prepdates.union(inputData.index)
+        glrecdate=prepdates.strftime("%Y-%m-%d")
+        for i in range(spinup):
+            glinflow=np.append(glinflow[0:12], glinflow, axis=0)
+            glprec=np.append(glprec[0:12,:], glprec, axis=0)
+            glpet=np.append(glpet[0:12], glpet, axis=0)
+        glnoftsteps=glnoftsteps+nspinmon
+    print (str(glnoftsteps) + " time steps read")
+
+
+
+def read_init(file_init):
+    global glsv_init, glfv_init, gliv_init, glnofswcells, glnofgwcells
+    
+    print ("reading initial condition from: "+file_init)
+    with open(file_init, "r") as finit:
+        data=finit.readlines()
+        # initial storage of surface cells
+    temp=data[0:glnofswcells]
+    temp=np.array([x.strip().split(",") for x in temp])
+#    print(temp)
+    glsv_init=temp[:,1].astype(float)
+        
+    #initial storage of groundwater cells
+    temp=data[glnofswcells:(glnofswcells*2)]
+    temp=np.array([x.strip().split(",") for x in temp])
+#    print (temp)
+    glfv_init=temp[:,1:].astype(float)
+    
+    temp=data[(glnofswcells*2):(glnofswcells*3)]
+    temp=np.array([x.strip().split(",") for x in temp])
+#    print (temp)
+    gliv_init=temp[:,1:].astype(float)
+    
+    print("done")
+
+    
 def evap_calc():
     global glnoftsteps, glrecdate, gltminmax, glpet   
     r0 = [16.35261505, 14.95509782, 12.8087226, 10.86376736, 9.847079426, 10.22676382, 11.84785549, 14.00041471, 15.76601788, 16.82545576, 17.20206337, 17.09344496]
@@ -244,36 +244,46 @@ def write_output_cellinundation(file_output):
     global glout_sa
     print ("writing surface area output file...")
     glout_sa.astype(int).to_csv(file_output)
-    print ("written "+str(glout_sa.shape[0])+" time steps")
+    print ("done")
 
 def write_output_totalinundation(file_output):
     global glout_sa
-    print ("writing surface area output file...")
-    glout_sa.sum(0).astype(int).to_csv(file_output)
-    print ("written "+str(glout_sa.shape[0])+" time steps")
-
+    temp=glout_sa.sum(1).to_frame()
+    temp.columns=["Delta"]
+    temp.astype(int).to_csv(file_output)
+    print ("done")
 
 def write_output_cellvolume(file_output):
     global glout_sv
     print ("writing surface volume output file...")
     glout_sv.astype(int).to_csv(file_output)
-    print ("written "+str(glout_sv.shape[0])+" time steps")
+    print ("done")
 
 def write_output_cellq(file_output):
 #write discharges for each cell
     global glout_sqout
     print ("writing discharge output file...")
     glout_sqout.astype(int).to_csv(file_output)
-    print ("written "+str(glout_sqout.shape[0])+" time steps")
+    print ("done")
+
+def write_output_ecoregions(file_output):
+    #write ecoregions for each cell
+    global glalleco
+    print ("writing ecoregions output file...")
+    glalleco.astype(int).to_csv(file_output)
+    print ("done")
 
 
-def mergecells(glvar, spinup):
+
+def mergecells(glvar,spinup):
     #write areas for each cell
     global gloutputflag, glswcellname, glrecdate
     selcells=glvar[:,np.array(gloutputflag)==1]
     cellnames=np.array(glswcellname)
+#    print(cellnames)
     tooutput=np.array(gloutputflag)
     selcellnames=cellnames[tooutput==1]
+    #0-Panh 1-Nqo1 2-Nqo2 3-Tha 4-Xud 5-Bor 6-Mch1 7-Mch2 8-Sel 9-Mbo 10-Khw 11-Tot 12-Maun 13-Mab 14-Gomoti
     selcellnames=['Panhandle','Nqoga','Thaoge','Xudum','Boro','Maunachira','Selinda','Mboroga','Khwai']
     merged=[[0],[1,2],[3],[4],[5],[6,7],[8],[9],[10]]
     outputtable=[]
@@ -284,7 +294,8 @@ def mergecells(glvar, spinup):
         for i in m:
             current=current+selcells[:,i]
         outputtable=outputtable+[current]
-    outputFrame=pd.DataFrame(np.array(outputtable).T, index=pd.to_datetime(glrecdate), columns=outputcellnames)    
+    index=pd.date_range(glrecdate[0], freq="M", periods=len(glrecdate))
+    outputFrame=pd.DataFrame(np.array(outputtable).T, index=index, columns=outputcellnames)
     if spinup>0:
         outputFrame=outputFrame.iloc[spinup*12:,:]
     return outputFrame
@@ -292,14 +303,15 @@ def mergecells(glvar, spinup):
 
 def write_init(output_file, _ts):
     global glnofswcells, glfin_sv, glfin_fv, glfin_iv
+    print(glnofswcells, glfin_sv.shape, glfin_fv.shape, glfin_iv.shape)
     with open(output_file, "w") as outf:
         for scell in range(glnofswcells):
-            outf.write("s_"+str(scell)+","+str(int(glfin_sv[scell,_ts]))+"\n")
+            outf.write("s_"+str(scell)+","+str(int(glfin_sv[_ts,scell]))+"\n")
         for scell in range(glnofswcells):
-            line="f_"+str(scell)+","+",".join([str(np.round(x,2)) for x in glfin_fv[scell,:,_ts].tolist()])
+            line="f_"+str(scell)+","+",".join([str(np.round(x,2)) for x in glfin_fv[_ts,scell,:].tolist()])
             outf.write(line+"\n")
         for scell in range(glnofswcells):
-            line="i_"+str(scell)+","+",".join([str(np.round(x,2)) for x in glfin_iv[scell,:,_ts].tolist()])
+            line="i_"+str(scell)+","+",".join([str(np.round(x,2)) for x in glfin_iv[_ts,scell,:].tolist()])
             outf.write(line+"\n")
             
 
@@ -327,7 +339,7 @@ def wbalance_calc():
     frainfall=glfin_fpre.sum((0,2))
     finputs=finfiltration+frainfall
     foutputs=fgwoutflow+fevap
-#    print (finputs.shape, foutputs.shape, fvdelta.shape)
+    print (finputs.shape, foutputs.shape, fvdelta.shape)
     fwbal=finputs-foutputs-fvdelta
     fwbalclosure=fwbal/finputs*100
 #    print fvdelta, fevap, frainfall,finfiltration,fgwoutflow
@@ -350,259 +362,193 @@ def timer():
     t0=timeit.default_timer()
 
 
-
-def eco_calc():
-    print("calculating eco model... ")
-    size=[]
-    nofyears=int(np.floor(gl.noftsteps)/12)
-    nmonths=nofyears*12
-    cellnames,celldata=mergecells(gl.fin_sa_end)
-
-    dates=pd.to_datetime(gl.recdate)
-    firstmonth=dates[0].month
-    print(firstmonth)
-    first2read=(12-firstmonth+1)%12
-    gl.firstyear=dates[first2read].year
-    print("input file has "+str(len(dates))+" monthly time and "+str(celldata.shape[1])+" units")
-    print("January at timestep "+str(first2read))
-
-    floodsize=np.sum(celldata[(first2read):],0)
-    temp=np.copy(floodsize[0:nmonths])
-    temp=temp.reshape(nofyears, 12)
-    areayear=np.mean(temp,1)
-    sizerange=range(1,12000, 1)
-    ecoall=[]
-    for size in sizerange:
-        d=np.sum(temp>size, 1)
-        eco=[2]*nofyears
-        for y in range(nofyears):
-            if eco[y-1]==1: #A
-                # rules for Aquatic
-                if d[y] == 0:
-                    eco[y] = 2 #RS
-                else:
-                    if d[y - 1] == 12:
-                        eco[y] = 1 #"A"
-                    elif d[y - 2] == 12 and d[y - 3] == 12 and d[y - 4] == 12:
-                        eco[y] == 1 #"A"
+def eco_calc(_mode,spinup):
+    global glalleco
+    ecoregs=["Aquatic","Sedgeland", "Inundated grasslands", "Savanna"]
+    glout_sa4eco=mergecells(glfin_sa.copy(),0)
+    
+    dates=glout_sa4eco.index
+    fst=np.where(dates.month==1)[0][0]
+    lst=np.where(dates.month==12)[0][-1]
+    print(fst,lst)
+    print(dates[fst], dates[lst])
+#    fst=fst[0][0]
+#    lst=lst[0][-1]
+    areayearpd=glout_sa4eco.iloc[fst:(lst+1),:].resample("A").mean()
+    areamonthpd=glout_sa4eco.iloc[fst:(lst+1),:]
+    if _mode=="total":
+        areayearpd=pd.DataFrame(areayearpd.mean(1), columns=["Delta"])
+        areamonthpd=pd.DataFrame(areamonthpd.mean(1), columns=["Delta"])
+    nofyears=areayearpd.shape[0]
+    nofunits=areayearpd.shape[1]
+    i=0
+    areayear=areayearpd.values
+    areamonth=areamonthpd.values.reshape(nofyears,12,nofunits)
+    print(areayear.shape, areamonth.shape)
+    
+#    sys.exit()
+    for unit in range(areayear.shape[1]):
+        i=i+1
+        print(unit)
+        maxarea=int(np.ceil(areamonth[:,:,unit].max()))
+        minarea=int(np.ceil(areamonth[:,:,unit].min()))
+        ecoall=[]
+        for size in range(minarea,maxarea):
+            eco=np.zeros((nofyears,))
+            eco[:]=2
+            dur=(areamonth[:,:,unit]>size).sum(1)
+            for y in range(1,nofyears):
+                if eco[y-1]==1: #A
+                    # rules for Aquatic
+                    if dur[y] == 0:
+                        eco[y] = 2 #RS
                     else:
-                        eco[y] = 2 #"RS"
-            elif eco[y-1]==2: #"RS"
-            # rules for Sedges
-                if d[y]== 0:
-                    eco[y] = 3 #"G"
-                elif d[y - 1] < 12:
-                    eco[y] = 2  #"RS"
-                else:
-                    eco[y]=1 #A
-    #            elif d[y - 1] ==12:
-    #                if d[y - 2] ==12:
-    #                    eco[y] = 1 #"A"
-    #                else:
-    #                    eco[y] = 2 #"RS"
-
-            elif eco[y-1]==3: #"G"
-            # rules for Grassland
-                if d[y]== 0:
-                    if d[y - 1]== 0:
-                        if d[y - 2] > 0 or d[y - 3] > 0 or d[y - 4] > 0:
-                            eco[y] = 3 #"G"
-                        else:
-                            eco[y] = 4 #"S"
-                    elif d[y - 1] > 0:
-                        eco[y] = 3 #"G"
-                elif d[y] > 0:
-                    if d[y - 1]==0:
-                        eco[y]== 3 #"G"
-                    else:
-                        if d[y - 2]==0:
-                            eco[y] = 3 #"G"
+                        if dur[y - 1] == 12:
+                            eco[y] = 1 #"A"
+                        elif dur[y - 2] == 12 and dur[y - 3] == 12 and dur[y - 4] == 12:
+                            eco[y] == 1 #"A"
                         else:
                             eco[y] = 2 #"RS"
+                elif eco[y-1]==2: #"RS"
+                # rules for Sedges
+                    if dur[y]== 0:
+                        eco[y] = 3 #"G"
+                    elif dur[y - 1] < 12:
+                        eco[y] = 2  #"RS"
+                    else:
+                        eco[y]=1 #A
+                elif eco[y-1]==3: #"G"
+                # rules for Grassland
+                    if dur[y]== 0:
+                        if dur[y - 1]== 0:
+                            if dur[y - 2] > 0 or dur[y - 3] > 0 or dur[y - 4] > 0:
+                                eco[y] = 3 #"G"
+                            else:
+                                eco[y] = 4 #"S"
+                        elif dur[y - 1] > 0:
+                            eco[y] = 3 #"G"
+                    elif dur[y] > 0:
+                        if dur[y - 1]==0:
+                            eco[y]== 3 #"G"
+                        else:
+                            if dur[y - 2]==0:
+                                eco[y] = 3 #"G"
+                            else:
+                                eco[y] = 2 #"RS"
 
-            elif eco[y-1]==4: #"S"
-                # rules for Savanna
-                if d[y]== 0:
-                    eco[y] = 4 #"S"
-                elif d[y] > 1:
-                    eco[y] = 3 #"G"
-                else:
-                    eco[y] = 4 #"S"
-        ecoall=ecoall+[eco]
-    ecoall=np.array(ecoall)
-    gl.ecototal=[[]]*5
-    for j in range(0,4):
-        gl.ecototal[j]=np.sum(ecoall==j+1, 0)
-    gl.ecototal=np.array(gl.ecototal)
-    print("done\n")
+                elif eco[y-1]==4: #"S"
+                    # rules for Savanna
+                    if dur[y]== 0:
+                        eco[y] = 4 #"S"
+                    elif dur[y] > 1:
+                        eco[y] = 3 #"G"
+                    else:
+                        eco[y] = 4 #"S"
+            ecoall=ecoall+[eco]
+        ecoall=np.array(ecoall)
+        ecototal=np.zeros((nofyears,4))
+        ecototal[:]=0
+        for j in range(4):
+            ecototal[:,j]=np.sum(ecoall==j+1, 0)
+        ecototal=np.array(ecototal)
+        ecototal[:,0]=ecototal[:,0]+minarea
+        ecototal[:,-1]=maxarea-np.sum(ecototal[:,0:3],1)
+        colnames=[areayearpd.keys()[unit]+"-"+x for x in ecoregs]
+        temp=pd.DataFrame(ecototal,  index=areayearpd.index, columns=colnames)
+#        temp=pd.DataFrame(ecototal,  index=areayearpd.index, columns=pd.MultiIndex.from_tuples(zip(np.repeat(glout_sa4eco.keys()[unit],4),ecoregs), names=['distributary', 'ecoregion']))
+        if i==1:
+            glalleco=temp.copy()
+        else:
+            glalleco=pd.concat([glalleco, temp], axis=1)
+    if spinup:
+        glalleco=glalleco.iloc[spinup:,:]
 
+#*****************************************************************************
 
-
-def inund_calc(outputfile):
-    print("Animating inundation...\n")
-    import struct
-    import numpy as np
-    import PIL
-    import sys
-    import matplotlib
-    matplotlib.use('Agg')
-    from matplotlib import pyplot as plt
-    import scipy.stats as st
-    import matplotlib.animation as animation
-
-    fps=5
-
-    mapdir="./config/"
-    nrow,ncol = 300,303
-    nofpix = ncol * nrow
-
-    skip=3
-    thresh=0.7
-
-    print("reading inundation map parameters...")
-
-    ncdata=Dataset(mapdir+"./m_arc.nc")
-    m=ncdata.variables['Band1'][:]
-    m[m<0]=1000
-
-    ncdata=Dataset(mapdir+"./sigma_arc.nc")
-    sigma=ncdata.variables['Band1'][:]
-
-    ncdata=Dataset(mapdir+"./units_arc.nc")
-    units=ncdata.variables['Band1'][:]
-    units=units.astype("float")
-
-    units[m<=0]=np.nan
-    units[sigma<=0]=np.nan
-
-    codes={1:"Panhandle", 2:"Thaoge", 3:"Xudum", 4:"Boro", 5:"Khwai", 6:"Nqoga-1a", 7:"Selinda", 8:"Nqoga-2a", 9:"Mboroga"}
-
-    unitsf=units.flatten()
-    mf=m.flatten()
-    sigmaf=sigma.flatten()
-
-    print("done\n")
-
-
-    cellnames,cellvalues=mergecells(gl.fin_sa_end)
-    dates=pd.to_datetime(gl.recdate)
-    
-    sa=pd.DataFrame(cellvalues.T,index=dates, columns=cellnames)
-
-    nts=sa.shape[0]
-
-    print("read", nts, "time steps")
-    print("will skip", skip, "time steps")
-
-    print("done\n")
-
-
-    print("processing...")
-
-    fig, pl= plt.subplots(figsize=(5, 5))
-
-    #preparing empty frame
-    temp=np.zeros_like(units).astype(float)
-    temp[:]=0
-    im = pl.imshow(temp, cmap=plt.cm.RdBu)
-
-    #plt.show()
-
-    #preparing canvas
-    pl.set_yticks([])
-    pl.set_xticks([])
-    tx=pl.text(0.7,0.9,sa.index.strftime('%Y %B')[0], transform=pl.transAxes)
-
-
-    def plotflood(ts): 
-        if ts%10==0:
-            print ("ts="+str(ts))
-        inu=sa.iloc[ts,:]
-        amap=np.zeros_like(mf).astype(float)
-        amap[:]=np.nan
-        for key in codes.keys():
-            area=inu[codes[key]]
-            sel=np.where(unitsf==key)[0]
-            for x in sel:
-                prob=st.norm.cdf(area,mf[x],sigmaf[x])
-                if thresh>0:
-                    if prob>thresh:
-                        amap[x]=1
-                else:
-                        amap[x]=prob
-        amap=np.flipud(amap.reshape(nrow,ncol))
-        tx.set_text(sa.index.strftime('%Y %B')[ts])
-        im.set_array(amap)
-        return im,
-
-
-    ani = animation.FuncAnimation(fig, plotflood, range(skip,nts))
-    writer = animation.ImageMagickFileWriter(fps=fps)
-    ani.save(outputfile, writer=writer) 
-    print ("done")
-
-
-
+#model units
+unitnames=["panhandle","nqoga1a","nqoga1b","thaoge","xudum","boro","nqoga2a","nqoga2b","selinda","mboroga","khwai"]
 
 
 
 print ("Initializing inundaion model with the following:")
 print ("parameters:",file_modpar)
-print ("initial condiions:", file_init)
+print ("initialization:", file_init)
 print ("input:",file_input)
 print ("spinup:", spinup, "years")
 print ("requested output files:", outputfiles)
-print("done")
+print ("done")
 print ()
+
+#start timer
+t0 = timeit.default_timer()
+
 
 read_modset(file_modset)                                #reading model configuration
 print ()
-read_modpar(file_modpar)                                #reading model parameters
+read_modpar(file_modpar)
 print ()
-read_input(file_input, spinup)                                  #reading inputs
+read_input(file_input,spinup)                                  #reading inputs
 print ()
 read_init(file_init)                                    #reading initial conditions
 print ()
-
-
+timer()
 
 
 print("calculating...")
 if debug:
-    print (glinflow.shape, glprec.shape, glpet.shape, glsv_init.shape, glfv_init.shape, gliv_init.shape, glunitpar.shape, glgwpar.shape)                                            #this is when the model is actually run
+    print (glinflow.shape, glprec.shape, glpet.shape, glsv_init.shape, glfv_init.shape, gliv_init.shape, glunitpar.shape, glgwpar.shape)
 
-result=hcy.model_calc(glinflow, glprec, glpet, glsv_init, glfv_init, gliv_init, glunitpar, glgwpar)                                            #this is when the model is actually run
+#this is when the model is actually run
+result=hcy.model_calc(glinflow, glprec, glpet, glsv_init, glfv_init, gliv_init, glunitpar, glgwpar)                         
+timer()
 print ("done")
 print ()
 
-print("preparing output...")
-glfin_sqin, glfin_sa, glfin_sv, glfin_sev, glfin_spre, glfin_sqout,glfin_sinf,\
-glfin_fv, glfin_fev,glfin_fpre,glfin_fgwout,glfin_finf,\
-glfin_iv, glfin_iev,glfin_ipre=result
 
-glout_sa=mergecells(glfin_sa, spinup)
-glout_sv=mergecells(glfin_sv, spinup)
-glout_sqout=mergecells(glfin_sqout, spinup)
-glout_sev=mergecells(glfin_sev, spinup)
-glout_sinf=mergecells(glfin_sinf, spinup)
+print("preparing output...")
+glfin_sqin, glfin_sa, glfin_sv, glfin_sev, glfin_spre, glfin_sqout,glfin_sinf,glfin_fv, glfin_fev,glfin_fpre,glfin_fgwout,glfin_finf,glfin_iv, glfin_iev,glfin_ipre=result
+
+
+glout_sqin=mergecells(glfin_sqin,spinup)
+glout_sa=mergecells(glfin_sa,spinup)
+glout_sv=mergecells(glfin_sv,spinup)
+glout_sqout=mergecells(glfin_sqout,spinup)
+glout_sev=mergecells(glfin_sev,spinup)
+glout_sinf=mergecells(glfin_sinf,spinup)
+
 print("done")
 print ()
 
+# In[16]:
+
+
 for outputfile in outputfiles:
-    if "allinundation" in outputfile:
-        write_output_cellinundation(outputfile)                     #inundation by unit
+    if "allvolumes" in outputfile:
+        write_output_cellvolume(outputfile)
     if "alloutflows" in outputfile:
-        write_output_cellq(outputfile)                       #streamflow/unit discharges
+        write_output_cellq(outputfile)
+    if "allinundation" in outputfile:
+        write_output_cellinundation(outputfile)
     if "totalinundation" in outputfile:
         write_output_totalinundation(outputfile)                       #total inundation
     if "totalecoregions" in outputfile:
-        eco_calc()
-        write_output_totalecoregions(outputfile)                       #ecoregions
+        eco_calc("total", spinup)
+        write_output_ecoregions(outputfile)                       #ecoregions
+    if "finalcond" in outputfile:
+        write_init(outputfile, -1)
+    if "allecoregions" in outputfile:
+        eco_calc("all", spinup)
+        write_output_ecoregions(outputfile)                       #ecoregions
     if "animatedinundation" in outputfile:
         inund_calc(outputfile)
+        write_output_animatedinundation(outputfile)                       #inundation movie
     print ()
-#        write_output_animatedinundation(outputfile)                       #inundation movie
+
 
 print ()
 print("success")
+
+
+
+
 

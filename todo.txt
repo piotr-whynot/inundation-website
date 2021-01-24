@@ -1,7 +1,4 @@
-minimum 12 months of input - if spinup
-if no spinup - then fewer, but with initial condition from file
 saving initial condition file
-parsing param file
 saving simulation results
 fix and expand output
-
+fix behaviour on reset of model

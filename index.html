@@ -52,7 +52,10 @@
                 <a class=nav-link href=# onClick=showDocs() data-id=docs>Documentation</a>
                 </li>
                 <li>
-                <a class=nav-link href=# onClick=showModel() data-id=model>Model</a>
+                <a class=nav-link href=# onClick=showModel() data-id=model>Okavango Model</a>
+                </li>
+                <li>
+                <a class=nav-link href=# onClick=showBotModel() data-id=model>Boteti Model</a>
                 </li>
             </ul>
     <!--
@@ -95,9 +98,9 @@
 
                 <div class='panel panel-default'>
                     <div class=panel-heading>
-                        <a data-toggle="collapse" href="#collapse3">Parameters</a>
+                        <a data-toggle="collapse" href="#collapse3">Parameters (advanced)</a>
                     </div>
-                    <div id="collapse3" class="panel-collapse collapse in">
+                    <div id="collapse3" class="panel-collapse collapse">
                         <div class="panel-body">
                             <div id=paramContainer class="container contained"></div>
                         </div>
@@ -106,9 +109,9 @@
 
                 <div class='panel panel-default'>
                     <div class=panel-heading>
-                        <a data-toggle="collapse" href="#collapse4">Initial conditions</a>
+                        <a data-toggle="collapse" href="#collapse4">Initial conditions (advanced)</a>
                     </div>
-                    <div id="collapse4" class="panel-collapse collapse in">
+                    <div id="collapse4" class="panel-collapse collapse">
                         <div class="panel-body">
                             <div id=initcondContainer class="container contained"></div>
                         </div>
@@ -148,6 +151,7 @@
                     </div>
                 </div>
             </div>
+            <div id='modelbotContents'>showing Boteti model</div>
         </div>
     </div>
 
@@ -163,7 +167,8 @@
 
 
 <!-- stuff -->
-    <div id=floatFaq><span class="glyphicon glyphicon-question-sign"></div>
+<!--    <div id=floatFaq><span class="glyphicon glyphicon-question-sign"></div>
+-->
     <div id="shade"></div>
     <div id='popupBackground'></div>
     <div id='popupWindow'><div id=popupWindowClose>&times</div><div id='popupWindowContents'></div></div>

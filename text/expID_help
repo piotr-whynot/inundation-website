@@ -1,0 +1,2 @@
+<p><em>Experiment ID</em> is a number that is used to identify model run (or simulation) on the server. It is a unique identifier that is assigned at the moment one accesses the model website.It is used simply to distinguish files uploaded by various users, even if these files have identical names.
+<p>This number has relatively little significance in the "normal" use of the model website, but can be used to access given simulations later (this functionality is not implemented yet, though).

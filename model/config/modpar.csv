@@ -1,0 +1,85 @@
+fdet,5
+idet,20
+fpor,0.3
+ipor,0.3
+Pan_vol_a0,0.62,25
+Nqo1_vol_a1,0.64,25
+Nqo2_vol_a2,0.76,25
+Tha_vol_a3,0.76,25
+Xud_vol_a4,0.76,25
+Bor_vol_a5,0.76,25
+Mch1_vol_a6,0.64,25
+Mch2_vol_a7,0.76,25
+Sel_vol_a8,0.76,25
+Mbo_vol_a9,0.73,25
+Khw_vol_a10,0.73,25
+tot_vol_a11,0.73,25
+mau_vol_a12,0.73,25
+mab_vol_a13,0.71,25
+gom_vol_a14,0.73,25
+Pan-Nqo1-kv, 0.3, 300
+Pan-Nqo1-kv, 6.0, 2300,------------------
+Nqo1-Mch1-kv,0.15, 700
+Nqo1-Mch1-kv,1.4, 1600
+Nqo1-Mch1-kv,4, 1700
+Nqo1-Sel-kv, 1.4, 1635
+Nqo1-Bor-kv, 4.0, 1640
+Nqo1-Bor-kv, 0.05, 1100
+Nqo1-Xud-kv, 5.0, 1640
+Nqo1-Xud-kv, 0.1, 1100
+Nqo1-Tha-kv, 1.5, 1640
+Nqo1-Nq2-kv, 0.4, 1600
+Xud-Tote-kv, 0.3, 350, -------------------
+Xud-Tote-kv, 2, 1000
+Bor-Mau-kv,  0.15, 350
+Bor-Mau-kv,  0, 1000
+Mch1-Mch2-kv, 0.2, 100
+Mch1-Mbo-kv, 2, 300
+Mch1-Kwh-kv, 1, 300
+Mbo-Gom-kv,  0.1, 70000
+Khw-Mab-kv,  0.1, 25000
+Pan-delay0,0
+Nqo1-delay1,0
+Nqo2-delay2,0
+Tha-delay3,0
+Xud-delay4,2
+Bor-delay5,2
+Mch1-delay6,1
+Mch2-delay7,1
+Sel-delay8,0
+Mbo-delay9,2
+Khw-delay10,2
+Tot-delay11,0
+Mau-delay12,0
+Mab-delay13,0
+Gom-delay14,0
+M0,0.1
+M1,0.5
+M2,0.8
+M3,0.4
+M4,0.8
+M5,0.8
+M6,0.5
+M7,0.4
+M8,0.4
+M9,0.9
+M10,0.9
+M11,0
+M12,0
+M13,0
+M14,0
+fa_ia-Pan,184,141,1
+fa_ia-Nqo1,100,8,1
+fa_ia-Nqo2,152,18,1
+fa_ia-Tha,92,47,1
+fa_ia_Xud,321,76,1
+fa_ia-Bor,450,200,1
+fa_ia-Mch1,100,25.2,1
+fa_ia-Mch2,140,18,1
+fa_ia-Sel,92,47,1
+fa_ia-Mbo,206,160,1
+fa_ia-Khw,100,48,1
+fa_ia-Tot,100,6,1
+fa_ia_Mau,100,6,1
+fa_ia-Mab,100,6,1
+fa_ia-Gom,300,50,1

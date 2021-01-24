@@ -1,0 +1,3 @@
+<p><em>Model parameters</em> are a set of values that describe hydrological processes within the model.
+<p> A "regular" use of the model does not require any modifications or changes of model parameters, and the default values should be used. 
+<p> Only in a very specific situations, an advanced user may need to modify model parameters. If that is the case, a file with modified parameters can be uploaded and used instead of the default values. That file has to have a very specific format. Advanced users can read about that format <a class=clickable id=paramFilestructure_help >here</a>.

@@ -1,0 +1,5 @@
+<p><em>Experiment code </em>is a user-defined identifier. This code will be prepended to the name of each of the files that you upload to the server (e.g. to the name of file with input data), as well as to each of the files that the model generates.
+<p>In this way, you can easily identify files that "belong" to a single model simulation.
+<p>NB. you don't have to include this code in the name of files you upload here, this code will be added automatically. You can, after model simulation is done, download your input file as it was used in that simulation. In this way - you will have all the files (input and output) named in a similar way. 
+<p>This code should be short (max. 20 characters) and should contain only alphanumeric characters (i.e. a-z, A-Z and 0-9) and characters such as "_" and "-", but no spaces.
+<p>Example: <em>climate1</em> or <em>dam_at_menongue1</em>

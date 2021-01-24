@@ -1959,6 +1959,9 @@ static int __pyx_slices_overlap(__Pyx_memviewslice *slice1,
 /* Capsule.proto */
 static CYTHON_INLINE PyObject *__pyx_capsule_create(void *p, const char *sig);
 
+/* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
+
 /* IsLittleEndian.proto */
 static CYTHON_INLINE int __Pyx_Is_Little_Endian(void);
 
@@ -2001,9 +2004,6 @@ static CYTHON_INLINE int __pyx_memview_set_double(const char *itemp, PyObject *o
 
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
-
-/* CIntToPy.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
 
 /* RealImag.proto */
 #if CYTHON_CCOMPLEX
@@ -2179,6 +2179,19 @@ static PyTypeObject *__pyx_array_type = 0;
 static PyTypeObject *__pyx_MemviewEnum_type = 0;
 static PyTypeObject *__pyx_memoryview_type = 0;
 static PyTypeObject *__pyx_memoryviewslice_type = 0;
+static int __pyx_v_18hydro_model_cython_nn;
+static Py_ssize_t __pyx_v_18hydro_model_cython_nsu;
+static Py_ssize_t __pyx_v_18hydro_model_cython_ngw;
+static Py_ssize_t __pyx_v_18hydro_model_cython_nts;
+static Py_ssize_t __pyx_v_18hydro_model_cython_n;
+static Py_ssize_t __pyx_v_18hydro_model_cython_ts;
+static Py_ssize_t __pyx_v_18hydro_model_cython_sur;
+static Py_ssize_t __pyx_v_18hydro_model_cython_gw;
+static Py_ssize_t __pyx_v_18hydro_model_cython_delayindex;
+static float __pyx_v_18hydro_model_cython_glconvcrit;
+static int __pyx_v_18hydro_model_cython_glmaxiter;
+static int __pyx_v_18hydro_model_cython_glfarea;
+static float __pyx_v_18hydro_model_cython_gliarea;
 static PyArrayObject *__pyx_v_18hydro_model_cython__glfin_sqin = 0;
 static PyArrayObject *__pyx_v_18hydro_model_cython__glfin_sqout = 0;
 static PyArrayObject *__pyx_v_18hydro_model_cython__glfin_spre = 0;
@@ -2219,16 +2232,6 @@ static PyArrayObject *__pyx_v_18hydro_model_cython__glprecip = 0;
 static PyArrayObject *__pyx_v_18hydro_model_cython__glpet = 0;
 static __Pyx_memviewslice __pyx_v_18hydro_model_cython_glprecip = { 0, 0, { 0 }, { 0 }, { 0 } };
 static __Pyx_memviewslice __pyx_v_18hydro_model_cython_glpet = { 0, 0, { 0 }, { 0 }, { 0 } };
-static Py_ssize_t __pyx_v_18hydro_model_cython_nsu;
-static Py_ssize_t __pyx_v_18hydro_model_cython_ngw;
-static Py_ssize_t __pyx_v_18hydro_model_cython_nts;
-static Py_ssize_t __pyx_v_18hydro_model_cython_n;
-static Py_ssize_t __pyx_v_18hydro_model_cython_ts;
-static Py_ssize_t __pyx_v_18hydro_model_cython_sur;
-static Py_ssize_t __pyx_v_18hydro_model_cython_gw;
-static Py_ssize_t __pyx_v_18hydro_model_cython_delayindex;
-static float __pyx_v_18hydro_model_cython_glconvcrit;
-static int __pyx_v_18hydro_model_cython_glmaxiter;
 static PyArrayObject *__pyx_v_18hydro_model_cython__gldelay = 0;
 static PyArrayObject *__pyx_v_18hydro_model_cython__gltopopar = 0;
 static PyArrayObject *__pyx_v_18hydro_model_cython__glspar = 0;
@@ -2249,8 +2252,10 @@ static __Pyx_memviewslice __pyx_v_18hydro_model_cython_glia = { 0, 0, { 0 }, { 0
 static __Pyx_memviewslice __pyx_v_18hydro_model_cython_glkgw = { 0, 0, { 0 }, { 0 }, { 0 } };
 static PyArrayObject *__pyx_v_18hydro_model_cython__celloutflows = 0;
 static PyArrayObject *__pyx_v_18hydro_model_cython__fa_frac = 0;
+static PyArrayObject *__pyx_v_18hydro_model_cython__fa_incrfrac = 0;
 static __Pyx_memviewslice __pyx_v_18hydro_model_cython_celloutflows = { 0, 0, { 0 }, { 0 }, { 0 } };
 static __Pyx_memviewslice __pyx_v_18hydro_model_cython_fa_frac = { 0, 0, { 0 }, { 0 }, { 0 } };
+static __Pyx_memviewslice __pyx_v_18hydro_model_cython_fa_incrfrac = { 0, 0, { 0 }, { 0 }, { 0 } };
 static float __pyx_v_18hydro_model_cython_glrain;
 static float __pyx_v_18hydro_model_cython_glsa_beg;
 static float __pyx_v_18hydro_model_cython_glsa_end;
@@ -2265,12 +2270,12 @@ static float __pyx_v_18hydro_model_cython_glipor;
 static float __pyx_v_18hydro_model_cython_glfq;
 static float __pyx_v_18hydro_model_cython_gliv_end;
 static float __pyx_v_18hydro_model_cython_glsinf;
-static int __pyx_v_18hydro_model_cython_glsv_isincr;
 static int __pyx_v_18hydro_model_cython_iitern;
 static int __pyx_v_18hydro_model_cython_iiter_flag;
 static float __pyx_v_18hydro_model_cython_iv_endmin;
 static float __pyx_v_18hydro_model_cython_iv_endmax;
 static float __pyx_v_18hydro_model_cython_evapi;
+static float __pyx_v_18hydro_model_cython_evapf;
 static float __pyx_v_18hydro_model_cython_iv_endc;
 static float __pyx_v_18hydro_model_cython_sqin;
 static float __pyx_v_18hydro_model_cython_sv_beg;
@@ -2286,8 +2291,8 @@ static int __pyx_v_18hydro_model_cython_sitern;
 static int __pyx_v_18hydro_model_cython_siter_flag;
 static int __pyx_v_18hydro_model_cython_cellno;
 static float __pyx_v_18hydro_model_cython_fa_cum;
-static float __pyx_v_18hydro_model_cython_fa_incrfrac;
 static float __pyx_v_18hydro_model_cython_fa_cumprev;
+static float __pyx_v_18hydro_model_cython_fincr;
 static int __pyx_v_18hydro_model_cython_fiter_flag;
 static int __pyx_v_18hydro_model_cython_fitern;
 static float __pyx_v_18hydro_model_cython_fv_endmin;
@@ -2412,11 +2417,13 @@ static const char __pyx_k_fortran[] = "fortran";
 static const char __pyx_k_glfv_av[] = "glfv_av";
 static const char __pyx_k_memview[] = "memview";
 static const char __pyx_k_results[] = "results";
+static const char __pyx_k_success[] = "success";
 static const char __pyx_k_unitpar[] = "_unitpar";
 static const char __pyx_k_Ellipsis[] = "Ellipsis";
 static const char __pyx_k_getstate[] = "__getstate__";
 static const char __pyx_k_glfv_beg[] = "glfv_beg";
 static const char __pyx_k_glfv_end[] = "glfv_end";
+static const char __pyx_k_glfv_max[] = "glfv_max";
 static const char __pyx_k_itemsize[] = "itemsize";
 static const char __pyx_k_pyx_type[] = "__pyx_type";
 static const char __pyx_k_setstate[] = "__setstate__";
@@ -2543,6 +2550,7 @@ static PyObject *__pyx_n_s_glfv_av;
 static PyObject *__pyx_n_s_glfv_beg;
 static PyObject *__pyx_n_s_glfv_end;
 static PyObject *__pyx_n_s_glfv_init;
+static PyObject *__pyx_n_s_glfv_max;
 static PyObject *__pyx_n_s_gliv_init;
 static PyObject *__pyx_n_s_glsv_init;
 static PyObject *__pyx_kp_s_got_differing_extents_in_dimensi;
@@ -2607,6 +2615,7 @@ static PyObject *__pyx_kp_s_strided_and_direct_or_indirect;
 static PyObject *__pyx_kp_s_strided_and_indirect;
 static PyObject *__pyx_kp_s_stringsource;
 static PyObject *__pyx_n_s_struct;
+static PyObject *__pyx_n_s_success;
 static PyObject *__pyx_n_s_sum;
 static PyObject *__pyx_n_s_sys;
 static PyObject *__pyx_n_s_test;
@@ -2671,11 +2680,8 @@ static PyObject *__pyx_float_0_001;
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_2;
-static PyObject *__pyx_int_5;
 static PyObject *__pyx_int_10;
-static PyObject *__pyx_int_16;
 static PyObject *__pyx_int_30;
-static PyObject *__pyx_int_600;
 static PyObject *__pyx_int_184977713;
 static PyObject *__pyx_int_neg_1;
 static PyObject *__pyx_slice_;
@@ -2714,7 +2720,7 @@ static PyObject *__pyx_codeobj__27;
 static PyObject *__pyx_codeobj__34;
 /* Late includes */
 
-/* "hydro_model_cython.pyx":106
+/* "hydro_model_cython.pyx":113
  * 
  * #***************************************************************************
  * def model_calc(double[:] _inflow, double[:,:] _precip, double[:] _pet, double[:] _glsv_init, double[:,:] _glfv_init, double[:,:] _gliv_init, double[:,:] _unitpar, double[:] _gwpar):             # <<<<<<<<<<<<<<
@@ -2775,47 +2781,47 @@ static PyObject *__pyx_pw_18hydro_model_cython_1model_calc(PyObject *__pyx_self,
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_precip)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 1); __PYX_ERR(0, 106, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 1); __PYX_ERR(0, 113, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pet)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 2); __PYX_ERR(0, 106, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 2); __PYX_ERR(0, 113, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_glsv_init)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 3); __PYX_ERR(0, 106, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 3); __PYX_ERR(0, 113, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_glfv_init)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 4); __PYX_ERR(0, 106, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 4); __PYX_ERR(0, 113, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_gliv_init)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 5); __PYX_ERR(0, 106, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 5); __PYX_ERR(0, 113, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_unitpar)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 6); __PYX_ERR(0, 106, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 6); __PYX_ERR(0, 113, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_gwpar)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 7); __PYX_ERR(0, 106, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, 7); __PYX_ERR(0, 113, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "model_calc") < 0)) __PYX_ERR(0, 106, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "model_calc") < 0)) __PYX_ERR(0, 113, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 8) {
       goto __pyx_L5_argtuple_error;
@@ -2829,18 +2835,18 @@ static PyObject *__pyx_pw_18hydro_model_cython_1model_calc(PyObject *__pyx_self,
       values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
       values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
     }
-    __pyx_v__inflow = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v__inflow.memview)) __PYX_ERR(0, 106, __pyx_L3_error)
-    __pyx_v__precip = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v__precip.memview)) __PYX_ERR(0, 106, __pyx_L3_error)
-    __pyx_v__pet = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v__pet.memview)) __PYX_ERR(0, 106, __pyx_L3_error)
-    __pyx_v__glsv_init = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v__glsv_init.memview)) __PYX_ERR(0, 106, __pyx_L3_error)
-    __pyx_v__glfv_init = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v__glfv_init.memview)) __PYX_ERR(0, 106, __pyx_L3_error)
-    __pyx_v__gliv_init = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[5], PyBUF_WRITABLE); if (unlikely(!__pyx_v__gliv_init.memview)) __PYX_ERR(0, 106, __pyx_L3_error)
-    __pyx_v__unitpar = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[6], PyBUF_WRITABLE); if (unlikely(!__pyx_v__unitpar.memview)) __PYX_ERR(0, 106, __pyx_L3_error)
-    __pyx_v__gwpar = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[7], PyBUF_WRITABLE); if (unlikely(!__pyx_v__gwpar.memview)) __PYX_ERR(0, 106, __pyx_L3_error)
+    __pyx_v__inflow = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v__inflow.memview)) __PYX_ERR(0, 113, __pyx_L3_error)
+    __pyx_v__precip = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v__precip.memview)) __PYX_ERR(0, 113, __pyx_L3_error)
+    __pyx_v__pet = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v__pet.memview)) __PYX_ERR(0, 113, __pyx_L3_error)
+    __pyx_v__glsv_init = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v__glsv_init.memview)) __PYX_ERR(0, 113, __pyx_L3_error)
+    __pyx_v__glfv_init = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v__glfv_init.memview)) __PYX_ERR(0, 113, __pyx_L3_error)
+    __pyx_v__gliv_init = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[5], PyBUF_WRITABLE); if (unlikely(!__pyx_v__gliv_init.memview)) __PYX_ERR(0, 113, __pyx_L3_error)
+    __pyx_v__unitpar = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(values[6], PyBUF_WRITABLE); if (unlikely(!__pyx_v__unitpar.memview)) __PYX_ERR(0, 113, __pyx_L3_error)
+    __pyx_v__gwpar = __Pyx_PyObject_to_MemoryviewSlice_ds_double(values[7], PyBUF_WRITABLE); if (unlikely(!__pyx_v__gwpar.memview)) __PYX_ERR(0, 113, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 106, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("model_calc", 1, 8, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 113, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hydro_model_cython.model_calc", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2894,16 +2900,16 @@ static PyObject *__pyx_pf_18hydro_model_cython_model_calc(CYTHON_UNUSED PyObject
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("model_calc", 0);
 
-  /* "hydro_model_cython.pyx":112
- *     global nsu, ngw, nts, ts, sur, flo, isl
+  /* "hydro_model_cython.pyx":119
+ *     global nsu, ngw, nts, ts, sur, flo, isl, glfarea
  *     global celloutflows, debug
  *     print ("running model..")             # <<<<<<<<<<<<<<
  *     #adjusting dimensions
  *     nts=_inflow[:].shape[0]
  */
-  if (__Pyx_PrintOne(0, __pyx_kp_s_running_model) < 0) __PYX_ERR(0, 112, __pyx_L1_error)
+  if (__Pyx_PrintOne(0, __pyx_kp_s_running_model) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
 
-  /* "hydro_model_cython.pyx":114
+  /* "hydro_model_cython.pyx":121
  *     print ("running model..")
  *     #adjusting dimensions
  *     nts=_inflow[:].shape[0]             # <<<<<<<<<<<<<<
@@ -2912,7 +2918,7 @@ static PyObject *__pyx_pf_18hydro_model_cython_model_calc(CYTHON_UNUSED PyObject
  */
   __pyx_v_18hydro_model_cython_nts = (__pyx_v__inflow.shape[0]);
 
-  /* "hydro_model_cython.pyx":115
+  /* "hydro_model_cython.pyx":122
  *     #adjusting dimensions
  *     nts=_inflow[:].shape[0]
  *     debug=0             # <<<<<<<<<<<<<<
@@ -2921,7 +2927,7 @@ static PyObject *__pyx_pf_18hydro_model_cython_model_calc(CYTHON_UNUSED PyObject
  */
   __pyx_v_18hydro_model_cython_debug = 0;
 
-  /* "hydro_model_cython.pyx":116
+  /* "hydro_model_cython.pyx":123
  *     nts=_inflow[:].shape[0]
  *     debug=0
  *     dts=-1             # <<<<<<<<<<<<<<
@@ -2930,14 +2936,14 @@ static PyObject *__pyx_pf_18hydro_model_cython_model_calc(CYTHON_UNUSED PyObject
  */
   __pyx_v_dts = -1L;
 
-  /* "hydro_model_cython.pyx":119
+  /* "hydro_model_cython.pyx":126
  * 
  *     #populating forcing variables
  *     glfin_sqin[:]=0             # <<<<<<<<<<<<<<
  *     glfin_sqin[0:nts,0]=_inflow                              #inflow
  *     glprecip[0:nts,:]=_precip
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sqin.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sqin"); __PYX_ERR(0, 119, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sqin.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sqin"); __PYX_ERR(0, 126, __pyx_L1_error) }
   {
       double __pyx_temp_scalar = 0.0;
       {
@@ -2961,14 +2967,14 @@ static PyObject *__pyx_pf_18hydro_model_cython_model_calc(CYTHON_UNUSED PyObject
       }
   }
 
-  /* "hydro_model_cython.pyx":120
+  /* "hydro_model_cython.pyx":127
  *     #populating forcing variables
  *     glfin_sqin[:]=0
  *     glfin_sqin[0:nts,0]=_inflow                              #inflow             # <<<<<<<<<<<<<<
  *     glprecip[0:nts,:]=_precip
  *     glpet[0:nts]=_pet
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sqin.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sqin"); __PYX_ERR(0, 120, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sqin.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sqin"); __PYX_ERR(0, 127, __pyx_L1_error) }
   __pyx_t_1.data = __pyx_v_18hydro_model_cython_glfin_sqin.data;
   __pyx_t_1.memview = __pyx_v_18hydro_model_cython_glfin_sqin.memview;
   __PYX_INC_MEMVIEW(&__pyx_t_1, 0);
@@ -2987,7 +2993,7 @@ static PyObject *__pyx_pf_18hydro_model_cython_model_calc(CYTHON_UNUSED PyObject
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 120, __pyx_L1_error)
+    __PYX_ERR(0, 127, __pyx_L1_error)
 }
 
 {
@@ -2999,24 +3005,24 @@ static PyObject *__pyx_pf_18hydro_model_cython_model_calc(CYTHON_UNUSED PyObject
         if (unlikely(!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape))) {
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 1)");
-            __PYX_ERR(0, 120, __pyx_L1_error)
+            __PYX_ERR(0, 127, __pyx_L1_error)
         }
         __pyx_t_1.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__inflow, __pyx_t_1, 1, 1, 0) < 0)) __PYX_ERR(0, 120, __pyx_L1_error)
+if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__inflow, __pyx_t_1, 1, 1, 0) < 0)) __PYX_ERR(0, 127, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_1, 1);
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
-  /* "hydro_model_cython.pyx":121
+  /* "hydro_model_cython.pyx":128
  *     glfin_sqin[:]=0
  *     glfin_sqin[0:nts,0]=_inflow                              #inflow
  *     glprecip[0:nts,:]=_precip             # <<<<<<<<<<<<<<
  *     glpet[0:nts]=_pet
  * 
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glprecip.memview)) { __Pyx_RaiseUnboundLocalError("glprecip"); __PYX_ERR(0, 121, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glprecip.memview)) { __Pyx_RaiseUnboundLocalError("glprecip"); __PYX_ERR(0, 128, __pyx_L1_error) }
   __pyx_t_3.data = __pyx_v_18hydro_model_cython_glprecip.data;
   __pyx_t_3.memview = __pyx_v_18hydro_model_cython_glprecip.memview;
   __PYX_INC_MEMVIEW(&__pyx_t_3, 0);
@@ -3035,26 +3041,26 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__inflow, __pyx_t_1, 1, 1, 0)
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 121, __pyx_L1_error)
+    __PYX_ERR(0, 128, __pyx_L1_error)
 }
 
 __pyx_t_3.shape[1] = __pyx_v_18hydro_model_cython_glprecip.shape[1];
 __pyx_t_3.strides[1] = __pyx_v_18hydro_model_cython_glprecip.strides[1];
     __pyx_t_3.suboffsets[1] = -1;
 
-if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__precip, __pyx_t_3, 2, 2, 0) < 0)) __PYX_ERR(0, 121, __pyx_L1_error)
+if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__precip, __pyx_t_3, 2, 2, 0) < 0)) __PYX_ERR(0, 128, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_3, 1);
   __pyx_t_3.memview = NULL;
   __pyx_t_3.data = NULL;
 
-  /* "hydro_model_cython.pyx":122
+  /* "hydro_model_cython.pyx":129
  *     glfin_sqin[0:nts,0]=_inflow                              #inflow
  *     glprecip[0:nts,:]=_precip
  *     glpet[0:nts]=_pet             # <<<<<<<<<<<<<<
  * 
  *     glsv_init[0:nts]=_glsv_init
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glpet.memview)) { __Pyx_RaiseUnboundLocalError("glpet"); __PYX_ERR(0, 122, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glpet.memview)) { __Pyx_RaiseUnboundLocalError("glpet"); __PYX_ERR(0, 129, __pyx_L1_error) }
   __pyx_t_1.data = __pyx_v_18hydro_model_cython_glpet.data;
   __pyx_t_1.memview = __pyx_v_18hydro_model_cython_glpet.memview;
   __PYX_INC_MEMVIEW(&__pyx_t_1, 0);
@@ -3073,22 +3079,22 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__precip, __pyx_t_3, 2, 2, 0)
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 122, __pyx_L1_error)
+    __PYX_ERR(0, 129, __pyx_L1_error)
 }
 
-if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__pet, __pyx_t_1, 1, 1, 0) < 0)) __PYX_ERR(0, 122, __pyx_L1_error)
+if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__pet, __pyx_t_1, 1, 1, 0) < 0)) __PYX_ERR(0, 129, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_1, 1);
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
-  /* "hydro_model_cython.pyx":124
+  /* "hydro_model_cython.pyx":131
  *     glpet[0:nts]=_pet
  * 
  *     glsv_init[0:nts]=_glsv_init             # <<<<<<<<<<<<<<
  *     glfv_init[0:nts,:]=_glfv_init
  *     gliv_init[0:nts,:]=_gliv_init
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glsv_init.memview)) { __Pyx_RaiseUnboundLocalError("glsv_init"); __PYX_ERR(0, 124, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glsv_init.memview)) { __Pyx_RaiseUnboundLocalError("glsv_init"); __PYX_ERR(0, 131, __pyx_L1_error) }
   __pyx_t_1.data = __pyx_v_18hydro_model_cython_glsv_init.data;
   __pyx_t_1.memview = __pyx_v_18hydro_model_cython_glsv_init.memview;
   __PYX_INC_MEMVIEW(&__pyx_t_1, 0);
@@ -3107,22 +3113,22 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__pet, __pyx_t_1, 1, 1, 0) < 
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 124, __pyx_L1_error)
+    __PYX_ERR(0, 131, __pyx_L1_error)
 }
 
-if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__glsv_init, __pyx_t_1, 1, 1, 0) < 0)) __PYX_ERR(0, 124, __pyx_L1_error)
+if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__glsv_init, __pyx_t_1, 1, 1, 0) < 0)) __PYX_ERR(0, 131, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_1, 1);
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
-  /* "hydro_model_cython.pyx":125
+  /* "hydro_model_cython.pyx":132
  * 
  *     glsv_init[0:nts]=_glsv_init
  *     glfv_init[0:nts,:]=_glfv_init             # <<<<<<<<<<<<<<
  *     gliv_init[0:nts,:]=_gliv_init
  * 
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glfv_init.memview)) { __Pyx_RaiseUnboundLocalError("glfv_init"); __PYX_ERR(0, 125, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glfv_init.memview)) { __Pyx_RaiseUnboundLocalError("glfv_init"); __PYX_ERR(0, 132, __pyx_L1_error) }
   __pyx_t_3.data = __pyx_v_18hydro_model_cython_glfv_init.data;
   __pyx_t_3.memview = __pyx_v_18hydro_model_cython_glfv_init.memview;
   __PYX_INC_MEMVIEW(&__pyx_t_3, 0);
@@ -3141,26 +3147,26 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__glsv_init, __pyx_t_1, 1, 1,
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 125, __pyx_L1_error)
+    __PYX_ERR(0, 132, __pyx_L1_error)
 }
 
 __pyx_t_3.shape[1] = __pyx_v_18hydro_model_cython_glfv_init.shape[1];
 __pyx_t_3.strides[1] = __pyx_v_18hydro_model_cython_glfv_init.strides[1];
     __pyx_t_3.suboffsets[1] = -1;
 
-if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__glfv_init, __pyx_t_3, 2, 2, 0) < 0)) __PYX_ERR(0, 125, __pyx_L1_error)
+if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__glfv_init, __pyx_t_3, 2, 2, 0) < 0)) __PYX_ERR(0, 132, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_3, 1);
   __pyx_t_3.memview = NULL;
   __pyx_t_3.data = NULL;
 
-  /* "hydro_model_cython.pyx":126
+  /* "hydro_model_cython.pyx":133
  *     glsv_init[0:nts]=_glsv_init
  *     glfv_init[0:nts,:]=_glfv_init
  *     gliv_init[0:nts,:]=_gliv_init             # <<<<<<<<<<<<<<
  * 
  *     #other parameters
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_gliv_init.memview)) { __Pyx_RaiseUnboundLocalError("gliv_init"); __PYX_ERR(0, 126, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_gliv_init.memview)) { __Pyx_RaiseUnboundLocalError("gliv_init"); __PYX_ERR(0, 133, __pyx_L1_error) }
   __pyx_t_3.data = __pyx_v_18hydro_model_cython_gliv_init.data;
   __pyx_t_3.memview = __pyx_v_18hydro_model_cython_gliv_init.memview;
   __PYX_INC_MEMVIEW(&__pyx_t_3, 0);
@@ -3179,19 +3185,19 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__glfv_init, __pyx_t_3, 2, 2,
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 126, __pyx_L1_error)
+    __PYX_ERR(0, 133, __pyx_L1_error)
 }
 
 __pyx_t_3.shape[1] = __pyx_v_18hydro_model_cython_gliv_init.shape[1];
 __pyx_t_3.strides[1] = __pyx_v_18hydro_model_cython_gliv_init.strides[1];
     __pyx_t_3.suboffsets[1] = -1;
 
-if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__gliv_init, __pyx_t_3, 2, 2, 0) < 0)) __PYX_ERR(0, 126, __pyx_L1_error)
+if (unlikely(__pyx_memoryview_copy_contents(__pyx_v__gliv_init, __pyx_t_3, 2, 2, 0) < 0)) __PYX_ERR(0, 133, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_3, 1);
   __pyx_t_3.memview = NULL;
   __pyx_t_3.data = NULL;
 
-  /* "hydro_model_cython.pyx":129
+  /* "hydro_model_cython.pyx":136
  * 
  *     #other parameters
  *     gldelay[:]=_unitpar[:,0]             # <<<<<<<<<<<<<<
@@ -3214,18 +3220,18 @@ __pyx_t_1.strides[0] = __pyx_v__unitpar.strides[0];
         if (unlikely(!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape))) {
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 1)");
-            __PYX_ERR(0, 129, __pyx_L1_error)
+            __PYX_ERR(0, 136, __pyx_L1_error)
         }
         __pyx_t_1.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-if (unlikely(!__pyx_v_18hydro_model_cython_gldelay.memview)) { __Pyx_RaiseUnboundLocalError("gldelay"); __PYX_ERR(0, 129, __pyx_L1_error) }
-  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_1, __pyx_v_18hydro_model_cython_gldelay, 1, 1, 0) < 0)) __PYX_ERR(0, 129, __pyx_L1_error)
+if (unlikely(!__pyx_v_18hydro_model_cython_gldelay.memview)) { __Pyx_RaiseUnboundLocalError("gldelay"); __PYX_ERR(0, 136, __pyx_L1_error) }
+  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_1, __pyx_v_18hydro_model_cython_gldelay, 1, 1, 0) < 0)) __PYX_ERR(0, 136, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_1, 1);
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
-  /* "hydro_model_cython.pyx":130
+  /* "hydro_model_cython.pyx":137
  *     #other parameters
  *     gldelay[:]=_unitpar[:,0]
  *     gltopopar[:,:]=_unitpar[:,2:4]             # <<<<<<<<<<<<<<
@@ -3254,16 +3260,16 @@ __pyx_t_2 = -1;
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 130, __pyx_L1_error)
+    __PYX_ERR(0, 137, __pyx_L1_error)
 }
 
-if (unlikely(!__pyx_v_18hydro_model_cython_gltopopar.memview)) { __Pyx_RaiseUnboundLocalError("gltopopar"); __PYX_ERR(0, 130, __pyx_L1_error) }
-  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_18hydro_model_cython_gltopopar, 2, 2, 0) < 0)) __PYX_ERR(0, 130, __pyx_L1_error)
+if (unlikely(!__pyx_v_18hydro_model_cython_gltopopar.memview)) { __Pyx_RaiseUnboundLocalError("gltopopar"); __PYX_ERR(0, 137, __pyx_L1_error) }
+  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_18hydro_model_cython_gltopopar, 2, 2, 0) < 0)) __PYX_ERR(0, 137, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_3, 1);
   __pyx_t_3.memview = NULL;
   __pyx_t_3.data = NULL;
 
-  /* "hydro_model_cython.pyx":131
+  /* "hydro_model_cython.pyx":138
  *     gldelay[:]=_unitpar[:,0]
  *     gltopopar[:,:]=_unitpar[:,2:4]
  *     glfa[:]=_unitpar[:,4]             # <<<<<<<<<<<<<<
@@ -3286,18 +3292,18 @@ __pyx_t_1.strides[0] = __pyx_v__unitpar.strides[0];
         if (unlikely(!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape))) {
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 1)");
-            __PYX_ERR(0, 131, __pyx_L1_error)
+            __PYX_ERR(0, 138, __pyx_L1_error)
         }
         __pyx_t_1.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 131, __pyx_L1_error) }
-  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_1, __pyx_v_18hydro_model_cython_glfa, 1, 1, 0) < 0)) __PYX_ERR(0, 131, __pyx_L1_error)
+if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 138, __pyx_L1_error) }
+  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_1, __pyx_v_18hydro_model_cython_glfa, 1, 1, 0) < 0)) __PYX_ERR(0, 138, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_1, 1);
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
-  /* "hydro_model_cython.pyx":132
+  /* "hydro_model_cython.pyx":139
  *     gltopopar[:,:]=_unitpar[:,2:4]
  *     glfa[:]=_unitpar[:,4]
  *     glia[:]=_unitpar[:,5]             # <<<<<<<<<<<<<<
@@ -3320,18 +3326,18 @@ __pyx_t_1.strides[0] = __pyx_v__unitpar.strides[0];
         if (unlikely(!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape))) {
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 1)");
-            __PYX_ERR(0, 132, __pyx_L1_error)
+            __PYX_ERR(0, 139, __pyx_L1_error)
         }
         __pyx_t_1.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-if (unlikely(!__pyx_v_18hydro_model_cython_glia.memview)) { __Pyx_RaiseUnboundLocalError("glia"); __PYX_ERR(0, 132, __pyx_L1_error) }
-  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_1, __pyx_v_18hydro_model_cython_glia, 1, 1, 0) < 0)) __PYX_ERR(0, 132, __pyx_L1_error)
+if (unlikely(!__pyx_v_18hydro_model_cython_glia.memview)) { __Pyx_RaiseUnboundLocalError("glia"); __PYX_ERR(0, 139, __pyx_L1_error) }
+  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_1, __pyx_v_18hydro_model_cython_glia, 1, 1, 0) < 0)) __PYX_ERR(0, 139, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_1, 1);
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
-  /* "hydro_model_cython.pyx":133
+  /* "hydro_model_cython.pyx":140
  *     glfa[:]=_unitpar[:,4]
  *     glia[:]=_unitpar[:,5]
  *     glkgw[:]=_unitpar[:,6]             # <<<<<<<<<<<<<<
@@ -3354,18 +3360,18 @@ __pyx_t_1.strides[0] = __pyx_v__unitpar.strides[0];
         if (unlikely(!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape))) {
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 1)");
-            __PYX_ERR(0, 133, __pyx_L1_error)
+            __PYX_ERR(0, 140, __pyx_L1_error)
         }
         __pyx_t_1.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-if (unlikely(!__pyx_v_18hydro_model_cython_glkgw.memview)) { __Pyx_RaiseUnboundLocalError("glkgw"); __PYX_ERR(0, 133, __pyx_L1_error) }
-  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_1, __pyx_v_18hydro_model_cython_glkgw, 1, 1, 0) < 0)) __PYX_ERR(0, 133, __pyx_L1_error)
+if (unlikely(!__pyx_v_18hydro_model_cython_glkgw.memview)) { __Pyx_RaiseUnboundLocalError("glkgw"); __PYX_ERR(0, 140, __pyx_L1_error) }
+  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_1, __pyx_v_18hydro_model_cython_glkgw, 1, 1, 0) < 0)) __PYX_ERR(0, 140, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_1, 1);
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
-  /* "hydro_model_cython.pyx":135
+  /* "hydro_model_cython.pyx":142
  *     glkgw[:]=_unitpar[:,6]
  * 
  *     glspar[:,:]=_unitpar[:,7:37]             # <<<<<<<<<<<<<<
@@ -3394,23 +3400,23 @@ __pyx_t_2 = -1;
     0,
     1) < 0))
 {
-    __PYX_ERR(0, 135, __pyx_L1_error)
+    __PYX_ERR(0, 142, __pyx_L1_error)
 }
 
-if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnboundLocalError("glspar"); __PYX_ERR(0, 135, __pyx_L1_error) }
-  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_18hydro_model_cython_glspar, 2, 2, 0) < 0)) __PYX_ERR(0, 135, __pyx_L1_error)
+if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnboundLocalError("glspar"); __PYX_ERR(0, 142, __pyx_L1_error) }
+  if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_3, __pyx_v_18hydro_model_cython_glspar, 2, 2, 0) < 0)) __PYX_ERR(0, 142, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_3, 1);
   __pyx_t_3.memview = NULL;
   __pyx_t_3.data = NULL;
 
-  /* "hydro_model_cython.pyx":137
+  /* "hydro_model_cython.pyx":144
  *     glspar[:,:]=_unitpar[:,7:37]
  * 
  *     glfdet,glfpor,glidet,glipor=_gwpar             # <<<<<<<<<<<<<<
  *     #iterate through time steps
  *     if dts<0:
  */
-  __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v__gwpar, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_4 = __pyx_memoryview_fromslice(__pyx_v__gwpar, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   if ((likely(PyTuple_CheckExact(__pyx_t_4))) || (PyList_CheckExact(__pyx_t_4))) {
     PyObject* sequence = __pyx_t_4;
@@ -3418,7 +3424,7 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
     if (unlikely(size != 4)) {
       if (size > 4) __Pyx_RaiseTooManyValuesError(4);
       else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-      __PYX_ERR(0, 137, __pyx_L1_error)
+      __PYX_ERR(0, 144, __pyx_L1_error)
     }
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
     if (likely(PyTuple_CheckExact(sequence))) {
@@ -3441,7 +3447,7 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
       Py_ssize_t i;
       PyObject** temps[4] = {&__pyx_t_5,&__pyx_t_6,&__pyx_t_7,&__pyx_t_8};
       for (i=0; i < 4; i++) {
-        PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) __PYX_ERR(0, 137, __pyx_L1_error)
+        PyObject* item = PySequence_ITEM(sequence, i); if (unlikely(!item)) __PYX_ERR(0, 144, __pyx_L1_error)
         __Pyx_GOTREF(item);
         *(temps[i]) = item;
       }
@@ -3451,7 +3457,7 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   } else {
     Py_ssize_t index = -1;
     PyObject** temps[4] = {&__pyx_t_5,&__pyx_t_6,&__pyx_t_7,&__pyx_t_8};
-    __pyx_t_9 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 137, __pyx_L1_error)
+    __pyx_t_9 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 144, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_10 = Py_TYPE(__pyx_t_9)->tp_iternext;
@@ -3460,7 +3466,7 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
       __Pyx_GOTREF(item);
       *(temps[index]) = item;
     }
-    if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 4) < 0) __PYX_ERR(0, 137, __pyx_L1_error)
+    if (__Pyx_IternextUnpackEndCheck(__pyx_t_10(__pyx_t_9), 4) < 0) __PYX_ERR(0, 144, __pyx_L1_error)
     __pyx_t_10 = NULL;
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     goto __pyx_L4_unpacking_done;
@@ -3468,23 +3474,23 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     __pyx_t_10 = NULL;
     if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-    __PYX_ERR(0, 137, __pyx_L1_error)
+    __PYX_ERR(0, 144, __pyx_L1_error)
     __pyx_L4_unpacking_done:;
   }
-  __pyx_t_11 = __pyx_PyFloat_AsFloat(__pyx_t_5); if (unlikely((__pyx_t_11 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_11 = __pyx_PyFloat_AsFloat(__pyx_t_5); if (unlikely((__pyx_t_11 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_12 = __pyx_PyFloat_AsFloat(__pyx_t_6); if (unlikely((__pyx_t_12 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_12 = __pyx_PyFloat_AsFloat(__pyx_t_6); if (unlikely((__pyx_t_12 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_13 = __pyx_PyFloat_AsFloat(__pyx_t_7); if (unlikely((__pyx_t_13 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_13 = __pyx_PyFloat_AsFloat(__pyx_t_7); if (unlikely((__pyx_t_13 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_14 = __pyx_PyFloat_AsFloat(__pyx_t_8); if (unlikely((__pyx_t_14 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_14 = __pyx_PyFloat_AsFloat(__pyx_t_8); if (unlikely((__pyx_t_14 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __pyx_v_18hydro_model_cython_glfdet = __pyx_t_11;
   __pyx_v_18hydro_model_cython_glfpor = __pyx_t_12;
   __pyx_v_18hydro_model_cython_glidet = __pyx_t_13;
   __pyx_v_18hydro_model_cython_glipor = __pyx_t_14;
 
-  /* "hydro_model_cython.pyx":139
+  /* "hydro_model_cython.pyx":146
  *     glfdet,glfpor,glidet,glipor=_gwpar
  *     #iterate through time steps
  *     if dts<0:             # <<<<<<<<<<<<<<
@@ -3494,7 +3500,7 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __pyx_t_15 = ((__pyx_v_dts < 0) != 0);
   if (__pyx_t_15) {
 
-    /* "hydro_model_cython.pyx":140
+    /* "hydro_model_cython.pyx":147
  *     #iterate through time steps
  *     if dts<0:
  *         last=nts             # <<<<<<<<<<<<<<
@@ -3503,7 +3509,7 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
  */
     __pyx_v_last = __pyx_v_18hydro_model_cython_nts;
 
-    /* "hydro_model_cython.pyx":139
+    /* "hydro_model_cython.pyx":146
  *     glfdet,glfpor,glidet,glipor=_gwpar
  *     #iterate through time steps
  *     if dts<0:             # <<<<<<<<<<<<<<
@@ -3513,7 +3519,7 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
     goto __pyx_L5;
   }
 
-  /* "hydro_model_cython.pyx":142
+  /* "hydro_model_cython.pyx":149
  *         last=nts
  *     else:
  *         last=dts             # <<<<<<<<<<<<<<
@@ -3525,19 +3531,19 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   }
   __pyx_L5:;
 
-  /* "hydro_model_cython.pyx":144
+  /* "hydro_model_cython.pyx":151
  *         last=dts
  * 
  *     for ts in np.arange(0,last):             # <<<<<<<<<<<<<<
  *         if ts%10==0:
  *             print ("ts="+str(ts))
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 144, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_np); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_arange); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 144, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_arange); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-  __pyx_t_8 = PyInt_FromSsize_t(__pyx_v_last); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 144, __pyx_L1_error)
+  __pyx_t_8 = PyInt_FromSsize_t(__pyx_v_last); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __pyx_t_6 = NULL;
   __pyx_t_2 = 0;
@@ -3554,7 +3560,7 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_7)) {
     PyObject *__pyx_temp[3] = {__pyx_t_6, __pyx_int_0, __pyx_t_8};
-    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_2, 2+__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_2, 2+__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 151, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -3563,14 +3569,14 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
     PyObject *__pyx_temp[3] = {__pyx_t_6, __pyx_int_0, __pyx_t_8};
-    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_2, 2+__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_2, 2+__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 151, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(2+__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(2+__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 151, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_6) {
       __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_6); __pyx_t_6 = NULL;
@@ -3581,7 +3587,7 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
     __Pyx_GIVEREF(__pyx_t_8);
     PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_2, __pyx_t_8);
     __pyx_t_8 = 0;
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_5, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_5, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 151, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
@@ -3590,9 +3596,9 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
     __pyx_t_7 = __pyx_t_4; __Pyx_INCREF(__pyx_t_7); __pyx_t_16 = 0;
     __pyx_t_17 = NULL;
   } else {
-    __pyx_t_16 = -1; __pyx_t_7 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_16 = -1; __pyx_t_7 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 151, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_17 = Py_TYPE(__pyx_t_7)->tp_iternext; if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_17 = Py_TYPE(__pyx_t_7)->tp_iternext; if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 151, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   for (;;) {
@@ -3600,17 +3606,17 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
       if (likely(PyList_CheckExact(__pyx_t_7))) {
         if (__pyx_t_16 >= PyList_GET_SIZE(__pyx_t_7)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_7, __pyx_t_16); __Pyx_INCREF(__pyx_t_4); __pyx_t_16++; if (unlikely(0 < 0)) __PYX_ERR(0, 144, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_7, __pyx_t_16); __Pyx_INCREF(__pyx_t_4); __pyx_t_16++; if (unlikely(0 < 0)) __PYX_ERR(0, 151, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_7, __pyx_t_16); __pyx_t_16++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 144, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_7, __pyx_t_16); __pyx_t_16++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 151, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_16 >= PyTuple_GET_SIZE(__pyx_t_7)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_7, __pyx_t_16); __Pyx_INCREF(__pyx_t_4); __pyx_t_16++; if (unlikely(0 < 0)) __PYX_ERR(0, 144, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_7, __pyx_t_16); __Pyx_INCREF(__pyx_t_4); __pyx_t_16++; if (unlikely(0 < 0)) __PYX_ERR(0, 151, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_7, __pyx_t_16); __pyx_t_16++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 144, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_7, __pyx_t_16); __pyx_t_16++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 151, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -3620,17 +3626,17 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 144, __pyx_L1_error)
+          else __PYX_ERR(0, 151, __pyx_L1_error)
         }
         break;
       }
       __Pyx_GOTREF(__pyx_t_4);
     }
-    __pyx_t_18 = __Pyx_PyIndex_AsSsize_t(__pyx_t_4); if (unlikely((__pyx_t_18 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_18 = __Pyx_PyIndex_AsSsize_t(__pyx_t_4); if (unlikely((__pyx_t_18 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 151, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_18hydro_model_cython_ts = __pyx_t_18;
 
-    /* "hydro_model_cython.pyx":145
+    /* "hydro_model_cython.pyx":152
  * 
  *     for ts in np.arange(0,last):
  *         if ts%10==0:             # <<<<<<<<<<<<<<
@@ -3640,25 +3646,25 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
     __pyx_t_15 = ((__Pyx_mod_Py_ssize_t(__pyx_v_18hydro_model_cython_ts, 10) == 0) != 0);
     if (__pyx_t_15) {
 
-      /* "hydro_model_cython.pyx":146
+      /* "hydro_model_cython.pyx":153
  *     for ts in np.arange(0,last):
  *         if ts%10==0:
  *             print ("ts="+str(ts))             # <<<<<<<<<<<<<<
  *         #itera\te through model cells
  *         for sur in range(nsu):
  */
-      __pyx_t_4 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ts); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 146, __pyx_L1_error)
+      __pyx_t_4 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ts); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 153, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_5 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 146, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 153, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyNumber_Add(__pyx_kp_s_ts, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 146, __pyx_L1_error)
+      __pyx_t_4 = PyNumber_Add(__pyx_kp_s_ts, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 153, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (__Pyx_PrintOne(0, __pyx_t_4) < 0) __PYX_ERR(0, 146, __pyx_L1_error)
+      if (__Pyx_PrintOne(0, __pyx_t_4) < 0) __PYX_ERR(0, 153, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-      /* "hydro_model_cython.pyx":145
+      /* "hydro_model_cython.pyx":152
  * 
  *     for ts in np.arange(0,last):
  *         if ts%10==0:             # <<<<<<<<<<<<<<
@@ -3667,7 +3673,7 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
  */
     }
 
-    /* "hydro_model_cython.pyx":148
+    /* "hydro_model_cython.pyx":155
  *             print ("ts="+str(ts))
  *         #itera\te through model cells
  *         for sur in range(nsu):             # <<<<<<<<<<<<<<
@@ -3679,19 +3685,19 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
     for (__pyx_t_20 = 0; __pyx_t_20 < __pyx_t_19; __pyx_t_20+=1) {
       __pyx_v_18hydro_model_cython_sur = __pyx_t_20;
 
-      /* "hydro_model_cython.pyx":149
+      /* "hydro_model_cython.pyx":156
  *         #itera\te through model cells
  *         for sur in range(nsu):
  *             calc_surface_iter()             # <<<<<<<<<<<<<<
  * #            if debug and ts==dts:
  * #                print("done", ts, nts, sur, nsu)
  */
-      __pyx_t_4 = __pyx_f_18hydro_model_cython_calc_surface_iter(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 149, __pyx_L1_error)
+      __pyx_t_4 = __pyx_f_18hydro_model_cython_calc_surface_iter(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 156, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
 
-    /* "hydro_model_cython.pyx":144
+    /* "hydro_model_cython.pyx":151
  *         last=dts
  * 
  *     for ts in np.arange(0,last):             # <<<<<<<<<<<<<<
@@ -3701,19 +3707,19 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   }
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "hydro_model_cython.pyx":154
+  /* "hydro_model_cython.pyx":161
  * 
  *     cdef list results
  *     results=[_glfin_sqin[0:nts,:],_glfin_sa[0:nts,:], _glfin_sv[0:nts,:], _glfin_sev[0:nts,:],\             # <<<<<<<<<<<<<<
  *              _glfin_spre[0:nts,:],_glfin_sqout[0:nts,:], _glfin_sinf[0:nts,:],\
  *              _glfin_fv[0:nts,:], _glfin_fev[0:nts,:],_glfin_fpre[0:nts,:], _glfin_fgwout[0:nts,:],\
  */
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_4 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_4);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_4);
@@ -3721,15 +3727,15 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sqin), __pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sqin), __pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_5 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_5 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_5);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5);
@@ -3737,15 +3743,15 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sa), __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sa), __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_8 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_8 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_8);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_8);
@@ -3753,15 +3759,15 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_8 = 0;
-  __pyx_t_8 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sv), __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sv), __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_6 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_6 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_6);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_6);
@@ -3769,23 +3775,23 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sev), __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sev), __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "hydro_model_cython.pyx":155
+  /* "hydro_model_cython.pyx":162
  *     cdef list results
  *     results=[_glfin_sqin[0:nts,:],_glfin_sa[0:nts,:], _glfin_sv[0:nts,:], _glfin_sev[0:nts,:],\
  *              _glfin_spre[0:nts,:],_glfin_sqout[0:nts,:], _glfin_sinf[0:nts,:],\             # <<<<<<<<<<<<<<
  *              _glfin_fv[0:nts,:], _glfin_fev[0:nts,:],_glfin_fpre[0:nts,:], _glfin_fgwout[0:nts,:],\
  *              _glfin_finf[0:nts,:,:],\
  */
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_9 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_9 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_9);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_9);
@@ -3793,15 +3799,15 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_9 = 0;
-  __pyx_t_9 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_spre), __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_spre), __pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_21 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_21 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_21);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_21);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_21);
@@ -3809,15 +3815,15 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_21 = 0;
-  __pyx_t_21 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sqout), __pyx_t_7); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_21 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sqout), __pyx_t_7); if (unlikely(!__pyx_t_21)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_21);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_22 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_22 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_22);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_22);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_22);
@@ -3825,23 +3831,23 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_22 = 0;
-  __pyx_t_22 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sinf), __pyx_t_7); if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_22 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sinf), __pyx_t_7); if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_22);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "hydro_model_cython.pyx":156
+  /* "hydro_model_cython.pyx":163
  *     results=[_glfin_sqin[0:nts,:],_glfin_sa[0:nts,:], _glfin_sv[0:nts,:], _glfin_sev[0:nts,:],\
  *              _glfin_spre[0:nts,:],_glfin_sqout[0:nts,:], _glfin_sinf[0:nts,:],\
  *              _glfin_fv[0:nts,:], _glfin_fev[0:nts,:],_glfin_fpre[0:nts,:], _glfin_fgwout[0:nts,:],\             # <<<<<<<<<<<<<<
  *              _glfin_finf[0:nts,:,:],\
  *              _glfin_iv[0:nts,:], _glfin_iev[0:nts,:],_glfin_ipre[0:nts,:]]
  */
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_23 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_23 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_23);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_23);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_23);
@@ -3849,15 +3855,15 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_23 = 0;
-  __pyx_t_23 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fv), __pyx_t_7); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_23 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fv), __pyx_t_7); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_23);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_24 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_24 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_24);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_24);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_24);
@@ -3865,15 +3871,15 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_24 = 0;
-  __pyx_t_24 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fev), __pyx_t_7); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_24 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fev), __pyx_t_7); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_24);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_25 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_25)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_25 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_25)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_25);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_25);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_25);
@@ -3881,15 +3887,15 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_25 = 0;
-  __pyx_t_25 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fpre), __pyx_t_7); if (unlikely(!__pyx_t_25)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_25 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fpre), __pyx_t_7); if (unlikely(!__pyx_t_25)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_25);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_26 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_26)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_26 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_26)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_26);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_26);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_26);
@@ -3897,23 +3903,23 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_26 = 0;
-  __pyx_t_26 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fgwout), __pyx_t_7); if (unlikely(!__pyx_t_26)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_26 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fgwout), __pyx_t_7); if (unlikely(!__pyx_t_26)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_26);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "hydro_model_cython.pyx":157
+  /* "hydro_model_cython.pyx":164
  *              _glfin_spre[0:nts,:],_glfin_sqout[0:nts,:], _glfin_sinf[0:nts,:],\
  *              _glfin_fv[0:nts,:], _glfin_fev[0:nts,:],_glfin_fpre[0:nts,:], _glfin_fgwout[0:nts,:],\
  *              _glfin_finf[0:nts,:,:],\             # <<<<<<<<<<<<<<
  *              _glfin_iv[0:nts,:], _glfin_iev[0:nts,:],_glfin_ipre[0:nts,:]]
- * 
+ *     print ("success")
  */
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 164, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_27 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_27)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_t_27 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_27)) __PYX_ERR(0, 164, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_27);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 164, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_27);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_27);
@@ -3924,23 +3930,23 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 2, __pyx_slice_);
   __pyx_t_27 = 0;
-  __pyx_t_27 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_finf), __pyx_t_7); if (unlikely(!__pyx_t_27)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_t_27 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_finf), __pyx_t_7); if (unlikely(!__pyx_t_27)) __PYX_ERR(0, 164, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_27);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "hydro_model_cython.pyx":158
+  /* "hydro_model_cython.pyx":165
  *              _glfin_fv[0:nts,:], _glfin_fev[0:nts,:],_glfin_fpre[0:nts,:], _glfin_fgwout[0:nts,:],\
  *              _glfin_finf[0:nts,:,:],\
  *              _glfin_iv[0:nts,:], _glfin_iev[0:nts,:],_glfin_ipre[0:nts,:]]             # <<<<<<<<<<<<<<
- * 
+ *     print ("success")
  *     return results
  */
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_28 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_28)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_28 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_28)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_28);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_28);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_28);
@@ -3948,15 +3954,15 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_28 = 0;
-  __pyx_t_28 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_iv), __pyx_t_7); if (unlikely(!__pyx_t_28)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_28 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_iv), __pyx_t_7); if (unlikely(!__pyx_t_28)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_28);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_29 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_29)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_29 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_29)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_29);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_29);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_29);
@@ -3964,15 +3970,15 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_29 = 0;
-  __pyx_t_29 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_iev), __pyx_t_7); if (unlikely(!__pyx_t_29)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_29 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_iev), __pyx_t_7); if (unlikely(!__pyx_t_29)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_29);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_7 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_30 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_30)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_30 = PySlice_New(__pyx_int_0, __pyx_t_7, Py_None); if (unlikely(!__pyx_t_30)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_30);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_30);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_30);
@@ -3980,18 +3986,18 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __Pyx_GIVEREF(__pyx_slice_);
   PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_slice_);
   __pyx_t_30 = 0;
-  __pyx_t_30 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_ipre), __pyx_t_7); if (unlikely(!__pyx_t_30)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_30 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_18hydro_model_cython__glfin_ipre), __pyx_t_7); if (unlikely(!__pyx_t_30)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_30);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "hydro_model_cython.pyx":154
+  /* "hydro_model_cython.pyx":161
  * 
  *     cdef list results
  *     results=[_glfin_sqin[0:nts,:],_glfin_sa[0:nts,:], _glfin_sv[0:nts,:], _glfin_sev[0:nts,:],\             # <<<<<<<<<<<<<<
  *              _glfin_spre[0:nts,:],_glfin_sqout[0:nts,:], _glfin_sinf[0:nts,:],\
  *              _glfin_fv[0:nts,:], _glfin_fev[0:nts,:],_glfin_fpre[0:nts,:], _glfin_fgwout[0:nts,:],\
  */
-  __pyx_t_7 = PyList_New(15); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_7 = PyList_New(15); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_4);
   PyList_SET_ITEM(__pyx_t_7, 0, __pyx_t_4);
@@ -4041,9 +4047,18 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __pyx_v_results = ((PyObject*)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "hydro_model_cython.pyx":160
+  /* "hydro_model_cython.pyx":166
+ *              _glfin_finf[0:nts,:,:],\
  *              _glfin_iv[0:nts,:], _glfin_iev[0:nts,:],_glfin_ipre[0:nts,:]]
+ *     print ("success")             # <<<<<<<<<<<<<<
+ *     return results
  * 
+ */
+  if (__Pyx_PrintOne(0, __pyx_n_s_success) < 0) __PYX_ERR(0, 166, __pyx_L1_error)
+
+  /* "hydro_model_cython.pyx":167
+ *              _glfin_iv[0:nts,:], _glfin_iev[0:nts,:],_glfin_ipre[0:nts,:]]
+ *     print ("success")
  *     return results             # <<<<<<<<<<<<<<
  * 
  * 
@@ -4053,7 +4068,7 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   __pyx_r = __pyx_v_results;
   goto __pyx_L0;
 
-  /* "hydro_model_cython.pyx":106
+  /* "hydro_model_cython.pyx":113
  * 
  * #***************************************************************************
  * def model_calc(double[:] _inflow, double[:,:] _precip, double[:] _pet, double[:] _glsv_init, double[:,:] _glfv_init, double[:,:] _gliv_init, double[:,:] _unitpar, double[:] _gwpar):             # <<<<<<<<<<<<<<
@@ -4098,7 +4113,7 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnbound
   return __pyx_r;
 }
 
-/* "hydro_model_cython.pyx":165
+/* "hydro_model_cython.pyx":172
  * 
  * #***************************************************************************
  * cdef calc_surface_iter():             # <<<<<<<<<<<<<<
@@ -4132,14 +4147,14 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("calc_surface_iter", 0);
 
-  /* "hydro_model_cython.pyx":182
+  /* "hydro_model_cython.pyx":189
  * 
  *     # reset outlets outflow
  *     celloutflows[:]=0             # <<<<<<<<<<<<<<
  * 
  *     # rain
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_celloutflows.memview)) { __Pyx_RaiseUnboundLocalError("celloutflows"); __PYX_ERR(0, 182, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_celloutflows.memview)) { __Pyx_RaiseUnboundLocalError("celloutflows"); __PYX_ERR(0, 189, __pyx_L1_error) }
   {
       double __pyx_temp_scalar = 0.0;
       {
@@ -4155,14 +4170,14 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
       }
   }
 
-  /* "hydro_model_cython.pyx":185
+  /* "hydro_model_cython.pyx":192
  * 
  *     # rain
  *     glrain= glprecip[ts,sur] # in mm             # <<<<<<<<<<<<<<
  * 
  *     # delay
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glprecip.memview)) { __Pyx_RaiseUnboundLocalError("glprecip"); __PYX_ERR(0, 185, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glprecip.memview)) { __Pyx_RaiseUnboundLocalError("glprecip"); __PYX_ERR(0, 192, __pyx_L1_error) }
   __pyx_t_1 = __pyx_v_18hydro_model_cython_ts;
   __pyx_t_2 = __pyx_v_18hydro_model_cython_sur;
   __pyx_t_3 = -1;
@@ -4176,20 +4191,20 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
   } else if (unlikely(__pyx_t_2 >= __pyx_v_18hydro_model_cython_glprecip.shape[1])) __pyx_t_3 = 1;
   if (unlikely(__pyx_t_3 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_3);
-    __PYX_ERR(0, 185, __pyx_L1_error)
+    __PYX_ERR(0, 192, __pyx_L1_error)
   }
   __pyx_v_18hydro_model_cython_glrain = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glprecip.data + __pyx_t_1 * __pyx_v_18hydro_model_cython_glprecip.strides[0]) ) + __pyx_t_2 * __pyx_v_18hydro_model_cython_glprecip.strides[1]) )));
 
-  /* "hydro_model_cython.pyx":190
+  /* "hydro_model_cython.pyx":197
  *     #Panhandle 1 Nqoga-1a 0 Nqoga-1b 0 Thaoge 0 Xudum 1 Boro 1 Nqoga-2a 0 Nqoga-2b 0
  *     #Selinda 0 Empty 0 Toteng 0 Maun 0 Shashe 0 Mboroga 1 Khwai 1 out 0
- *     delayindex=(max(0, ts - int(gldelay[sur])))             # <<<<<<<<<<<<<<
+ *     delayindex=max(0, ts-int(gldelay[sur]))             # <<<<<<<<<<<<<<
  *     sqin = glfin_sqin[delayindex,sur]    #this delay makes sense
  * 
  */
-  __pyx_t_4 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ts); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __pyx_t_4 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ts); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (unlikely(!__pyx_v_18hydro_model_cython_gldelay.memview)) { __Pyx_RaiseUnboundLocalError("gldelay"); __PYX_ERR(0, 190, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_gldelay.memview)) { __Pyx_RaiseUnboundLocalError("gldelay"); __PYX_ERR(0, 197, __pyx_L1_error) }
   __pyx_t_2 = __pyx_v_18hydro_model_cython_sur;
   __pyx_t_3 = -1;
   if (__pyx_t_2 < 0) {
@@ -4198,43 +4213,43 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
   } else if (unlikely(__pyx_t_2 >= __pyx_v_18hydro_model_cython_gldelay.shape[0])) __pyx_t_3 = 0;
   if (unlikely(__pyx_t_3 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_3);
-    __PYX_ERR(0, 190, __pyx_L1_error)
+    __PYX_ERR(0, 197, __pyx_L1_error)
   }
-  __pyx_t_5 = __Pyx_PyInt_FromDouble((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_gldelay.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_gldelay.strides[0]) )))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_FromDouble((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_gldelay.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_gldelay.strides[0]) )))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = PyNumber_Subtract(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __pyx_t_6 = PyNumber_Subtract(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_7 = 0;
-  __pyx_t_4 = __Pyx_PyInt_From_long(__pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_long(__pyx_t_7); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_8 = PyObject_RichCompare(__pyx_t_6, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __pyx_t_8 = PyObject_RichCompare(__pyx_t_6, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   if (__pyx_t_9) {
     __Pyx_INCREF(__pyx_t_6);
     __pyx_t_5 = __pyx_t_6;
   } else {
-    __pyx_t_8 = __Pyx_PyInt_From_long(__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 190, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyInt_From_long(__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 197, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __pyx_t_5 = __pyx_t_8;
     __pyx_t_8 = 0;
   }
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_10 = __Pyx_PyIndex_AsSsize_t(__pyx_t_5); if (unlikely((__pyx_t_10 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 190, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyIndex_AsSsize_t(__pyx_t_5); if (unlikely((__pyx_t_10 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_v_18hydro_model_cython_delayindex = __pyx_t_10;
 
-  /* "hydro_model_cython.pyx":191
+  /* "hydro_model_cython.pyx":198
  *     #Selinda 0 Empty 0 Toteng 0 Maun 0 Shashe 0 Mboroga 1 Khwai 1 out 0
- *     delayindex=(max(0, ts - int(gldelay[sur])))
+ *     delayindex=max(0, ts-int(gldelay[sur]))
  *     sqin = glfin_sqin[delayindex,sur]    #this delay makes sense             # <<<<<<<<<<<<<<
  * 
  *     #initial condition
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sqin.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sqin"); __PYX_ERR(0, 191, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sqin.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sqin"); __PYX_ERR(0, 198, __pyx_L1_error) }
   __pyx_t_2 = __pyx_v_18hydro_model_cython_delayindex;
   __pyx_t_1 = __pyx_v_18hydro_model_cython_sur;
   __pyx_t_3 = -1;
@@ -4248,11 +4263,11 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
   } else if (unlikely(__pyx_t_1 >= __pyx_v_18hydro_model_cython_glfin_sqin.shape[1])) __pyx_t_3 = 1;
   if (unlikely(__pyx_t_3 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_3);
-    __PYX_ERR(0, 191, __pyx_L1_error)
+    __PYX_ERR(0, 198, __pyx_L1_error)
   }
   __pyx_v_18hydro_model_cython_sqin = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_sqin.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_glfin_sqin.strides[0]) ) + __pyx_t_1 * __pyx_v_18hydro_model_cython_glfin_sqin.strides[1]) )));
 
-  /* "hydro_model_cython.pyx":194
+  /* "hydro_model_cython.pyx":201
  * 
  *     #initial condition
  *     if ts==0:             # <<<<<<<<<<<<<<
@@ -4262,14 +4277,14 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
   __pyx_t_9 = ((__pyx_v_18hydro_model_cython_ts == 0) != 0);
   if (__pyx_t_9) {
 
-    /* "hydro_model_cython.pyx":195
+    /* "hydro_model_cython.pyx":202
  *     #initial condition
  *     if ts==0:
  *         sv_beg = glsv_init[sur]             # <<<<<<<<<<<<<<
  *     else:
  *         sv_beg = glfin_sv[ts-1,sur]
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glsv_init.memview)) { __Pyx_RaiseUnboundLocalError("glsv_init"); __PYX_ERR(0, 195, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_glsv_init.memview)) { __Pyx_RaiseUnboundLocalError("glsv_init"); __PYX_ERR(0, 202, __pyx_L1_error) }
     __pyx_t_1 = __pyx_v_18hydro_model_cython_sur;
     __pyx_t_3 = -1;
     if (__pyx_t_1 < 0) {
@@ -4278,11 +4293,11 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     } else if (unlikely(__pyx_t_1 >= __pyx_v_18hydro_model_cython_glsv_init.shape[0])) __pyx_t_3 = 0;
     if (unlikely(__pyx_t_3 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_3);
-      __PYX_ERR(0, 195, __pyx_L1_error)
+      __PYX_ERR(0, 202, __pyx_L1_error)
     }
     __pyx_v_18hydro_model_cython_sv_beg = (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glsv_init.data + __pyx_t_1 * __pyx_v_18hydro_model_cython_glsv_init.strides[0]) )));
 
-    /* "hydro_model_cython.pyx":194
+    /* "hydro_model_cython.pyx":201
  * 
  *     #initial condition
  *     if ts==0:             # <<<<<<<<<<<<<<
@@ -4292,7 +4307,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     goto __pyx_L3;
   }
 
-  /* "hydro_model_cython.pyx":197
+  /* "hydro_model_cython.pyx":204
  *         sv_beg = glsv_init[sur]
  *     else:
  *         sv_beg = glfin_sv[ts-1,sur]             # <<<<<<<<<<<<<<
@@ -4300,7 +4315,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  *     #first guess of end of time step volume
  */
   /*else*/ {
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sv.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sv"); __PYX_ERR(0, 197, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sv.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sv"); __PYX_ERR(0, 204, __pyx_L1_error) }
     __pyx_t_1 = (__pyx_v_18hydro_model_cython_ts - 1);
     __pyx_t_2 = __pyx_v_18hydro_model_cython_sur;
     __pyx_t_3 = -1;
@@ -4314,13 +4329,13 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     } else if (unlikely(__pyx_t_2 >= __pyx_v_18hydro_model_cython_glfin_sv.shape[1])) __pyx_t_3 = 1;
     if (unlikely(__pyx_t_3 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_3);
-      __PYX_ERR(0, 197, __pyx_L1_error)
+      __PYX_ERR(0, 204, __pyx_L1_error)
     }
     __pyx_v_18hydro_model_cython_sv_beg = (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_sv.data + __pyx_t_1 * __pyx_v_18hydro_model_cython_glfin_sv.strides[0]) ) + __pyx_t_2 * __pyx_v_18hydro_model_cython_glfin_sv.strides[1]) )));
   }
   __pyx_L3:;
 
-  /* "hydro_model_cython.pyx":200
+  /* "hydro_model_cython.pyx":207
  * 
  *     #first guess of end of time step volume
  *     sv_end = sv_beg + 0.5 * sqin             # <<<<<<<<<<<<<<
@@ -4329,7 +4344,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
   __pyx_v_18hydro_model_cython_sv_end = (__pyx_v_18hydro_model_cython_sv_beg + (0.5 * __pyx_v_18hydro_model_cython_sqin));
 
-  /* "hydro_model_cython.pyx":203
+  /* "hydro_model_cython.pyx":210
  * 
  *     #iteration parameters
  *     sitern = 0             # <<<<<<<<<<<<<<
@@ -4338,7 +4353,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
   __pyx_v_18hydro_model_cython_sitern = 0;
 
-  /* "hydro_model_cython.pyx":204
+  /* "hydro_model_cython.pyx":211
  *     #iteration parameters
  *     sitern = 0
  *     sv_endmin = 0             # <<<<<<<<<<<<<<
@@ -4347,7 +4362,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
   __pyx_v_18hydro_model_cython_sv_endmin = 0.0;
 
-  /* "hydro_model_cython.pyx":205
+  /* "hydro_model_cython.pyx":212
  *     sitern = 0
  *     sv_endmin = 0
  *     sv_endmax = -999             # <<<<<<<<<<<<<<
@@ -4356,7 +4371,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
   __pyx_v_18hydro_model_cython_sv_endmax = -999.0;
 
-  /* "hydro_model_cython.pyx":206
+  /* "hydro_model_cython.pyx":213
  *     sv_endmin = 0
  *     sv_endmax = -999
  *     siter_flag=1             # <<<<<<<<<<<<<<
@@ -4365,7 +4380,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
   __pyx_v_18hydro_model_cython_siter_flag = 1;
 
-  /* "hydro_model_cython.pyx":209
+  /* "hydro_model_cython.pyx":216
  * 
  *     #iterate
  *     while siter_flag:             # <<<<<<<<<<<<<<
@@ -4376,7 +4391,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     __pyx_t_9 = (__pyx_v_18hydro_model_cython_siter_flag != 0);
     if (!__pyx_t_9) break;
 
-    /* "hydro_model_cython.pyx":210
+    /* "hydro_model_cython.pyx":217
  *     #iterate
  *     while siter_flag:
  *         sv_av = (sv_end + sv_beg) / 2             # <<<<<<<<<<<<<<
@@ -4385,14 +4400,14 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
     __pyx_v_18hydro_model_cython_sv_av = ((__pyx_v_18hydro_model_cython_sv_end + __pyx_v_18hydro_model_cython_sv_beg) / 2.0);
 
-    /* "hydro_model_cython.pyx":211
+    /* "hydro_model_cython.pyx":218
  *     while siter_flag:
  *         sv_av = (sv_end + sv_beg) / 2
  *         glsa_beg = (gltopopar[sur,0] * sv_beg)**gltopopar[sur,1]             # <<<<<<<<<<<<<<
  *         glsa_end = (gltopopar[sur,0] * sv_end)**gltopopar[sur,1]
- *         #check if flood is increasing in the sw cell
+ *         #print(sv_beg, glsa_beg, gltopopar[sur,0], gltopopar[sur,1])
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_gltopopar.memview)) { __Pyx_RaiseUnboundLocalError("gltopopar"); __PYX_ERR(0, 211, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_gltopopar.memview)) { __Pyx_RaiseUnboundLocalError("gltopopar"); __PYX_ERR(0, 218, __pyx_L1_error) }
     __pyx_t_2 = __pyx_v_18hydro_model_cython_sur;
     __pyx_t_1 = 0;
     __pyx_t_3 = -1;
@@ -4406,9 +4421,9 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     } else if (unlikely(__pyx_t_1 >= __pyx_v_18hydro_model_cython_gltopopar.shape[1])) __pyx_t_3 = 1;
     if (unlikely(__pyx_t_3 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_3);
-      __PYX_ERR(0, 211, __pyx_L1_error)
+      __PYX_ERR(0, 218, __pyx_L1_error)
     }
-    if (unlikely(!__pyx_v_18hydro_model_cython_gltopopar.memview)) { __Pyx_RaiseUnboundLocalError("gltopopar"); __PYX_ERR(0, 211, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_gltopopar.memview)) { __Pyx_RaiseUnboundLocalError("gltopopar"); __PYX_ERR(0, 218, __pyx_L1_error) }
     __pyx_t_11 = __pyx_v_18hydro_model_cython_sur;
     __pyx_t_12 = 1;
     __pyx_t_3 = -1;
@@ -4422,18 +4437,18 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_gltopopar.shape[1])) __pyx_t_3 = 1;
     if (unlikely(__pyx_t_3 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_3);
-      __PYX_ERR(0, 211, __pyx_L1_error)
+      __PYX_ERR(0, 218, __pyx_L1_error)
     }
     __pyx_v_18hydro_model_cython_glsa_beg = pow(((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_gltopopar.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_gltopopar.strides[0]) ) + __pyx_t_1 * __pyx_v_18hydro_model_cython_gltopopar.strides[1]) ))) * __pyx_v_18hydro_model_cython_sv_beg), (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_gltopopar.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_gltopopar.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_gltopopar.strides[1]) ))));
 
-    /* "hydro_model_cython.pyx":212
+    /* "hydro_model_cython.pyx":219
  *         sv_av = (sv_end + sv_beg) / 2
  *         glsa_beg = (gltopopar[sur,0] * sv_beg)**gltopopar[sur,1]
  *         glsa_end = (gltopopar[sur,0] * sv_end)**gltopopar[sur,1]             # <<<<<<<<<<<<<<
+ *         #print(sv_beg, glsa_beg, gltopopar[sur,0], gltopopar[sur,1])
  *         #check if flood is increasing in the sw cell
- *         if sv_end > sv_beg:
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_gltopopar.memview)) { __Pyx_RaiseUnboundLocalError("gltopopar"); __PYX_ERR(0, 212, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_gltopopar.memview)) { __Pyx_RaiseUnboundLocalError("gltopopar"); __PYX_ERR(0, 219, __pyx_L1_error) }
     __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
     __pyx_t_11 = 0;
     __pyx_t_3 = -1;
@@ -4447,9 +4462,9 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_gltopopar.shape[1])) __pyx_t_3 = 1;
     if (unlikely(__pyx_t_3 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_3);
-      __PYX_ERR(0, 212, __pyx_L1_error)
+      __PYX_ERR(0, 219, __pyx_L1_error)
     }
-    if (unlikely(!__pyx_v_18hydro_model_cython_gltopopar.memview)) { __Pyx_RaiseUnboundLocalError("gltopopar"); __PYX_ERR(0, 212, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_gltopopar.memview)) { __Pyx_RaiseUnboundLocalError("gltopopar"); __PYX_ERR(0, 219, __pyx_L1_error) }
     __pyx_t_1 = __pyx_v_18hydro_model_cython_sur;
     __pyx_t_2 = 1;
     __pyx_t_3 = -1;
@@ -4463,251 +4478,11 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     } else if (unlikely(__pyx_t_2 >= __pyx_v_18hydro_model_cython_gltopopar.shape[1])) __pyx_t_3 = 1;
     if (unlikely(__pyx_t_3 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_3);
-      __PYX_ERR(0, 212, __pyx_L1_error)
+      __PYX_ERR(0, 219, __pyx_L1_error)
     }
     __pyx_v_18hydro_model_cython_glsa_end = pow(((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_gltopopar.data + __pyx_t_12 * __pyx_v_18hydro_model_cython_gltopopar.strides[0]) ) + __pyx_t_11 * __pyx_v_18hydro_model_cython_gltopopar.strides[1]) ))) * __pyx_v_18hydro_model_cython_sv_end), (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_gltopopar.data + __pyx_t_1 * __pyx_v_18hydro_model_cython_gltopopar.strides[0]) ) + __pyx_t_2 * __pyx_v_18hydro_model_cython_gltopopar.strides[1]) ))));
 
-    /* "hydro_model_cython.pyx":214
- *         glsa_end = (gltopopar[sur,0] * sv_end)**gltopopar[sur,1]
- *         #check if flood is increasing in the sw cell
- *         if sv_end > sv_beg:             # <<<<<<<<<<<<<<
- *             glsv_isincr = 1
- *         else:
- */
-    __pyx_t_9 = ((__pyx_v_18hydro_model_cython_sv_end > __pyx_v_18hydro_model_cython_sv_beg) != 0);
-    if (__pyx_t_9) {
-
-      /* "hydro_model_cython.pyx":215
- *         #check if flood is increasing in the sw cell
- *         if sv_end > sv_beg:
- *             glsv_isincr = 1             # <<<<<<<<<<<<<<
- *         else:
- *             glsv_isincr = 0
- */
-      __pyx_v_18hydro_model_cython_glsv_isincr = 1;
-
-      /* "hydro_model_cython.pyx":214
- *         glsa_end = (gltopopar[sur,0] * sv_end)**gltopopar[sur,1]
- *         #check if flood is increasing in the sw cell
- *         if sv_end > sv_beg:             # <<<<<<<<<<<<<<
- *             glsv_isincr = 1
- *         else:
- */
-      goto __pyx_L6;
-    }
-
-    /* "hydro_model_cython.pyx":217
- *             glsv_isincr = 1
- *         else:
- *             glsv_isincr = 0             # <<<<<<<<<<<<<<
- * 
- *         #############################################################################################
- */
-    /*else*/ {
-      __pyx_v_18hydro_model_cython_glsv_isincr = 0;
-    }
-    __pyx_L6:;
-
-    /* "hydro_model_cython.pyx":225
- * 
- *         #change shape of volume-area curve
- *         if sur==0:             # <<<<<<<<<<<<<<
- *             #Panhandle
- *             #Case 1
- */
-    switch (__pyx_v_18hydro_model_cython_sur) {
-      case 0:
-
-      /* "hydro_model_cython.pyx":228
- *             #Panhandle
- *             #Case 1
- *             if sv_beg < 1500:             # <<<<<<<<<<<<<<
- *                 glsa_beg = (0.006 * sv_beg)**3
- * 
- */
-      __pyx_t_9 = ((__pyx_v_18hydro_model_cython_sv_beg < 1500.0) != 0);
-      if (__pyx_t_9) {
-
-        /* "hydro_model_cython.pyx":229
- *             #Case 1
- *             if sv_beg < 1500:
- *                 glsa_beg = (0.006 * sv_beg)**3             # <<<<<<<<<<<<<<
- * 
- *             if sv_end < 1500:
- */
-        __pyx_v_18hydro_model_cython_glsa_beg = pow((0.006 * __pyx_v_18hydro_model_cython_sv_beg), 3.0);
-
-        /* "hydro_model_cython.pyx":228
- *             #Panhandle
- *             #Case 1
- *             if sv_beg < 1500:             # <<<<<<<<<<<<<<
- *                 glsa_beg = (0.006 * sv_beg)**3
- * 
- */
-      }
-
-      /* "hydro_model_cython.pyx":231
- *                 glsa_beg = (0.006 * sv_beg)**3
- * 
- *             if sv_end < 1500:             # <<<<<<<<<<<<<<
- *                 glsa_end = (0.006 * sv_end)**3
- * 
- */
-      __pyx_t_9 = ((__pyx_v_18hydro_model_cython_sv_end < 1500.0) != 0);
-      if (__pyx_t_9) {
-
-        /* "hydro_model_cython.pyx":232
- * 
- *             if sv_end < 1500:
- *                 glsa_end = (0.006 * sv_end)**3             # <<<<<<<<<<<<<<
- * 
- *         #constrain the extent of inundation
- */
-        __pyx_v_18hydro_model_cython_glsa_end = pow((0.006 * __pyx_v_18hydro_model_cython_sv_end), 3.0);
-
-        /* "hydro_model_cython.pyx":231
- *                 glsa_beg = (0.006 * sv_beg)**3
- * 
- *             if sv_end < 1500:             # <<<<<<<<<<<<<<
- *                 glsa_end = (0.006 * sv_end)**3
- * 
- */
-      }
-
-      /* "hydro_model_cython.pyx":225
- * 
- *         #change shape of volume-area curve
- *         if sur==0:             # <<<<<<<<<<<<<<
- *             #Panhandle
- *             #Case 1
- */
-      break;
-      case 1:
-
-      /* "hydro_model_cython.pyx":235
- * 
- *         #constrain the extent of inundation
- *         elif sur==1 or sur==6 or sur==5 or sur==13 or sur==14:             # <<<<<<<<<<<<<<
- *             #Case 2, 7, 6, 14, 15
- *             if glsa_beg > glfa[sur]*ngw:
- */
-      case 6:
-      case 5:
-      case 13:
-      case 14:
-
-      /* "hydro_model_cython.pyx":237
- *         elif sur==1 or sur==6 or sur==5 or sur==13 or sur==14:
- *             #Case 2, 7, 6, 14, 15
- *             if glsa_beg > glfa[sur]*ngw:             # <<<<<<<<<<<<<<
- *                 glsa_beg = glfa[sur]*ngw
- * 
- */
-      if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 237, __pyx_L1_error) }
-      __pyx_t_2 = __pyx_v_18hydro_model_cython_sur;
-      __pyx_t_3 = -1;
-      if (__pyx_t_2 < 0) {
-        __pyx_t_2 += __pyx_v_18hydro_model_cython_glfa.shape[0];
-        if (unlikely(__pyx_t_2 < 0)) __pyx_t_3 = 0;
-      } else if (unlikely(__pyx_t_2 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_3 = 0;
-      if (unlikely(__pyx_t_3 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_3);
-        __PYX_ERR(0, 237, __pyx_L1_error)
-      }
-      __pyx_t_9 = ((__pyx_v_18hydro_model_cython_glsa_beg > ((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_glfa.strides[0]) ))) * __pyx_v_18hydro_model_cython_ngw)) != 0);
-      if (__pyx_t_9) {
-
-        /* "hydro_model_cython.pyx":238
- *             #Case 2, 7, 6, 14, 15
- *             if glsa_beg > glfa[sur]*ngw:
- *                 glsa_beg = glfa[sur]*ngw             # <<<<<<<<<<<<<<
- * 
- *             if glsa_end > glfa[sur]*ngw:
- */
-        if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 238, __pyx_L1_error) }
-        __pyx_t_2 = __pyx_v_18hydro_model_cython_sur;
-        __pyx_t_3 = -1;
-        if (__pyx_t_2 < 0) {
-          __pyx_t_2 += __pyx_v_18hydro_model_cython_glfa.shape[0];
-          if (unlikely(__pyx_t_2 < 0)) __pyx_t_3 = 0;
-        } else if (unlikely(__pyx_t_2 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_3 = 0;
-        if (unlikely(__pyx_t_3 != -1)) {
-          __Pyx_RaiseBufferIndexError(__pyx_t_3);
-          __PYX_ERR(0, 238, __pyx_L1_error)
-        }
-        __pyx_v_18hydro_model_cython_glsa_beg = ((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_glfa.strides[0]) ))) * __pyx_v_18hydro_model_cython_ngw);
-
-        /* "hydro_model_cython.pyx":237
- *         elif sur==1 or sur==6 or sur==5 or sur==13 or sur==14:
- *             #Case 2, 7, 6, 14, 15
- *             if glsa_beg > glfa[sur]*ngw:             # <<<<<<<<<<<<<<
- *                 glsa_beg = glfa[sur]*ngw
- * 
- */
-      }
-
-      /* "hydro_model_cython.pyx":240
- *                 glsa_beg = glfa[sur]*ngw
- * 
- *             if glsa_end > glfa[sur]*ngw:             # <<<<<<<<<<<<<<
- *                 glsa_end = glfa[sur]*ngw
- * 
- */
-      if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 240, __pyx_L1_error) }
-      __pyx_t_2 = __pyx_v_18hydro_model_cython_sur;
-      __pyx_t_3 = -1;
-      if (__pyx_t_2 < 0) {
-        __pyx_t_2 += __pyx_v_18hydro_model_cython_glfa.shape[0];
-        if (unlikely(__pyx_t_2 < 0)) __pyx_t_3 = 0;
-      } else if (unlikely(__pyx_t_2 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_3 = 0;
-      if (unlikely(__pyx_t_3 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_3);
-        __PYX_ERR(0, 240, __pyx_L1_error)
-      }
-      __pyx_t_9 = ((__pyx_v_18hydro_model_cython_glsa_end > ((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_glfa.strides[0]) ))) * __pyx_v_18hydro_model_cython_ngw)) != 0);
-      if (__pyx_t_9) {
-
-        /* "hydro_model_cython.pyx":241
- * 
- *             if glsa_end > glfa[sur]*ngw:
- *                 glsa_end = glfa[sur]*ngw             # <<<<<<<<<<<<<<
- * 
- *         #############################################################################################
- */
-        if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 241, __pyx_L1_error) }
-        __pyx_t_2 = __pyx_v_18hydro_model_cython_sur;
-        __pyx_t_3 = -1;
-        if (__pyx_t_2 < 0) {
-          __pyx_t_2 += __pyx_v_18hydro_model_cython_glfa.shape[0];
-          if (unlikely(__pyx_t_2 < 0)) __pyx_t_3 = 0;
-        } else if (unlikely(__pyx_t_2 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_3 = 0;
-        if (unlikely(__pyx_t_3 != -1)) {
-          __Pyx_RaiseBufferIndexError(__pyx_t_3);
-          __PYX_ERR(0, 241, __pyx_L1_error)
-        }
-        __pyx_v_18hydro_model_cython_glsa_end = ((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_glfa.strides[0]) ))) * __pyx_v_18hydro_model_cython_ngw);
-
-        /* "hydro_model_cython.pyx":240
- *                 glsa_beg = glfa[sur]*ngw
- * 
- *             if glsa_end > glfa[sur]*ngw:             # <<<<<<<<<<<<<<
- *                 glsa_end = glfa[sur]*ngw
- * 
- */
-      }
-
-      /* "hydro_model_cython.pyx":235
- * 
- *         #constrain the extent of inundation
- *         elif sur==1 or sur==6 or sur==5 or sur==13 or sur==14:             # <<<<<<<<<<<<<<
- *             #Case 2, 7, 6, 14, 15
- *             if glsa_beg > glfa[sur]*ngw:
- */
-      break;
-      default: break;
-    }
-
-    /* "hydro_model_cython.pyx":245
+    /* "hydro_model_cython.pyx":252
  *         #############################################################################################
  * 
  *         sa_av = (glsa_beg + glsa_end) / 2             # <<<<<<<<<<<<<<
@@ -4716,7 +4491,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
     __pyx_v_18hydro_model_cython_sa_av = ((__pyx_v_18hydro_model_cython_glsa_beg + __pyx_v_18hydro_model_cython_glsa_end) / 2.0);
 
-    /* "hydro_model_cython.pyx":246
+    /* "hydro_model_cython.pyx":253
  * 
  *         sa_av = (glsa_beg + glsa_end) / 2
  *         spre = glrain * sa_av / 1000             # <<<<<<<<<<<<<<
@@ -4725,14 +4500,14 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
     __pyx_v_18hydro_model_cython_spre = ((__pyx_v_18hydro_model_cython_glrain * __pyx_v_18hydro_model_cython_sa_av) / 1000.0);
 
-    /* "hydro_model_cython.pyx":253
+    /* "hydro_model_cython.pyx":260
  *         # and this was a bug... it was ==0
  * #        if ts - gldelay[sur] < 0:
- *         sev = glpet[ts] * sa_av / 1000             # <<<<<<<<<<<<<<
+ *         sev = glpet[ts] * sa_av /1000             # <<<<<<<<<<<<<<
  * #        else:
  * #            sev = glpet[ts - int(gldelay[sur])] * sa_av / 1000
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glpet.memview)) { __Pyx_RaiseUnboundLocalError("glpet"); __PYX_ERR(0, 253, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_glpet.memview)) { __Pyx_RaiseUnboundLocalError("glpet"); __PYX_ERR(0, 260, __pyx_L1_error) }
     __pyx_t_2 = __pyx_v_18hydro_model_cython_ts;
     __pyx_t_3 = -1;
     if (__pyx_t_2 < 0) {
@@ -4741,11 +4516,11 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     } else if (unlikely(__pyx_t_2 >= __pyx_v_18hydro_model_cython_glpet.shape[0])) __pyx_t_3 = 0;
     if (unlikely(__pyx_t_3 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_3);
-      __PYX_ERR(0, 253, __pyx_L1_error)
+      __PYX_ERR(0, 260, __pyx_L1_error)
     }
     __pyx_v_18hydro_model_cython_sev = (((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glpet.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_glpet.strides[0]) ))) * __pyx_v_18hydro_model_cython_sa_av) / 1000.0);
 
-    /* "hydro_model_cython.pyx":262
+    /* "hydro_model_cython.pyx":269
  *         #-------------------------------------------------------------------------
  *         # calculate surface outflows
  *         for n in range(10):             # <<<<<<<<<<<<<<
@@ -4755,14 +4530,14 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     for (__pyx_t_10 = 0; __pyx_t_10 < 10; __pyx_t_10+=1) {
       __pyx_v_18hydro_model_cython_n = __pyx_t_10;
 
-      /* "hydro_model_cython.pyx":263
+      /* "hydro_model_cython.pyx":270
  *         # calculate surface outflows
  *         for n in range(10):
  *             if sv_av > glspar[sur,n+10]:             # <<<<<<<<<<<<<<
  *                 celloutflows[n] = glspar[sur,n] * (sv_av - glspar[sur,n+10])
  *             else:
  */
-      if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnboundLocalError("glspar"); __PYX_ERR(0, 263, __pyx_L1_error) }
+      if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnboundLocalError("glspar"); __PYX_ERR(0, 270, __pyx_L1_error) }
       __pyx_t_2 = __pyx_v_18hydro_model_cython_sur;
       __pyx_t_1 = (__pyx_v_18hydro_model_cython_n + 10);
       __pyx_t_3 = -1;
@@ -4776,19 +4551,19 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
       } else if (unlikely(__pyx_t_1 >= __pyx_v_18hydro_model_cython_glspar.shape[1])) __pyx_t_3 = 1;
       if (unlikely(__pyx_t_3 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_3);
-        __PYX_ERR(0, 263, __pyx_L1_error)
+        __PYX_ERR(0, 270, __pyx_L1_error)
       }
       __pyx_t_9 = ((__pyx_v_18hydro_model_cython_sv_av > (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glspar.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_glspar.strides[0]) ) + __pyx_t_1 * __pyx_v_18hydro_model_cython_glspar.strides[1]) )))) != 0);
       if (__pyx_t_9) {
 
-        /* "hydro_model_cython.pyx":264
+        /* "hydro_model_cython.pyx":271
  *         for n in range(10):
  *             if sv_av > glspar[sur,n+10]:
  *                 celloutflows[n] = glspar[sur,n] * (sv_av - glspar[sur,n+10])             # <<<<<<<<<<<<<<
  *             else:
  *                 celloutflows[n] = 0
  */
-        if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnboundLocalError("glspar"); __PYX_ERR(0, 264, __pyx_L1_error) }
+        if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnboundLocalError("glspar"); __PYX_ERR(0, 271, __pyx_L1_error) }
         __pyx_t_1 = __pyx_v_18hydro_model_cython_sur;
         __pyx_t_2 = __pyx_v_18hydro_model_cython_n;
         __pyx_t_3 = -1;
@@ -4802,9 +4577,9 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
         } else if (unlikely(__pyx_t_2 >= __pyx_v_18hydro_model_cython_glspar.shape[1])) __pyx_t_3 = 1;
         if (unlikely(__pyx_t_3 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_3);
-          __PYX_ERR(0, 264, __pyx_L1_error)
+          __PYX_ERR(0, 271, __pyx_L1_error)
         }
-        if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnboundLocalError("glspar"); __PYX_ERR(0, 264, __pyx_L1_error) }
+        if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnboundLocalError("glspar"); __PYX_ERR(0, 271, __pyx_L1_error) }
         __pyx_t_11 = __pyx_v_18hydro_model_cython_sur;
         __pyx_t_12 = (__pyx_v_18hydro_model_cython_n + 10);
         __pyx_t_3 = -1;
@@ -4818,9 +4593,9 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
         } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glspar.shape[1])) __pyx_t_3 = 1;
         if (unlikely(__pyx_t_3 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_3);
-          __PYX_ERR(0, 264, __pyx_L1_error)
+          __PYX_ERR(0, 271, __pyx_L1_error)
         }
-        if (unlikely(!__pyx_v_18hydro_model_cython_celloutflows.memview)) { __Pyx_RaiseUnboundLocalError("celloutflows"); __PYX_ERR(0, 264, __pyx_L1_error) }
+        if (unlikely(!__pyx_v_18hydro_model_cython_celloutflows.memview)) { __Pyx_RaiseUnboundLocalError("celloutflows"); __PYX_ERR(0, 271, __pyx_L1_error) }
         __pyx_t_13 = __pyx_v_18hydro_model_cython_n;
         __pyx_t_3 = -1;
         if (__pyx_t_13 < 0) {
@@ -4829,21 +4604,21 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
         } else if (unlikely(__pyx_t_13 >= __pyx_v_18hydro_model_cython_celloutflows.shape[0])) __pyx_t_3 = 0;
         if (unlikely(__pyx_t_3 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_3);
-          __PYX_ERR(0, 264, __pyx_L1_error)
+          __PYX_ERR(0, 271, __pyx_L1_error)
         }
         *((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_celloutflows.data + __pyx_t_13 * __pyx_v_18hydro_model_cython_celloutflows.strides[0]) )) = ((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glspar.data + __pyx_t_1 * __pyx_v_18hydro_model_cython_glspar.strides[0]) ) + __pyx_t_2 * __pyx_v_18hydro_model_cython_glspar.strides[1]) ))) * (__pyx_v_18hydro_model_cython_sv_av - (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glspar.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glspar.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glspar.strides[1]) )))));
 
-        /* "hydro_model_cython.pyx":263
+        /* "hydro_model_cython.pyx":270
  *         # calculate surface outflows
  *         for n in range(10):
  *             if sv_av > glspar[sur,n+10]:             # <<<<<<<<<<<<<<
  *                 celloutflows[n] = glspar[sur,n] * (sv_av - glspar[sur,n+10])
  *             else:
  */
-        goto __pyx_L13;
+        goto __pyx_L8;
       }
 
-      /* "hydro_model_cython.pyx":266
+      /* "hydro_model_cython.pyx":273
  *                 celloutflows[n] = glspar[sur,n] * (sv_av - glspar[sur,n+10])
  *             else:
  *                 celloutflows[n] = 0             # <<<<<<<<<<<<<<
@@ -4851,7 +4626,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  *         #calculate groundwater outflow
  */
       /*else*/ {
-        if (unlikely(!__pyx_v_18hydro_model_cython_celloutflows.memview)) { __Pyx_RaiseUnboundLocalError("celloutflows"); __PYX_ERR(0, 266, __pyx_L1_error) }
+        if (unlikely(!__pyx_v_18hydro_model_cython_celloutflows.memview)) { __Pyx_RaiseUnboundLocalError("celloutflows"); __PYX_ERR(0, 273, __pyx_L1_error) }
         __pyx_t_12 = __pyx_v_18hydro_model_cython_n;
         __pyx_t_3 = -1;
         if (__pyx_t_12 < 0) {
@@ -4860,21 +4635,21 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
         } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_celloutflows.shape[0])) __pyx_t_3 = 0;
         if (unlikely(__pyx_t_3 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_3);
-          __PYX_ERR(0, 266, __pyx_L1_error)
+          __PYX_ERR(0, 273, __pyx_L1_error)
         }
         *((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_celloutflows.data + __pyx_t_12 * __pyx_v_18hydro_model_cython_celloutflows.strides[0]) )) = 0.0;
       }
-      __pyx_L13:;
+      __pyx_L8:;
     }
 
-    /* "hydro_model_cython.pyx":267
+    /* "hydro_model_cython.pyx":274
  *             else:
  *                 celloutflows[n] = 0
  *         sqout=_celloutflows.sum()             # <<<<<<<<<<<<<<
  *         #calculate groundwater outflow
  *         glsinf=0
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_18hydro_model_cython__celloutflows), __pyx_n_s_sum); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 267, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_18hydro_model_cython__celloutflows), __pyx_n_s_sum); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 274, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_8 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -4888,13 +4663,13 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     }
     __pyx_t_5 = (__pyx_t_8) ? __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_8) : __Pyx_PyObject_CallNoArg(__pyx_t_6);
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 267, __pyx_L1_error)
+    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 274, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_XDECREF_SET(__pyx_v_sqout, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "hydro_model_cython.pyx":269
+    /* "hydro_model_cython.pyx":276
  *         sqout=_celloutflows.sum()
  *         #calculate groundwater outflow
  *         glsinf=0             # <<<<<<<<<<<<<<
@@ -4903,46 +4678,46 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
     __pyx_v_18hydro_model_cython_glsinf = 0.0;
 
-    /* "hydro_model_cython.pyx":273
+    /* "hydro_model_cython.pyx":280
  * #            print("sw-0", sv_beg, spre, sev, sqout, sqin, glsinf)
  * 
  *         calc_gw_iter()             # <<<<<<<<<<<<<<
  * #        print("check", sv_beg, spre, sev, sqout, sqin, glsinf)
  * 
  */
-    __pyx_t_5 = __pyx_f_18hydro_model_cython_calc_gw_iter(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 273, __pyx_L1_error)
+    __pyx_t_5 = __pyx_f_18hydro_model_cython_calc_gw_iter(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 280, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "hydro_model_cython.pyx":277
+    /* "hydro_model_cython.pyx":284
  * 
  *         #calculate end water balance
  *         sv_endc = sv_beg + spre - sev - sqout + sqin - glsinf             # <<<<<<<<<<<<<<
  * 
  *         #-------------------------------------------------------------------------
  */
-    __pyx_t_5 = PyFloat_FromDouble(((__pyx_v_18hydro_model_cython_sv_beg + __pyx_v_18hydro_model_cython_spre) - __pyx_v_18hydro_model_cython_sev)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 277, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble(((__pyx_v_18hydro_model_cython_sv_beg + __pyx_v_18hydro_model_cython_spre) - __pyx_v_18hydro_model_cython_sev)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 284, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = PyNumber_Subtract(__pyx_t_5, __pyx_v_sqout); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 277, __pyx_L1_error)
+    __pyx_t_6 = PyNumber_Subtract(__pyx_t_5, __pyx_v_sqout); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 284, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_sqin); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 277, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_sqin); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 284, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_8 = PyNumber_Add(__pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 277, __pyx_L1_error)
+    __pyx_t_8 = PyNumber_Add(__pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 284, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glsinf); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 277, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glsinf); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 284, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = PyNumber_Subtract(__pyx_t_8, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 277, __pyx_L1_error)
+    __pyx_t_6 = PyNumber_Subtract(__pyx_t_8, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 284, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_14 = __pyx_PyFloat_AsFloat(__pyx_t_6); if (unlikely((__pyx_t_14 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 277, __pyx_L1_error)
+    __pyx_t_14 = __pyx_PyFloat_AsFloat(__pyx_t_6); if (unlikely((__pyx_t_14 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 284, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_v_18hydro_model_cython_sv_endc = __pyx_t_14;
 
-    /* "hydro_model_cython.pyx":281
+    /* "hydro_model_cython.pyx":288
  *         #-------------------------------------------------------------------------
  *         #check if convergence is achieved
  *         if abs(sv_endc - sv_end) < glconvcrit * sv_end:             # <<<<<<<<<<<<<<
@@ -4952,7 +4727,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     __pyx_t_9 = ((fabsf((__pyx_v_18hydro_model_cython_sv_endc - __pyx_v_18hydro_model_cython_sv_end)) < (__pyx_v_18hydro_model_cython_glconvcrit * __pyx_v_18hydro_model_cython_sv_end)) != 0);
     if (__pyx_t_9) {
 
-      /* "hydro_model_cython.pyx":282
+      /* "hydro_model_cython.pyx":289
  *         #check if convergence is achieved
  *         if abs(sv_endc - sv_end) < glconvcrit * sv_end:
  *             siter_flag = 0             # <<<<<<<<<<<<<<
@@ -4961,17 +4736,17 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
       __pyx_v_18hydro_model_cython_siter_flag = 0;
 
-      /* "hydro_model_cython.pyx":281
+      /* "hydro_model_cython.pyx":288
  *         #-------------------------------------------------------------------------
  *         #check if convergence is achieved
  *         if abs(sv_endc - sv_end) < glconvcrit * sv_end:             # <<<<<<<<<<<<<<
  *             siter_flag = 0
  *         elif sv_end < 0.001:
  */
-      goto __pyx_L14;
+      goto __pyx_L9;
     }
 
-    /* "hydro_model_cython.pyx":283
+    /* "hydro_model_cython.pyx":290
  *         if abs(sv_endc - sv_end) < glconvcrit * sv_end:
  *             siter_flag = 0
  *         elif sv_end < 0.001:             # <<<<<<<<<<<<<<
@@ -4981,7 +4756,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     __pyx_t_9 = ((__pyx_v_18hydro_model_cython_sv_end < 0.001) != 0);
     if (__pyx_t_9) {
 
-      /* "hydro_model_cython.pyx":285
+      /* "hydro_model_cython.pyx":292
  *         elif sv_end < 0.001:
  *             #unit dries
  *             sv_end = 0             # <<<<<<<<<<<<<<
@@ -4990,7 +4765,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
       __pyx_v_18hydro_model_cython_sv_end = 0.0;
 
-      /* "hydro_model_cython.pyx":286
+      /* "hydro_model_cython.pyx":293
  *             #unit dries
  *             sv_end = 0
  *             siter_flag = 0             # <<<<<<<<<<<<<<
@@ -4999,17 +4774,17 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
       __pyx_v_18hydro_model_cython_siter_flag = 0;
 
-      /* "hydro_model_cython.pyx":283
+      /* "hydro_model_cython.pyx":290
  *         if abs(sv_endc - sv_end) < glconvcrit * sv_end:
  *             siter_flag = 0
  *         elif sv_end < 0.001:             # <<<<<<<<<<<<<<
  *             #unit dries
  *             sv_end = 0
  */
-      goto __pyx_L14;
+      goto __pyx_L9;
     }
 
-    /* "hydro_model_cython.pyx":288
+    /* "hydro_model_cython.pyx":295
  *             siter_flag = 0
  *         else:
  *             if sv_end > sv_endc:             # <<<<<<<<<<<<<<
@@ -5020,7 +4795,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
       __pyx_t_9 = ((__pyx_v_18hydro_model_cython_sv_end > __pyx_v_18hydro_model_cython_sv_endc) != 0);
       if (__pyx_t_9) {
 
-        /* "hydro_model_cython.pyx":289
+        /* "hydro_model_cython.pyx":296
  *         else:
  *             if sv_end > sv_endc:
  *                 sv_endmax = sv_end             # <<<<<<<<<<<<<<
@@ -5029,17 +4804,17 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
         __pyx_v_18hydro_model_cython_sv_endmax = __pyx_v_18hydro_model_cython_sv_end;
 
-        /* "hydro_model_cython.pyx":288
+        /* "hydro_model_cython.pyx":295
  *             siter_flag = 0
  *         else:
  *             if sv_end > sv_endc:             # <<<<<<<<<<<<<<
  *                 sv_endmax = sv_end
  *             else:
  */
-        goto __pyx_L15;
+        goto __pyx_L10;
       }
 
-      /* "hydro_model_cython.pyx":291
+      /* "hydro_model_cython.pyx":298
  *                 sv_endmax = sv_end
  *             else:
  *                 sv_endmin = sv_end             # <<<<<<<<<<<<<<
@@ -5049,9 +4824,9 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
       /*else*/ {
         __pyx_v_18hydro_model_cython_sv_endmin = __pyx_v_18hydro_model_cython_sv_end;
       }
-      __pyx_L15:;
+      __pyx_L10:;
 
-      /* "hydro_model_cython.pyx":293
+      /* "hydro_model_cython.pyx":300
  *                 sv_endmin = sv_end
  * 
  *             if sv_endmax==-999:             # <<<<<<<<<<<<<<
@@ -5061,7 +4836,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
       __pyx_t_9 = ((__pyx_v_18hydro_model_cython_sv_endmax == -999.0) != 0);
       if (__pyx_t_9) {
 
-        /* "hydro_model_cython.pyx":294
+        /* "hydro_model_cython.pyx":301
  * 
  *             if sv_endmax==-999:
  *                 sv_end = sv_endc             # <<<<<<<<<<<<<<
@@ -5070,17 +4845,17 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
         __pyx_v_18hydro_model_cython_sv_end = __pyx_v_18hydro_model_cython_sv_endc;
 
-        /* "hydro_model_cython.pyx":293
+        /* "hydro_model_cython.pyx":300
  *                 sv_endmin = sv_end
  * 
  *             if sv_endmax==-999:             # <<<<<<<<<<<<<<
  *                 sv_end = sv_endc
  *             else:
  */
-        goto __pyx_L16;
+        goto __pyx_L11;
       }
 
-      /* "hydro_model_cython.pyx":296
+      /* "hydro_model_cython.pyx":303
  *                 sv_end = sv_endc
  *             else:
  *                 sv_end = sv_endmin + 0.5 * (sv_endmax - sv_endmin)             # <<<<<<<<<<<<<<
@@ -5090,11 +4865,11 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
       /*else*/ {
         __pyx_v_18hydro_model_cython_sv_end = (__pyx_v_18hydro_model_cython_sv_endmin + (0.5 * (__pyx_v_18hydro_model_cython_sv_endmax - __pyx_v_18hydro_model_cython_sv_endmin)));
       }
-      __pyx_L16:;
+      __pyx_L11:;
     }
-    __pyx_L14:;
+    __pyx_L9:;
 
-    /* "hydro_model_cython.pyx":301
+    /* "hydro_model_cython.pyx":308
  *         #advance iteration
  * 
  *         sitern = sitern + 1             # <<<<<<<<<<<<<<
@@ -5103,7 +4878,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
     __pyx_v_18hydro_model_cython_sitern = (__pyx_v_18hydro_model_cython_sitern + 1);
 
-    /* "hydro_model_cython.pyx":303
+    /* "hydro_model_cython.pyx":310
  *         sitern = sitern + 1
  * 
  *         if sitern > glmaxiter:             # <<<<<<<<<<<<<<
@@ -5113,46 +4888,46 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     __pyx_t_9 = ((__pyx_v_18hydro_model_cython_sitern > __pyx_v_18hydro_model_cython_glmaxiter) != 0);
     if (__pyx_t_9) {
 
-      /* "hydro_model_cython.pyx":304
+      /* "hydro_model_cython.pyx":311
  * 
  *         if sitern > glmaxiter:
  *             print (str(glmaxiter) + " s iterations in cell " + str(sur) + " in " + str(ts))             # <<<<<<<<<<<<<<
  *             siter_flag=0
  * #    print "check"
  */
-      __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_18hydro_model_cython_glmaxiter); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 304, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_18hydro_model_cython_glmaxiter); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 311, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_5 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 304, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 311, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = PyNumber_Add(__pyx_t_5, __pyx_kp_s_s_iterations_in_cell); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 304, __pyx_L1_error)
+      __pyx_t_6 = PyNumber_Add(__pyx_t_5, __pyx_kp_s_s_iterations_in_cell); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 311, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_sur); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 304, __pyx_L1_error)
+      __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_sur); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 311, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 304, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 311, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = PyNumber_Add(__pyx_t_6, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 304, __pyx_L1_error)
+      __pyx_t_5 = PyNumber_Add(__pyx_t_6, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 311, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_8 = PyNumber_Add(__pyx_t_5, __pyx_kp_s_in); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 304, __pyx_L1_error)
+      __pyx_t_8 = PyNumber_Add(__pyx_t_5, __pyx_kp_s_in); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 311, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 304, __pyx_L1_error)
+      __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 311, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_6 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 304, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 311, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = PyNumber_Add(__pyx_t_8, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 304, __pyx_L1_error)
+      __pyx_t_5 = PyNumber_Add(__pyx_t_8, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 311, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (__Pyx_PrintOne(0, __pyx_t_5) < 0) __PYX_ERR(0, 304, __pyx_L1_error)
+      if (__Pyx_PrintOne(0, __pyx_t_5) < 0) __PYX_ERR(0, 311, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-      /* "hydro_model_cython.pyx":305
+      /* "hydro_model_cython.pyx":312
  *         if sitern > glmaxiter:
  *             print (str(glmaxiter) + " s iterations in cell " + str(sur) + " in " + str(ts))
  *             siter_flag=0             # <<<<<<<<<<<<<<
@@ -5161,7 +4936,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
  */
       __pyx_v_18hydro_model_cython_siter_flag = 0;
 
-      /* "hydro_model_cython.pyx":303
+      /* "hydro_model_cython.pyx":310
  *         sitern = sitern + 1
  * 
  *         if sitern > glmaxiter:             # <<<<<<<<<<<<<<
@@ -5171,14 +4946,14 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
     }
   }
 
-  /* "hydro_model_cython.pyx":308
+  /* "hydro_model_cython.pyx":315
  * #    print "check"
  *     #saving end of time stp variables
  *     glfin_spre[ts,sur] = spre             # <<<<<<<<<<<<<<
  *     glfin_sqout[ts,sur] = sqout
  *     glfin_sa[ts,sur] = glsa_end
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_spre.memview)) { __Pyx_RaiseUnboundLocalError("glfin_spre"); __PYX_ERR(0, 308, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_spre.memview)) { __Pyx_RaiseUnboundLocalError("glfin_spre"); __PYX_ERR(0, 315, __pyx_L1_error) }
   __pyx_t_12 = __pyx_v_18hydro_model_cython_ts;
   __pyx_t_11 = __pyx_v_18hydro_model_cython_sur;
   __pyx_t_3 = -1;
@@ -5192,20 +4967,20 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
   } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfin_spre.shape[1])) __pyx_t_3 = 1;
   if (unlikely(__pyx_t_3 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_3);
-    __PYX_ERR(0, 308, __pyx_L1_error)
+    __PYX_ERR(0, 315, __pyx_L1_error)
   }
   *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_spre.data + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_spre.strides[0]) ) + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_spre.strides[1]) )) = __pyx_v_18hydro_model_cython_spre;
 
-  /* "hydro_model_cython.pyx":309
+  /* "hydro_model_cython.pyx":316
  *     #saving end of time stp variables
  *     glfin_spre[ts,sur] = spre
  *     glfin_sqout[ts,sur] = sqout             # <<<<<<<<<<<<<<
  *     glfin_sa[ts,sur] = glsa_end
  *     glfin_sv[ts,sur] = sv_end
  */
-  if (unlikely(!__pyx_v_sqout)) { __Pyx_RaiseUnboundLocalError("sqout"); __PYX_ERR(0, 309, __pyx_L1_error) }
-  __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_sqout); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 309, __pyx_L1_error)
-  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sqout.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sqout"); __PYX_ERR(0, 309, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_sqout)) { __Pyx_RaiseUnboundLocalError("sqout"); __PYX_ERR(0, 316, __pyx_L1_error) }
+  __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_sqout); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 316, __pyx_L1_error)
+  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sqout.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sqout"); __PYX_ERR(0, 316, __pyx_L1_error) }
   __pyx_t_11 = __pyx_v_18hydro_model_cython_ts;
   __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
   __pyx_t_3 = -1;
@@ -5219,18 +4994,18 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
   } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfin_sqout.shape[1])) __pyx_t_3 = 1;
   if (unlikely(__pyx_t_3 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_3);
-    __PYX_ERR(0, 309, __pyx_L1_error)
+    __PYX_ERR(0, 316, __pyx_L1_error)
   }
   *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_sqout.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_sqout.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_sqout.strides[1]) )) = __pyx_t_15;
 
-  /* "hydro_model_cython.pyx":310
+  /* "hydro_model_cython.pyx":317
  *     glfin_spre[ts,sur] = spre
  *     glfin_sqout[ts,sur] = sqout
  *     glfin_sa[ts,sur] = glsa_end             # <<<<<<<<<<<<<<
  *     glfin_sv[ts,sur] = sv_end
  *     glfin_sev[ts,sur] = sev
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sa.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sa"); __PYX_ERR(0, 310, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sa.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sa"); __PYX_ERR(0, 317, __pyx_L1_error) }
   __pyx_t_12 = __pyx_v_18hydro_model_cython_ts;
   __pyx_t_11 = __pyx_v_18hydro_model_cython_sur;
   __pyx_t_3 = -1;
@@ -5244,18 +5019,18 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
   } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfin_sa.shape[1])) __pyx_t_3 = 1;
   if (unlikely(__pyx_t_3 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_3);
-    __PYX_ERR(0, 310, __pyx_L1_error)
+    __PYX_ERR(0, 317, __pyx_L1_error)
   }
   *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_sa.data + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_sa.strides[0]) ) + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_sa.strides[1]) )) = __pyx_v_18hydro_model_cython_glsa_end;
 
-  /* "hydro_model_cython.pyx":311
+  /* "hydro_model_cython.pyx":318
  *     glfin_sqout[ts,sur] = sqout
  *     glfin_sa[ts,sur] = glsa_end
  *     glfin_sv[ts,sur] = sv_end             # <<<<<<<<<<<<<<
  *     glfin_sev[ts,sur] = sev
  *     glfin_sinf[ts,sur] = glsinf
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sv.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sv"); __PYX_ERR(0, 311, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sv.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sv"); __PYX_ERR(0, 318, __pyx_L1_error) }
   __pyx_t_11 = __pyx_v_18hydro_model_cython_ts;
   __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
   __pyx_t_3 = -1;
@@ -5269,18 +5044,18 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
   } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfin_sv.shape[1])) __pyx_t_3 = 1;
   if (unlikely(__pyx_t_3 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_3);
-    __PYX_ERR(0, 311, __pyx_L1_error)
+    __PYX_ERR(0, 318, __pyx_L1_error)
   }
   *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_sv.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_sv.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_sv.strides[1]) )) = __pyx_v_18hydro_model_cython_sv_end;
 
-  /* "hydro_model_cython.pyx":312
+  /* "hydro_model_cython.pyx":319
  *     glfin_sa[ts,sur] = glsa_end
  *     glfin_sv[ts,sur] = sv_end
  *     glfin_sev[ts,sur] = sev             # <<<<<<<<<<<<<<
  *     glfin_sinf[ts,sur] = glsinf
  * 
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sev.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sev"); __PYX_ERR(0, 312, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sev.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sev"); __PYX_ERR(0, 319, __pyx_L1_error) }
   __pyx_t_12 = __pyx_v_18hydro_model_cython_ts;
   __pyx_t_11 = __pyx_v_18hydro_model_cython_sur;
   __pyx_t_3 = -1;
@@ -5294,18 +5069,18 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
   } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfin_sev.shape[1])) __pyx_t_3 = 1;
   if (unlikely(__pyx_t_3 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_3);
-    __PYX_ERR(0, 312, __pyx_L1_error)
+    __PYX_ERR(0, 319, __pyx_L1_error)
   }
   *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_sev.data + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_sev.strides[0]) ) + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_sev.strides[1]) )) = __pyx_v_18hydro_model_cython_sev;
 
-  /* "hydro_model_cython.pyx":313
+  /* "hydro_model_cython.pyx":320
  *     glfin_sv[ts,sur] = sv_end
  *     glfin_sev[ts,sur] = sev
  *     glfin_sinf[ts,sur] = glsinf             # <<<<<<<<<<<<<<
  * 
  *     glfa_frac_start[sur,:] = glfa_frac_finish[sur,:]
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sinf.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sinf"); __PYX_ERR(0, 313, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sinf.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sinf"); __PYX_ERR(0, 320, __pyx_L1_error) }
   __pyx_t_11 = __pyx_v_18hydro_model_cython_ts;
   __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
   __pyx_t_3 = -1;
@@ -5319,18 +5094,18 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
   } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfin_sinf.shape[1])) __pyx_t_3 = 1;
   if (unlikely(__pyx_t_3 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_3);
-    __PYX_ERR(0, 313, __pyx_L1_error)
+    __PYX_ERR(0, 320, __pyx_L1_error)
   }
   *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_sinf.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_sinf.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_sinf.strides[1]) )) = __pyx_v_18hydro_model_cython_glsinf;
 
-  /* "hydro_model_cython.pyx":315
+  /* "hydro_model_cython.pyx":322
  *     glfin_sinf[ts,sur] = glsinf
  * 
  *     glfa_frac_start[sur,:] = glfa_frac_finish[sur,:]             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_finish.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_finish"); __PYX_ERR(0, 315, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_finish.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_finish"); __PYX_ERR(0, 322, __pyx_L1_error) }
   __pyx_t_16.data = __pyx_v_18hydro_model_cython_glfa_frac_finish.data;
   __pyx_t_16.memview = __pyx_v_18hydro_model_cython_glfa_frac_finish.memview;
   __PYX_INC_MEMVIEW(&__pyx_t_16, 0);
@@ -5343,7 +5118,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_surface_iter(void) {
         if (unlikely(!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape))) {
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 0)");
-            __PYX_ERR(0, 315, __pyx_L1_error)
+            __PYX_ERR(0, 322, __pyx_L1_error)
         }
         __pyx_t_16.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
@@ -5352,7 +5127,7 @@ __pyx_t_16.shape[0] = __pyx_v_18hydro_model_cython_glfa_frac_finish.shape[1];
 __pyx_t_16.strides[0] = __pyx_v_18hydro_model_cython_glfa_frac_finish.strides[1];
     __pyx_t_16.suboffsets[0] = -1;
 
-if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_start.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_start"); __PYX_ERR(0, 315, __pyx_L1_error) }
+if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_start.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_start"); __PYX_ERR(0, 322, __pyx_L1_error) }
   __pyx_t_17.data = __pyx_v_18hydro_model_cython_glfa_frac_start.data;
   __pyx_t_17.memview = __pyx_v_18hydro_model_cython_glfa_frac_start.memview;
   __PYX_INC_MEMVIEW(&__pyx_t_17, 0);
@@ -5365,7 +5140,7 @@ if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_start.memview)) { __Pyx_Rai
         if (unlikely(!__Pyx_is_valid_index(__pyx_tmp_idx, __pyx_tmp_shape))) {
             PyErr_SetString(PyExc_IndexError,
                             "Index out of bounds (axis 0)");
-            __PYX_ERR(0, 315, __pyx_L1_error)
+            __PYX_ERR(0, 322, __pyx_L1_error)
         }
         __pyx_t_17.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
@@ -5374,7 +5149,7 @@ __pyx_t_17.shape[0] = __pyx_v_18hydro_model_cython_glfa_frac_start.shape[1];
 __pyx_t_17.strides[0] = __pyx_v_18hydro_model_cython_glfa_frac_start.strides[1];
     __pyx_t_17.suboffsets[0] = -1;
 
-if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_16, __pyx_t_17, 1, 1, 0) < 0)) __PYX_ERR(0, 315, __pyx_L1_error)
+if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_16, __pyx_t_17, 1, 1, 0) < 0)) __PYX_ERR(0, 322, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_t_17, 1);
   __pyx_t_17.memview = NULL;
   __pyx_t_17.data = NULL;
@@ -5382,7 +5157,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_16, __pyx_t_17, 1, 1, 0) < 0
   __pyx_t_16.memview = NULL;
   __pyx_t_16.data = NULL;
 
-  /* "hydro_model_cython.pyx":319
+  /* "hydro_model_cython.pyx":326
  * 
  *     #get inflows to the downstream cells
  *     for n in range(10):             # <<<<<<<<<<<<<<
@@ -5392,14 +5167,14 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_16, __pyx_t_17, 1, 1, 0) < 0
   for (__pyx_t_10 = 0; __pyx_t_10 < 10; __pyx_t_10+=1) {
     __pyx_v_18hydro_model_cython_n = __pyx_t_10;
 
-    /* "hydro_model_cython.pyx":320
+    /* "hydro_model_cython.pyx":327
  *     #get inflows to the downstream cells
  *     for n in range(10):
  *         cellno=int(glspar[sur,n+20])             # <<<<<<<<<<<<<<
  *         if cellno>0:
  *             glfin_sqin[ts,cellno] = glfin_sqin[ts,cellno] + celloutflows[n]
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnboundLocalError("glspar"); __PYX_ERR(0, 320, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_glspar.memview)) { __Pyx_RaiseUnboundLocalError("glspar"); __PYX_ERR(0, 327, __pyx_L1_error) }
     __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
     __pyx_t_11 = (__pyx_v_18hydro_model_cython_n + 20);
     __pyx_t_3 = -1;
@@ -5413,11 +5188,11 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_16, __pyx_t_17, 1, 1, 0) < 0
     } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glspar.shape[1])) __pyx_t_3 = 1;
     if (unlikely(__pyx_t_3 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_3);
-      __PYX_ERR(0, 320, __pyx_L1_error)
+      __PYX_ERR(0, 327, __pyx_L1_error)
     }
     __pyx_v_18hydro_model_cython_cellno = ((int)(*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glspar.data + __pyx_t_12 * __pyx_v_18hydro_model_cython_glspar.strides[0]) ) + __pyx_t_11 * __pyx_v_18hydro_model_cython_glspar.strides[1]) ))));
 
-    /* "hydro_model_cython.pyx":321
+    /* "hydro_model_cython.pyx":328
  *     for n in range(10):
  *         cellno=int(glspar[sur,n+20])
  *         if cellno>0:             # <<<<<<<<<<<<<<
@@ -5427,14 +5202,14 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_16, __pyx_t_17, 1, 1, 0) < 0
     __pyx_t_9 = ((__pyx_v_18hydro_model_cython_cellno > 0) != 0);
     if (__pyx_t_9) {
 
-      /* "hydro_model_cython.pyx":322
+      /* "hydro_model_cython.pyx":329
  *         cellno=int(glspar[sur,n+20])
  *         if cellno>0:
  *             glfin_sqin[ts,cellno] = glfin_sqin[ts,cellno] + celloutflows[n]             # <<<<<<<<<<<<<<
  * 
  * #    print("end surface")
  */
-      if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sqin.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sqin"); __PYX_ERR(0, 322, __pyx_L1_error) }
+      if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sqin.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sqin"); __PYX_ERR(0, 329, __pyx_L1_error) }
       __pyx_t_11 = __pyx_v_18hydro_model_cython_ts;
       __pyx_t_12 = __pyx_v_18hydro_model_cython_cellno;
       __pyx_t_3 = -1;
@@ -5448,9 +5223,9 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_16, __pyx_t_17, 1, 1, 0) < 0
       } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfin_sqin.shape[1])) __pyx_t_3 = 1;
       if (unlikely(__pyx_t_3 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_3);
-        __PYX_ERR(0, 322, __pyx_L1_error)
+        __PYX_ERR(0, 329, __pyx_L1_error)
       }
-      if (unlikely(!__pyx_v_18hydro_model_cython_celloutflows.memview)) { __Pyx_RaiseUnboundLocalError("celloutflows"); __PYX_ERR(0, 322, __pyx_L1_error) }
+      if (unlikely(!__pyx_v_18hydro_model_cython_celloutflows.memview)) { __Pyx_RaiseUnboundLocalError("celloutflows"); __PYX_ERR(0, 329, __pyx_L1_error) }
       __pyx_t_2 = __pyx_v_18hydro_model_cython_n;
       __pyx_t_3 = -1;
       if (__pyx_t_2 < 0) {
@@ -5459,9 +5234,9 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_16, __pyx_t_17, 1, 1, 0) < 0
       } else if (unlikely(__pyx_t_2 >= __pyx_v_18hydro_model_cython_celloutflows.shape[0])) __pyx_t_3 = 0;
       if (unlikely(__pyx_t_3 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_3);
-        __PYX_ERR(0, 322, __pyx_L1_error)
+        __PYX_ERR(0, 329, __pyx_L1_error)
       }
-      if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sqin.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sqin"); __PYX_ERR(0, 322, __pyx_L1_error) }
+      if (unlikely(!__pyx_v_18hydro_model_cython_glfin_sqin.memview)) { __Pyx_RaiseUnboundLocalError("glfin_sqin"); __PYX_ERR(0, 329, __pyx_L1_error) }
       __pyx_t_1 = __pyx_v_18hydro_model_cython_ts;
       __pyx_t_13 = __pyx_v_18hydro_model_cython_cellno;
       __pyx_t_3 = -1;
@@ -5475,11 +5250,11 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_16, __pyx_t_17, 1, 1, 0) < 0
       } else if (unlikely(__pyx_t_13 >= __pyx_v_18hydro_model_cython_glfin_sqin.shape[1])) __pyx_t_3 = 1;
       if (unlikely(__pyx_t_3 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_3);
-        __PYX_ERR(0, 322, __pyx_L1_error)
+        __PYX_ERR(0, 329, __pyx_L1_error)
       }
       *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_sqin.data + __pyx_t_1 * __pyx_v_18hydro_model_cython_glfin_sqin.strides[0]) ) + __pyx_t_13 * __pyx_v_18hydro_model_cython_glfin_sqin.strides[1]) )) = ((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_sqin.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_sqin.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_sqin.strides[1]) ))) + (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_celloutflows.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_celloutflows.strides[0]) ))));
 
-      /* "hydro_model_cython.pyx":321
+      /* "hydro_model_cython.pyx":328
  *     for n in range(10):
  *         cellno=int(glspar[sur,n+20])
  *         if cellno>0:             # <<<<<<<<<<<<<<
@@ -5489,7 +5264,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_16, __pyx_t_17, 1, 1, 0) < 0
     }
   }
 
-  /* "hydro_model_cython.pyx":165
+  /* "hydro_model_cython.pyx":172
  * 
  * #***************************************************************************
  * cdef calc_surface_iter():             # <<<<<<<<<<<<<<
@@ -5516,7 +5291,7 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_16, __pyx_t_17, 1, 1, 0) < 0
   return __pyx_r;
 }
 
-/* "hydro_model_cython.pyx":330
+/* "hydro_model_cython.pyx":337
  * 
  * #*****************************************************************************
  * cdef calc_gw_iter():             # <<<<<<<<<<<<<<
@@ -5525,7 +5300,6 @@ if (unlikely(__pyx_memoryview_copy_contents(__pyx_t_16, __pyx_t_17, 1, 1, 0) < 0
  */
 
 static PyObject *__pyx_f_18hydro_model_cython_calc_gw_iter(void) {
-  CYTHON_UNUSED PyObject *__pyx_v_glfv_max = NULL;
   PyObject *__pyx_v_siv_adv = NULL;
   PyObject *__pyx_v_siv_front = NULL;
   PyObject *__pyx_v_finf = NULL;
@@ -5534,53 +5308,43 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_gw_iter(void) {
   Py_ssize_t __pyx_t_1;
   Py_ssize_t __pyx_t_2;
   Py_ssize_t __pyx_t_3;
-  Py_ssize_t __pyx_t_4;
-  int __pyx_t_5;
+  int __pyx_t_4;
+  Py_ssize_t __pyx_t_5;
   int __pyx_t_6;
   int __pyx_t_7;
   float __pyx_t_8;
-  double __pyx_t_9;
-  float __pyx_t_10;
+  Py_ssize_t __pyx_t_9;
+  Py_ssize_t __pyx_t_10;
   Py_ssize_t __pyx_t_11;
-  Py_ssize_t __pyx_t_12;
-  Py_ssize_t __pyx_t_13;
+  PyObject *__pyx_t_12 = NULL;
+  PyObject *__pyx_t_13 = NULL;
   PyObject *__pyx_t_14 = NULL;
-  PyObject *__pyx_t_15 = NULL;
-  PyObject *__pyx_t_16 = NULL;
+  double __pyx_t_15;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("calc_gw_iter", 0);
 
-  /* "hydro_model_cython.pyx":339
+  /* "hydro_model_cython.pyx":346
  *     #-----------------------------------------------------------------------------
  *     #get initial values of variables
  *     fa_cum=0             # <<<<<<<<<<<<<<
- *     fa_incrfrac=0
- *     fa_cumprev=0
- */
-  __pyx_v_18hydro_model_cython_fa_cum = 0.0;
-
-  /* "hydro_model_cython.pyx":340
- *     #get initial values of variables
- *     fa_cum=0
- *     fa_incrfrac=0             # <<<<<<<<<<<<<<
  *     fa_cumprev=0
  *     glsinf = 0
  */
-  __pyx_v_18hydro_model_cython_fa_incrfrac = 0.0;
+  __pyx_v_18hydro_model_cython_fa_cum = 0.0;
 
-  /* "hydro_model_cython.pyx":341
+  /* "hydro_model_cython.pyx":347
+ *     #get initial values of variables
  *     fa_cum=0
- *     fa_incrfrac=0
  *     fa_cumprev=0             # <<<<<<<<<<<<<<
  *     glsinf = 0
  * 
  */
   __pyx_v_18hydro_model_cython_fa_cumprev = 0.0;
 
-  /* "hydro_model_cython.pyx":342
- *     fa_incrfrac=0
+  /* "hydro_model_cython.pyx":348
+ *     fa_cum=0
  *     fa_cumprev=0
  *     glsinf = 0             # <<<<<<<<<<<<<<
  * 
@@ -5588,14 +5352,14 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_gw_iter(void) {
  */
   __pyx_v_18hydro_model_cython_glsinf = 0.0;
 
-  /* "hydro_model_cython.pyx":348
- *     # calculate status of gwcells flooding at the end of the time step
+  /* "hydro_model_cython.pyx":355
  *     # this is done for calculating rapid infiltration
- *     fa_frac[:]=0 #it is fraction of cell flooded at the end of the timestep             # <<<<<<<<<<<<<<
  * 
- *     for gw in range(ngw):
+ *     fa_frac[:]=0 #it is fraction of cell flooded at the end of the timestep             # <<<<<<<<<<<<<<
+ *     fa_incrfrac[:]=0
+ * 
  */
-  if (unlikely(!__pyx_v_18hydro_model_cython_fa_frac.memview)) { __Pyx_RaiseUnboundLocalError("fa_frac"); __PYX_ERR(0, 348, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_18hydro_model_cython_fa_frac.memview)) { __Pyx_RaiseUnboundLocalError("fa_frac"); __PYX_ERR(0, 355, __pyx_L1_error) }
   {
       double __pyx_temp_scalar = 0.0;
       {
@@ -5611,80 +5375,92 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_gw_iter(void) {
       }
   }
 
-  /* "hydro_model_cython.pyx":350
+  /* "hydro_model_cython.pyx":356
+ * 
  *     fa_frac[:]=0 #it is fraction of cell flooded at the end of the timestep
+ *     fa_incrfrac[:]=0             # <<<<<<<<<<<<<<
+ * 
+ *     for gw in range(ngw):
+ */
+  if (unlikely(!__pyx_v_18hydro_model_cython_fa_incrfrac.memview)) { __Pyx_RaiseUnboundLocalError("fa_incrfrac"); __PYX_ERR(0, 356, __pyx_L1_error) }
+  {
+      double __pyx_temp_scalar = 0.0;
+      {
+          Py_ssize_t __pyx_temp_extent_0 = __pyx_v_18hydro_model_cython_fa_incrfrac.shape[0];
+          Py_ssize_t __pyx_temp_stride_0 = __pyx_v_18hydro_model_cython_fa_incrfrac.strides[0];
+          char *__pyx_temp_pointer_0;
+          Py_ssize_t __pyx_temp_idx_0;
+          __pyx_temp_pointer_0 = __pyx_v_18hydro_model_cython_fa_incrfrac.data;
+          for (__pyx_temp_idx_0 = 0; __pyx_temp_idx_0 < __pyx_temp_extent_0; __pyx_temp_idx_0++) {
+            *((double *) __pyx_temp_pointer_0) = __pyx_temp_scalar;
+            __pyx_temp_pointer_0 += __pyx_temp_stride_0;
+          }
+      }
+  }
+
+  /* "hydro_model_cython.pyx":358
+ *     fa_incrfrac[:]=0
  * 
  *     for gw in range(ngw):             # <<<<<<<<<<<<<<
  *         fa_cumprev = fa_cum #it's ok, because on the first cell fa_cum is 0
- *         fa_cum = fa_cum + glfa[sur]
+ *         fa_cum = fa_cum + glfarea #glfa[sur]
  */
   __pyx_t_1 = __pyx_v_18hydro_model_cython_ngw;
   __pyx_t_2 = __pyx_t_1;
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_18hydro_model_cython_gw = __pyx_t_3;
 
-    /* "hydro_model_cython.pyx":351
+    /* "hydro_model_cython.pyx":359
  * 
  *     for gw in range(ngw):
  *         fa_cumprev = fa_cum #it's ok, because on the first cell fa_cum is 0             # <<<<<<<<<<<<<<
- *         fa_cum = fa_cum + glfa[sur]
+ *         fa_cum = fa_cum + glfarea #glfa[sur]
  *         if fa_cum <= glsa_end:
  */
     __pyx_v_18hydro_model_cython_fa_cumprev = __pyx_v_18hydro_model_cython_fa_cum;
 
-    /* "hydro_model_cython.pyx":352
+    /* "hydro_model_cython.pyx":360
  *     for gw in range(ngw):
  *         fa_cumprev = fa_cum #it's ok, because on the first cell fa_cum is 0
- *         fa_cum = fa_cum + glfa[sur]             # <<<<<<<<<<<<<<
+ *         fa_cum = fa_cum + glfarea #glfa[sur]             # <<<<<<<<<<<<<<
  *         if fa_cum <= glsa_end:
  *             #cell entirely flooded
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 352, __pyx_L1_error) }
-    __pyx_t_4 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_5 = -1;
-    if (__pyx_t_4 < 0) {
-      __pyx_t_4 += __pyx_v_18hydro_model_cython_glfa.shape[0];
-      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_5 = 0;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 352, __pyx_L1_error)
-    }
-    __pyx_v_18hydro_model_cython_fa_cum = (__pyx_v_18hydro_model_cython_fa_cum + (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_4 * __pyx_v_18hydro_model_cython_glfa.strides[0]) ))));
+    __pyx_v_18hydro_model_cython_fa_cum = (__pyx_v_18hydro_model_cython_fa_cum + __pyx_v_18hydro_model_cython_glfarea);
 
-    /* "hydro_model_cython.pyx":353
+    /* "hydro_model_cython.pyx":361
  *         fa_cumprev = fa_cum #it's ok, because on the first cell fa_cum is 0
- *         fa_cum = fa_cum + glfa[sur]
+ *         fa_cum = fa_cum + glfarea #glfa[sur]
  *         if fa_cum <= glsa_end:             # <<<<<<<<<<<<<<
  *             #cell entirely flooded
  *             fa_frac[gw] = 1
  */
-    __pyx_t_6 = ((__pyx_v_18hydro_model_cython_fa_cum <= __pyx_v_18hydro_model_cython_glsa_end) != 0);
-    if (__pyx_t_6) {
+    __pyx_t_4 = ((__pyx_v_18hydro_model_cython_fa_cum <= __pyx_v_18hydro_model_cython_glsa_end) != 0);
+    if (__pyx_t_4) {
 
-      /* "hydro_model_cython.pyx":355
+      /* "hydro_model_cython.pyx":363
  *         if fa_cum <= glsa_end:
  *             #cell entirely flooded
  *             fa_frac[gw] = 1             # <<<<<<<<<<<<<<
  *         elif fa_cum > glsa_end and fa_cumprev <= glsa_end:
  *             #cell partially flooded
  */
-      if (unlikely(!__pyx_v_18hydro_model_cython_fa_frac.memview)) { __Pyx_RaiseUnboundLocalError("fa_frac"); __PYX_ERR(0, 355, __pyx_L1_error) }
-      __pyx_t_4 = __pyx_v_18hydro_model_cython_gw;
-      __pyx_t_5 = -1;
-      if (__pyx_t_4 < 0) {
-        __pyx_t_4 += __pyx_v_18hydro_model_cython_fa_frac.shape[0];
-        if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
-      } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_fa_frac.shape[0])) __pyx_t_5 = 0;
-      if (unlikely(__pyx_t_5 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_5);
-        __PYX_ERR(0, 355, __pyx_L1_error)
+      if (unlikely(!__pyx_v_18hydro_model_cython_fa_frac.memview)) { __Pyx_RaiseUnboundLocalError("fa_frac"); __PYX_ERR(0, 363, __pyx_L1_error) }
+      __pyx_t_5 = __pyx_v_18hydro_model_cython_gw;
+      __pyx_t_6 = -1;
+      if (__pyx_t_5 < 0) {
+        __pyx_t_5 += __pyx_v_18hydro_model_cython_fa_frac.shape[0];
+        if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 0;
+      } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_fa_frac.shape[0])) __pyx_t_6 = 0;
+      if (unlikely(__pyx_t_6 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_6);
+        __PYX_ERR(0, 363, __pyx_L1_error)
       }
-      *((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_fa_frac.data + __pyx_t_4 * __pyx_v_18hydro_model_cython_fa_frac.strides[0]) )) = 1.0;
+      *((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_fa_frac.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_fa_frac.strides[0]) )) = 1.0;
 
-      /* "hydro_model_cython.pyx":353
+      /* "hydro_model_cython.pyx":361
  *         fa_cumprev = fa_cum #it's ok, because on the first cell fa_cum is 0
- *         fa_cum = fa_cum + glfa[sur]
+ *         fa_cum = fa_cum + glfarea #glfa[sur]
  *         if fa_cum <= glsa_end:             # <<<<<<<<<<<<<<
  *             #cell entirely flooded
  *             fa_frac[gw] = 1
@@ -5692,249 +5468,232 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_gw_iter(void) {
       goto __pyx_L5;
     }
 
-    /* "hydro_model_cython.pyx":356
+    /* "hydro_model_cython.pyx":364
  *             #cell entirely flooded
  *             fa_frac[gw] = 1
  *         elif fa_cum > glsa_end and fa_cumprev <= glsa_end:             # <<<<<<<<<<<<<<
  *             #cell partially flooded
- *             fa_frac[gw] = (glsa_end - fa_cumprev) / glfa[sur]
+ *             fa_frac[gw] = (glsa_end - fa_cumprev) / glfarea#glfa[sur]
  */
     __pyx_t_7 = ((__pyx_v_18hydro_model_cython_fa_cum > __pyx_v_18hydro_model_cython_glsa_end) != 0);
     if (__pyx_t_7) {
     } else {
-      __pyx_t_6 = __pyx_t_7;
+      __pyx_t_4 = __pyx_t_7;
       goto __pyx_L6_bool_binop_done;
     }
     __pyx_t_7 = ((__pyx_v_18hydro_model_cython_fa_cumprev <= __pyx_v_18hydro_model_cython_glsa_end) != 0);
-    __pyx_t_6 = __pyx_t_7;
+    __pyx_t_4 = __pyx_t_7;
     __pyx_L6_bool_binop_done:;
-    if (__pyx_t_6) {
+    if (__pyx_t_4) {
 
-      /* "hydro_model_cython.pyx":358
+      /* "hydro_model_cython.pyx":366
  *         elif fa_cum > glsa_end and fa_cumprev <= glsa_end:
  *             #cell partially flooded
- *             fa_frac[gw] = (glsa_end - fa_cumprev) / glfa[sur]             # <<<<<<<<<<<<<<
- *             if glsa_beg > fa_cumprev and glsa_end > glsa_beg:
- *                 #if cell partially flooded previously
+ *             fa_frac[gw] = (glsa_end - fa_cumprev) / glfarea#glfa[sur]             # <<<<<<<<<<<<<<
+ * 
+ *         fincr=fa_frac[gw] - glfa_frac_start[sur, gw]
  */
       __pyx_t_8 = (__pyx_v_18hydro_model_cython_glsa_end - __pyx_v_18hydro_model_cython_fa_cumprev);
-      if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 358, __pyx_L1_error) }
-      __pyx_t_4 = __pyx_v_18hydro_model_cython_sur;
-      __pyx_t_5 = -1;
-      if (__pyx_t_4 < 0) {
-        __pyx_t_4 += __pyx_v_18hydro_model_cython_glfa.shape[0];
-        if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
-      } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_5 = 0;
-      if (unlikely(__pyx_t_5 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_5);
-        __PYX_ERR(0, 358, __pyx_L1_error)
-      }
-      __pyx_t_9 = (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_4 * __pyx_v_18hydro_model_cython_glfa.strides[0]) )));
-      if (unlikely(__pyx_t_9 == 0)) {
+      if (unlikely(__pyx_v_18hydro_model_cython_glfarea == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 358, __pyx_L1_error)
+        __PYX_ERR(0, 366, __pyx_L1_error)
       }
-      if (unlikely(!__pyx_v_18hydro_model_cython_fa_frac.memview)) { __Pyx_RaiseUnboundLocalError("fa_frac"); __PYX_ERR(0, 358, __pyx_L1_error) }
-      __pyx_t_4 = __pyx_v_18hydro_model_cython_gw;
-      __pyx_t_5 = -1;
-      if (__pyx_t_4 < 0) {
-        __pyx_t_4 += __pyx_v_18hydro_model_cython_fa_frac.shape[0];
-        if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
-      } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_fa_frac.shape[0])) __pyx_t_5 = 0;
-      if (unlikely(__pyx_t_5 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_5);
-        __PYX_ERR(0, 358, __pyx_L1_error)
+      if (unlikely(!__pyx_v_18hydro_model_cython_fa_frac.memview)) { __Pyx_RaiseUnboundLocalError("fa_frac"); __PYX_ERR(0, 366, __pyx_L1_error) }
+      __pyx_t_5 = __pyx_v_18hydro_model_cython_gw;
+      __pyx_t_6 = -1;
+      if (__pyx_t_5 < 0) {
+        __pyx_t_5 += __pyx_v_18hydro_model_cython_fa_frac.shape[0];
+        if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 0;
+      } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_fa_frac.shape[0])) __pyx_t_6 = 0;
+      if (unlikely(__pyx_t_6 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_6);
+        __PYX_ERR(0, 366, __pyx_L1_error)
       }
-      *((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_fa_frac.data + __pyx_t_4 * __pyx_v_18hydro_model_cython_fa_frac.strides[0]) )) = (__pyx_t_8 / __pyx_t_9);
-
-      /* "hydro_model_cython.pyx":359
- *             #cell partially flooded
- *             fa_frac[gw] = (glsa_end - fa_cumprev) / glfa[sur]
- *             if glsa_beg > fa_cumprev and glsa_end > glsa_beg:             # <<<<<<<<<<<<<<
- *                 #if cell partially flooded previously
- *                  fa_incrfrac = (glsa_end - glsa_beg) / (fa_cum - glsa_beg) #this is ok, because incrfac is fraction of the part that is not flooded yet
- */
-      __pyx_t_7 = ((__pyx_v_18hydro_model_cython_glsa_beg > __pyx_v_18hydro_model_cython_fa_cumprev) != 0);
-      if (__pyx_t_7) {
-      } else {
-        __pyx_t_6 = __pyx_t_7;
-        goto __pyx_L9_bool_binop_done;
-      }
-      __pyx_t_7 = ((__pyx_v_18hydro_model_cython_glsa_end > __pyx_v_18hydro_model_cython_glsa_beg) != 0);
-      __pyx_t_6 = __pyx_t_7;
-      __pyx_L9_bool_binop_done:;
-      if (__pyx_t_6) {
-
-        /* "hydro_model_cython.pyx":361
- *             if glsa_beg > fa_cumprev and glsa_end > glsa_beg:
- *                 #if cell partially flooded previously
- *                  fa_incrfrac = (glsa_end - glsa_beg) / (fa_cum - glsa_beg) #this is ok, because incrfac is fraction of the part that is not flooded yet             # <<<<<<<<<<<<<<
- *             else:
- *                 #if cell not flooded previously
- */
-        __pyx_t_8 = (__pyx_v_18hydro_model_cython_glsa_end - __pyx_v_18hydro_model_cython_glsa_beg);
-        __pyx_t_10 = (__pyx_v_18hydro_model_cython_fa_cum - __pyx_v_18hydro_model_cython_glsa_beg);
-        if (unlikely(__pyx_t_10 == 0)) {
-          PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-          __PYX_ERR(0, 361, __pyx_L1_error)
-        }
-        __pyx_v_18hydro_model_cython_fa_incrfrac = (__pyx_t_8 / __pyx_t_10);
-
-        /* "hydro_model_cython.pyx":359
- *             #cell partially flooded
- *             fa_frac[gw] = (glsa_end - fa_cumprev) / glfa[sur]
- *             if glsa_beg > fa_cumprev and glsa_end > glsa_beg:             # <<<<<<<<<<<<<<
- *                 #if cell partially flooded previously
- *                  fa_incrfrac = (glsa_end - glsa_beg) / (fa_cum - glsa_beg) #this is ok, because incrfac is fraction of the part that is not flooded yet
- */
-        goto __pyx_L8;
-      }
+      *((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_fa_frac.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_fa_frac.strides[0]) )) = (__pyx_t_8 / __pyx_v_18hydro_model_cython_glfarea);
 
       /* "hydro_model_cython.pyx":364
- *             else:
- *                 #if cell not flooded previously
- *                 fa_incrfrac = fa_frac[gw]             # <<<<<<<<<<<<<<
- *         else:
- *             #cell not flooded
- */
-      /*else*/ {
-        if (unlikely(!__pyx_v_18hydro_model_cython_fa_frac.memview)) { __Pyx_RaiseUnboundLocalError("fa_frac"); __PYX_ERR(0, 364, __pyx_L1_error) }
-        __pyx_t_4 = __pyx_v_18hydro_model_cython_gw;
-        __pyx_t_5 = -1;
-        if (__pyx_t_4 < 0) {
-          __pyx_t_4 += __pyx_v_18hydro_model_cython_fa_frac.shape[0];
-          if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
-        } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_fa_frac.shape[0])) __pyx_t_5 = 0;
-        if (unlikely(__pyx_t_5 != -1)) {
-          __Pyx_RaiseBufferIndexError(__pyx_t_5);
-          __PYX_ERR(0, 364, __pyx_L1_error)
-        }
-        __pyx_v_18hydro_model_cython_fa_incrfrac = (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_fa_frac.data + __pyx_t_4 * __pyx_v_18hydro_model_cython_fa_frac.strides[0]) )));
-      }
-      __pyx_L8:;
-
-      /* "hydro_model_cython.pyx":356
  *             #cell entirely flooded
  *             fa_frac[gw] = 1
  *         elif fa_cum > glsa_end and fa_cumprev <= glsa_end:             # <<<<<<<<<<<<<<
  *             #cell partially flooded
- *             fa_frac[gw] = (glsa_end - fa_cumprev) / glfa[sur]
+ *             fa_frac[gw] = (glsa_end - fa_cumprev) / glfarea#glfa[sur]
  */
-      goto __pyx_L5;
-    }
-
-    /* "hydro_model_cython.pyx":367
- *         else:
- *             #cell not flooded
- *             fa_frac[gw] = 0             # <<<<<<<<<<<<<<
- *         #this is correct fraction ONLY if there is no expansion of flood
- *         glfa_frac_avg[gw] = (fa_frac[gw] + glfa_frac_start[sur, gw]) / 2
- */
-    /*else*/ {
-      if (unlikely(!__pyx_v_18hydro_model_cython_fa_frac.memview)) { __Pyx_RaiseUnboundLocalError("fa_frac"); __PYX_ERR(0, 367, __pyx_L1_error) }
-      __pyx_t_4 = __pyx_v_18hydro_model_cython_gw;
-      __pyx_t_5 = -1;
-      if (__pyx_t_4 < 0) {
-        __pyx_t_4 += __pyx_v_18hydro_model_cython_fa_frac.shape[0];
-        if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
-      } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_fa_frac.shape[0])) __pyx_t_5 = 0;
-      if (unlikely(__pyx_t_5 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_5);
-        __PYX_ERR(0, 367, __pyx_L1_error)
-      }
-      *((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_fa_frac.data + __pyx_t_4 * __pyx_v_18hydro_model_cython_fa_frac.strides[0]) )) = 0.0;
     }
     __pyx_L5:;
 
+    /* "hydro_model_cython.pyx":368
+ *             fa_frac[gw] = (glsa_end - fa_cumprev) / glfarea#glfa[sur]
+ * 
+ *         fincr=fa_frac[gw] - glfa_frac_start[sur, gw]             # <<<<<<<<<<<<<<
+ *         if fincr<0:
+ *             fincr=0
+ */
+    if (unlikely(!__pyx_v_18hydro_model_cython_fa_frac.memview)) { __Pyx_RaiseUnboundLocalError("fa_frac"); __PYX_ERR(0, 368, __pyx_L1_error) }
+    __pyx_t_5 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_18hydro_model_cython_fa_frac.shape[0];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_fa_frac.shape[0])) __pyx_t_6 = 0;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 368, __pyx_L1_error)
+    }
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_start.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_start"); __PYX_ERR(0, 368, __pyx_L1_error) }
+    __pyx_t_9 = __pyx_v_18hydro_model_cython_sur;
+    __pyx_t_10 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_18hydro_model_cython_glfa_frac_start.shape[0];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_glfa_frac_start.shape[0])) __pyx_t_6 = 0;
+    if (__pyx_t_10 < 0) {
+      __pyx_t_10 += __pyx_v_18hydro_model_cython_glfa_frac_start.shape[1];
+      if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 1;
+    } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_glfa_frac_start.shape[1])) __pyx_t_6 = 1;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 368, __pyx_L1_error)
+    }
+    __pyx_v_18hydro_model_cython_fincr = ((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_fa_frac.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_fa_frac.strides[0]) ))) - (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_start.data + __pyx_t_9 * __pyx_v_18hydro_model_cython_glfa_frac_start.strides[0]) ) + __pyx_t_10 * __pyx_v_18hydro_model_cython_glfa_frac_start.strides[1]) ))));
+
     /* "hydro_model_cython.pyx":369
- *             fa_frac[gw] = 0
- *         #this is correct fraction ONLY if there is no expansion of flood
+ * 
+ *         fincr=fa_frac[gw] - glfa_frac_start[sur, gw]
+ *         if fincr<0:             # <<<<<<<<<<<<<<
+ *             fincr=0
+ *         fa_incrfrac[gw] =  fincr#incrfac is fraction of the cell that is flooded during this time step
+ */
+    __pyx_t_4 = ((__pyx_v_18hydro_model_cython_fincr < 0.0) != 0);
+    if (__pyx_t_4) {
+
+      /* "hydro_model_cython.pyx":370
+ *         fincr=fa_frac[gw] - glfa_frac_start[sur, gw]
+ *         if fincr<0:
+ *             fincr=0             # <<<<<<<<<<<<<<
+ *         fa_incrfrac[gw] =  fincr#incrfac is fraction of the cell that is flooded during this time step
+ *         glfa_frac_avg[gw] = (fa_frac[gw] + glfa_frac_start[sur, gw]) / 2
+ */
+      __pyx_v_18hydro_model_cython_fincr = 0.0;
+
+      /* "hydro_model_cython.pyx":369
+ * 
+ *         fincr=fa_frac[gw] - glfa_frac_start[sur, gw]
+ *         if fincr<0:             # <<<<<<<<<<<<<<
+ *             fincr=0
+ *         fa_incrfrac[gw] =  fincr#incrfac is fraction of the cell that is flooded during this time step
+ */
+    }
+
+    /* "hydro_model_cython.pyx":371
+ *         if fincr<0:
+ *             fincr=0
+ *         fa_incrfrac[gw] =  fincr#incrfac is fraction of the cell that is flooded during this time step             # <<<<<<<<<<<<<<
+ *         glfa_frac_avg[gw] = (fa_frac[gw] + glfa_frac_start[sur, gw]) / 2
+ *         glfa_frac_finish[sur,gw] = fa_frac[gw]
+ */
+    if (unlikely(!__pyx_v_18hydro_model_cython_fa_incrfrac.memview)) { __Pyx_RaiseUnboundLocalError("fa_incrfrac"); __PYX_ERR(0, 371, __pyx_L1_error) }
+    __pyx_t_10 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_10 < 0) {
+      __pyx_t_10 += __pyx_v_18hydro_model_cython_fa_incrfrac.shape[0];
+      if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_fa_incrfrac.shape[0])) __pyx_t_6 = 0;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 371, __pyx_L1_error)
+    }
+    *((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_fa_incrfrac.data + __pyx_t_10 * __pyx_v_18hydro_model_cython_fa_incrfrac.strides[0]) )) = __pyx_v_18hydro_model_cython_fincr;
+
+    /* "hydro_model_cython.pyx":372
+ *             fincr=0
+ *         fa_incrfrac[gw] =  fincr#incrfac is fraction of the cell that is flooded during this time step
  *         glfa_frac_avg[gw] = (fa_frac[gw] + glfa_frac_start[sur, gw]) / 2             # <<<<<<<<<<<<<<
  *         glfa_frac_finish[sur,gw] = fa_frac[gw]
  * 
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_fa_frac.memview)) { __Pyx_RaiseUnboundLocalError("fa_frac"); __PYX_ERR(0, 369, __pyx_L1_error) }
-    __pyx_t_4 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
-    if (__pyx_t_4 < 0) {
-      __pyx_t_4 += __pyx_v_18hydro_model_cython_fa_frac.shape[0];
-      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_fa_frac.shape[0])) __pyx_t_5 = 0;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 369, __pyx_L1_error)
+    if (unlikely(!__pyx_v_18hydro_model_cython_fa_frac.memview)) { __Pyx_RaiseUnboundLocalError("fa_frac"); __PYX_ERR(0, 372, __pyx_L1_error) }
+    __pyx_t_10 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_10 < 0) {
+      __pyx_t_10 += __pyx_v_18hydro_model_cython_fa_frac.shape[0];
+      if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_fa_frac.shape[0])) __pyx_t_6 = 0;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 372, __pyx_L1_error)
     }
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_start.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_start"); __PYX_ERR(0, 369, __pyx_L1_error) }
-    __pyx_t_11 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_12 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_start.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_start"); __PYX_ERR(0, 372, __pyx_L1_error) }
+    __pyx_t_9 = __pyx_v_18hydro_model_cython_sur;
+    __pyx_t_5 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_18hydro_model_cython_glfa_frac_start.shape[0];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_glfa_frac_start.shape[0])) __pyx_t_6 = 0;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_18hydro_model_cython_glfa_frac_start.shape[1];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 1;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfa_frac_start.shape[1])) __pyx_t_6 = 1;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 372, __pyx_L1_error)
+    }
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_avg.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_avg"); __PYX_ERR(0, 372, __pyx_L1_error) }
+    __pyx_t_11 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
     if (__pyx_t_11 < 0) {
-      __pyx_t_11 += __pyx_v_18hydro_model_cython_glfa_frac_start.shape[0];
-      if (unlikely(__pyx_t_11 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfa_frac_start.shape[0])) __pyx_t_5 = 0;
-    if (__pyx_t_12 < 0) {
-      __pyx_t_12 += __pyx_v_18hydro_model_cython_glfa_frac_start.shape[1];
-      if (unlikely(__pyx_t_12 < 0)) __pyx_t_5 = 1;
-    } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfa_frac_start.shape[1])) __pyx_t_5 = 1;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 369, __pyx_L1_error)
+      __pyx_t_11 += __pyx_v_18hydro_model_cython_glfa_frac_avg.shape[0];
+      if (unlikely(__pyx_t_11 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfa_frac_avg.shape[0])) __pyx_t_6 = 0;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 372, __pyx_L1_error)
     }
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_avg.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_avg"); __PYX_ERR(0, 369, __pyx_L1_error) }
-    __pyx_t_13 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
-    if (__pyx_t_13 < 0) {
-      __pyx_t_13 += __pyx_v_18hydro_model_cython_glfa_frac_avg.shape[0];
-      if (unlikely(__pyx_t_13 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_13 >= __pyx_v_18hydro_model_cython_glfa_frac_avg.shape[0])) __pyx_t_5 = 0;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 369, __pyx_L1_error)
-    }
-    *((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_avg.data + __pyx_t_13 * __pyx_v_18hydro_model_cython_glfa_frac_avg.strides[0]) )) = (((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_fa_frac.data + __pyx_t_4 * __pyx_v_18hydro_model_cython_fa_frac.strides[0]) ))) + (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_start.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfa_frac_start.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfa_frac_start.strides[1]) )))) / 2.0);
+    *((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_avg.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfa_frac_avg.strides[0]) )) = (((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_fa_frac.data + __pyx_t_10 * __pyx_v_18hydro_model_cython_fa_frac.strides[0]) ))) + (*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_start.data + __pyx_t_9 * __pyx_v_18hydro_model_cython_glfa_frac_start.strides[0]) ) + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfa_frac_start.strides[1]) )))) / 2.0);
 
-    /* "hydro_model_cython.pyx":370
- *         #this is correct fraction ONLY if there is no expansion of flood
+    /* "hydro_model_cython.pyx":373
+ *         fa_incrfrac[gw] =  fincr#incrfac is fraction of the cell that is flooded during this time step
  *         glfa_frac_avg[gw] = (fa_frac[gw] + glfa_frac_start[sur, gw]) / 2
  *         glfa_frac_finish[sur,gw] = fa_frac[gw]             # <<<<<<<<<<<<<<
  * 
  *     #*****************************************************************************
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_fa_frac.memview)) { __Pyx_RaiseUnboundLocalError("fa_frac"); __PYX_ERR(0, 370, __pyx_L1_error) }
-    __pyx_t_12 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
-    if (__pyx_t_12 < 0) {
-      __pyx_t_12 += __pyx_v_18hydro_model_cython_fa_frac.shape[0];
-      if (unlikely(__pyx_t_12 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_fa_frac.shape[0])) __pyx_t_5 = 0;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 370, __pyx_L1_error)
+    if (unlikely(!__pyx_v_18hydro_model_cython_fa_frac.memview)) { __Pyx_RaiseUnboundLocalError("fa_frac"); __PYX_ERR(0, 373, __pyx_L1_error) }
+    __pyx_t_5 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_18hydro_model_cython_fa_frac.shape[0];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_fa_frac.shape[0])) __pyx_t_6 = 0;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 373, __pyx_L1_error)
     }
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_finish.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_finish"); __PYX_ERR(0, 370, __pyx_L1_error) }
-    __pyx_t_11 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_4 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
-    if (__pyx_t_11 < 0) {
-      __pyx_t_11 += __pyx_v_18hydro_model_cython_glfa_frac_finish.shape[0];
-      if (unlikely(__pyx_t_11 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfa_frac_finish.shape[0])) __pyx_t_5 = 0;
-    if (__pyx_t_4 < 0) {
-      __pyx_t_4 += __pyx_v_18hydro_model_cython_glfa_frac_finish.shape[1];
-      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 1;
-    } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_glfa_frac_finish.shape[1])) __pyx_t_5 = 1;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 370, __pyx_L1_error)
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_finish.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_finish"); __PYX_ERR(0, 373, __pyx_L1_error) }
+    __pyx_t_9 = __pyx_v_18hydro_model_cython_sur;
+    __pyx_t_10 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_18hydro_model_cython_glfa_frac_finish.shape[0];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_glfa_frac_finish.shape[0])) __pyx_t_6 = 0;
+    if (__pyx_t_10 < 0) {
+      __pyx_t_10 += __pyx_v_18hydro_model_cython_glfa_frac_finish.shape[1];
+      if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 1;
+    } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_glfa_frac_finish.shape[1])) __pyx_t_6 = 1;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 373, __pyx_L1_error)
     }
-    *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_finish.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfa_frac_finish.strides[0]) ) + __pyx_t_4 * __pyx_v_18hydro_model_cython_glfa_frac_finish.strides[1]) )) = (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_fa_frac.data + __pyx_t_12 * __pyx_v_18hydro_model_cython_fa_frac.strides[0]) )));
+    *((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_finish.data + __pyx_t_9 * __pyx_v_18hydro_model_cython_glfa_frac_finish.strides[0]) ) + __pyx_t_10 * __pyx_v_18hydro_model_cython_glfa_frac_finish.strides[1]) )) = (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_fa_frac.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_fa_frac.strides[0]) )));
   }
 
-  /* "hydro_model_cython.pyx":374
+  /* "hydro_model_cython.pyx":377
  *     #*****************************************************************************
  *     #calculate groundwater flow between floodplains and islands
  *     for gw in range(ngw):             # <<<<<<<<<<<<<<
- *         glfv_max = glidet * glfpor * glfa[sur]
+ *         glfv_max = glidet * glfpor * glfarea #glfa[sur]
  *        #-----------------------------------------------------------------------------
  */
   __pyx_t_1 = __pyx_v_18hydro_model_cython_ngw;
@@ -5942,78 +5701,67 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_gw_iter(void) {
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_18hydro_model_cython_gw = __pyx_t_3;
 
-    /* "hydro_model_cython.pyx":375
+    /* "hydro_model_cython.pyx":378
  *     #calculate groundwater flow between floodplains and islands
  *     for gw in range(ngw):
- *         glfv_max = glidet * glfpor * glfa[sur]             # <<<<<<<<<<<<<<
+ *         glfv_max = glidet * glfpor * glfarea #glfa[sur]             # <<<<<<<<<<<<<<
  *        #-----------------------------------------------------------------------------
  * #        if debug:
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 375, __pyx_L1_error) }
-    __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_5 = -1;
-    if (__pyx_t_12 < 0) {
-      __pyx_t_12 += __pyx_v_18hydro_model_cython_glfa.shape[0];
-      if (unlikely(__pyx_t_12 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_5 = 0;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 375, __pyx_L1_error)
-    }
-    __pyx_t_14 = PyFloat_FromDouble(((__pyx_v_18hydro_model_cython_glidet * __pyx_v_18hydro_model_cython_glfpor) * (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfa.strides[0]) ))))); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 375, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    __Pyx_XDECREF_SET(__pyx_v_glfv_max, __pyx_t_14);
-    __pyx_t_14 = 0;
+    __pyx_t_12 = PyFloat_FromDouble(((__pyx_v_18hydro_model_cython_glidet * __pyx_v_18hydro_model_cython_glfpor) * __pyx_v_18hydro_model_cython_glfarea)); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 378, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
+    if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_max, __pyx_t_12) < 0) __PYX_ERR(0, 378, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
 
-    /* "hydro_model_cython.pyx":379
+    /* "hydro_model_cython.pyx":382
  * #        if debug:
  * #            print "\tgwcell",gwcell
  *         if ts==0:             # <<<<<<<<<<<<<<
  *             glfv_beg=glfv_init[sur,gw]
  *         else:
  */
-    __pyx_t_6 = ((__pyx_v_18hydro_model_cython_ts == 0) != 0);
-    if (__pyx_t_6) {
+    __pyx_t_4 = ((__pyx_v_18hydro_model_cython_ts == 0) != 0);
+    if (__pyx_t_4) {
 
-      /* "hydro_model_cython.pyx":380
+      /* "hydro_model_cython.pyx":383
  * #            print "\tgwcell",gwcell
  *         if ts==0:
  *             glfv_beg=glfv_init[sur,gw]             # <<<<<<<<<<<<<<
  *         else:
  *             glfv_beg=glfin_fv[ts-1,sur,gw]
  */
-      if (unlikely(!__pyx_v_18hydro_model_cython_glfv_init.memview)) { __Pyx_RaiseUnboundLocalError("glfv_init"); __PYX_ERR(0, 380, __pyx_L1_error) }
-      __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
-      __pyx_t_4 = __pyx_v_18hydro_model_cython_gw;
-      __pyx_t_5 = -1;
-      if (__pyx_t_12 < 0) {
-        __pyx_t_12 += __pyx_v_18hydro_model_cython_glfv_init.shape[0];
-        if (unlikely(__pyx_t_12 < 0)) __pyx_t_5 = 0;
-      } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfv_init.shape[0])) __pyx_t_5 = 0;
-      if (__pyx_t_4 < 0) {
-        __pyx_t_4 += __pyx_v_18hydro_model_cython_glfv_init.shape[1];
-        if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 1;
-      } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_glfv_init.shape[1])) __pyx_t_5 = 1;
-      if (unlikely(__pyx_t_5 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_5);
-        __PYX_ERR(0, 380, __pyx_L1_error)
+      if (unlikely(!__pyx_v_18hydro_model_cython_glfv_init.memview)) { __Pyx_RaiseUnboundLocalError("glfv_init"); __PYX_ERR(0, 383, __pyx_L1_error) }
+      __pyx_t_5 = __pyx_v_18hydro_model_cython_sur;
+      __pyx_t_10 = __pyx_v_18hydro_model_cython_gw;
+      __pyx_t_6 = -1;
+      if (__pyx_t_5 < 0) {
+        __pyx_t_5 += __pyx_v_18hydro_model_cython_glfv_init.shape[0];
+        if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 0;
+      } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfv_init.shape[0])) __pyx_t_6 = 0;
+      if (__pyx_t_10 < 0) {
+        __pyx_t_10 += __pyx_v_18hydro_model_cython_glfv_init.shape[1];
+        if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 1;
+      } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_glfv_init.shape[1])) __pyx_t_6 = 1;
+      if (unlikely(__pyx_t_6 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_6);
+        __PYX_ERR(0, 383, __pyx_L1_error)
       }
-      __pyx_t_14 = PyFloat_FromDouble((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfv_init.data + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfv_init.strides[0]) ) + __pyx_t_4 * __pyx_v_18hydro_model_cython_glfv_init.strides[1]) )))); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 380, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_beg, __pyx_t_14) < 0) __PYX_ERR(0, 380, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+      __pyx_t_12 = PyFloat_FromDouble((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfv_init.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfv_init.strides[0]) ) + __pyx_t_10 * __pyx_v_18hydro_model_cython_glfv_init.strides[1]) )))); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 383, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_12);
+      if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_beg, __pyx_t_12) < 0) __PYX_ERR(0, 383, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
 
-      /* "hydro_model_cython.pyx":379
+      /* "hydro_model_cython.pyx":382
  * #        if debug:
  * #            print "\tgwcell",gwcell
  *         if ts==0:             # <<<<<<<<<<<<<<
  *             glfv_beg=glfv_init[sur,gw]
  *         else:
  */
-      goto __pyx_L13;
+      goto __pyx_L11;
     }
 
-    /* "hydro_model_cython.pyx":382
+    /* "hydro_model_cython.pyx":385
  *             glfv_beg=glfv_init[sur,gw]
  *         else:
  *             glfv_beg=glfin_fv[ts-1,sur,gw]             # <<<<<<<<<<<<<<
@@ -6021,393 +5769,393 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_gw_iter(void) {
  * #        if debug==1 and ts==dts:
  */
     /*else*/ {
-      if (unlikely(!__pyx_v_18hydro_model_cython_glfin_fv.memview)) { __Pyx_RaiseUnboundLocalError("glfin_fv"); __PYX_ERR(0, 382, __pyx_L1_error) }
-      __pyx_t_4 = (__pyx_v_18hydro_model_cython_ts - 1);
-      __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
-      __pyx_t_11 = __pyx_v_18hydro_model_cython_gw;
-      __pyx_t_5 = -1;
-      if (__pyx_t_4 < 0) {
-        __pyx_t_4 += __pyx_v_18hydro_model_cython_glfin_fv.shape[0];
-        if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
-      } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_glfin_fv.shape[0])) __pyx_t_5 = 0;
-      if (__pyx_t_12 < 0) {
-        __pyx_t_12 += __pyx_v_18hydro_model_cython_glfin_fv.shape[1];
-        if (unlikely(__pyx_t_12 < 0)) __pyx_t_5 = 1;
-      } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfin_fv.shape[1])) __pyx_t_5 = 1;
-      if (__pyx_t_11 < 0) {
-        __pyx_t_11 += __pyx_v_18hydro_model_cython_glfin_fv.shape[2];
-        if (unlikely(__pyx_t_11 < 0)) __pyx_t_5 = 2;
-      } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfin_fv.shape[2])) __pyx_t_5 = 2;
-      if (unlikely(__pyx_t_5 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_5);
-        __PYX_ERR(0, 382, __pyx_L1_error)
+      if (unlikely(!__pyx_v_18hydro_model_cython_glfin_fv.memview)) { __Pyx_RaiseUnboundLocalError("glfin_fv"); __PYX_ERR(0, 385, __pyx_L1_error) }
+      __pyx_t_10 = (__pyx_v_18hydro_model_cython_ts - 1);
+      __pyx_t_5 = __pyx_v_18hydro_model_cython_sur;
+      __pyx_t_9 = __pyx_v_18hydro_model_cython_gw;
+      __pyx_t_6 = -1;
+      if (__pyx_t_10 < 0) {
+        __pyx_t_10 += __pyx_v_18hydro_model_cython_glfin_fv.shape[0];
+        if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 0;
+      } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_glfin_fv.shape[0])) __pyx_t_6 = 0;
+      if (__pyx_t_5 < 0) {
+        __pyx_t_5 += __pyx_v_18hydro_model_cython_glfin_fv.shape[1];
+        if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 1;
+      } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfin_fv.shape[1])) __pyx_t_6 = 1;
+      if (__pyx_t_9 < 0) {
+        __pyx_t_9 += __pyx_v_18hydro_model_cython_glfin_fv.shape[2];
+        if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 2;
+      } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_glfin_fv.shape[2])) __pyx_t_6 = 2;
+      if (unlikely(__pyx_t_6 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_6);
+        __PYX_ERR(0, 385, __pyx_L1_error)
       }
-      __pyx_t_14 = PyFloat_FromDouble((*((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_fv.data + __pyx_t_4 * __pyx_v_18hydro_model_cython_glfin_fv.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_fv.strides[1]) ) + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_fv.strides[2]) )))); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 382, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_beg, __pyx_t_14) < 0) __PYX_ERR(0, 382, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+      __pyx_t_12 = PyFloat_FromDouble((*((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_fv.data + __pyx_t_10 * __pyx_v_18hydro_model_cython_glfin_fv.strides[0]) ) + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfin_fv.strides[1]) ) + __pyx_t_9 * __pyx_v_18hydro_model_cython_glfin_fv.strides[2]) )))); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 385, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_12);
+      if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_beg, __pyx_t_12) < 0) __PYX_ERR(0, 385, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     }
-    __pyx_L13:;
+    __pyx_L11:;
 
-    /* "hydro_model_cython.pyx":387
+    /* "hydro_model_cython.pyx":390
  * #            print("gw",glfv_beg,glfv_max,_glfa_frac_avg, glfa[sur], glfq)
  * 
  *         iteration_1()             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_14 = __pyx_f_18hydro_model_cython_iteration_1(); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 387, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+    __pyx_t_12 = __pyx_f_18hydro_model_cython_iteration_1(); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 390, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
+    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
 
-    /* "hydro_model_cython.pyx":391
+    /* "hydro_model_cython.pyx":394
  * 
  *         #if not flooded it will be 0, if flooded all the time it will be 1
  *         siv_adv = glfa_frac_avg[gw] * glfq             # <<<<<<<<<<<<<<
  * 
- *         siv_front = ((glidet * glfpor * glfa[sur]) - glfv_end) * fa_incrfrac
+ * #        siv_front = ((glidet * glfpor * glfa[sur]) - glfv_end) * fa_incrfrac[gw]
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_avg.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_avg"); __PYX_ERR(0, 391, __pyx_L1_error) }
-    __pyx_t_11 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
-    if (__pyx_t_11 < 0) {
-      __pyx_t_11 += __pyx_v_18hydro_model_cython_glfa_frac_avg.shape[0];
-      if (unlikely(__pyx_t_11 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfa_frac_avg.shape[0])) __pyx_t_5 = 0;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 391, __pyx_L1_error)
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_avg.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_avg"); __PYX_ERR(0, 394, __pyx_L1_error) }
+    __pyx_t_9 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_18hydro_model_cython_glfa_frac_avg.shape[0];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_glfa_frac_avg.shape[0])) __pyx_t_6 = 0;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 394, __pyx_L1_error)
     }
-    __pyx_t_14 = PyFloat_FromDouble(((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_avg.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfa_frac_avg.strides[0]) ))) * __pyx_v_18hydro_model_cython_glfq)); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 391, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    __Pyx_XDECREF_SET(__pyx_v_siv_adv, __pyx_t_14);
-    __pyx_t_14 = 0;
+    __pyx_t_12 = PyFloat_FromDouble(((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_avg.data + __pyx_t_9 * __pyx_v_18hydro_model_cython_glfa_frac_avg.strides[0]) ))) * __pyx_v_18hydro_model_cython_glfq)); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 394, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
+    __Pyx_XDECREF_SET(__pyx_v_siv_adv, __pyx_t_12);
+    __pyx_t_12 = 0;
 
-    /* "hydro_model_cython.pyx":393
- *         siv_adv = glfa_frac_avg[gw] * glfq
+    /* "hydro_model_cython.pyx":397
  * 
- *         siv_front = ((glidet * glfpor * glfa[sur]) - glfv_end) * fa_incrfrac             # <<<<<<<<<<<<<<
+ * #        siv_front = ((glidet * glfpor * glfa[sur]) - glfv_end) * fa_incrfrac[gw]
+ *         siv_front = ((glidet * glfpor * glfarea) - glfv_end) * fa_incrfrac[gw]             # <<<<<<<<<<<<<<
  * 
  *         #-----------------------------------------------------------------------------
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 393, __pyx_L1_error) }
-    __pyx_t_11 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_5 = -1;
-    if (__pyx_t_11 < 0) {
-      __pyx_t_11 += __pyx_v_18hydro_model_cython_glfa.shape[0];
-      if (unlikely(__pyx_t_11 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_5 = 0;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 393, __pyx_L1_error)
+    __pyx_t_12 = PyFloat_FromDouble(((__pyx_v_18hydro_model_cython_glidet * __pyx_v_18hydro_model_cython_glfpor) * __pyx_v_18hydro_model_cython_glfarea)); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 397, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
+    __Pyx_GetModuleGlobalName(__pyx_t_13, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 397, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_13);
+    __pyx_t_14 = PyNumber_Subtract(__pyx_t_12, __pyx_t_13); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 397, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_14);
+    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+    __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
+    if (unlikely(!__pyx_v_18hydro_model_cython_fa_incrfrac.memview)) { __Pyx_RaiseUnboundLocalError("fa_incrfrac"); __PYX_ERR(0, 397, __pyx_L1_error) }
+    __pyx_t_9 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_18hydro_model_cython_fa_incrfrac.shape[0];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_fa_incrfrac.shape[0])) __pyx_t_6 = 0;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 397, __pyx_L1_error)
     }
-    __pyx_t_14 = PyFloat_FromDouble(((__pyx_v_18hydro_model_cython_glidet * __pyx_v_18hydro_model_cython_glfpor) * (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfa.strides[0]) ))))); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 393, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 393, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_15);
-    __pyx_t_16 = PyNumber_Subtract(__pyx_t_14, __pyx_t_15); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 393, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_16);
+    __pyx_t_13 = PyFloat_FromDouble((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_fa_incrfrac.data + __pyx_t_9 * __pyx_v_18hydro_model_cython_fa_incrfrac.strides[0]) )))); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 397, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_13);
+    __pyx_t_12 = PyNumber_Multiply(__pyx_t_14, __pyx_t_13); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 397, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
     __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-    __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-    __pyx_t_15 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_fa_incrfrac); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 393, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_15);
-    __pyx_t_14 = PyNumber_Multiply(__pyx_t_16, __pyx_t_15); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 393, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-    __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-    __Pyx_XDECREF_SET(__pyx_v_siv_front, __pyx_t_14);
-    __pyx_t_14 = 0;
+    __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
+    __Pyx_XDECREF_SET(__pyx_v_siv_front, __pyx_t_12);
+    __pyx_t_12 = 0;
 
-    /* "hydro_model_cython.pyx":397
+    /* "hydro_model_cython.pyx":401
  *         #-----------------------------------------------------------------------------
  *         #sets initial values for the next time step
  *         glfv_end=glfv_end+siv_front             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 397, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    __pyx_t_15 = PyNumber_Add(__pyx_t_14, __pyx_v_siv_front); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 397, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_15);
-    __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-    if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_end, __pyx_t_15) < 0) __PYX_ERR(0, 397, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
+    __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 401, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
+    __pyx_t_13 = PyNumber_Add(__pyx_t_12, __pyx_v_siv_front); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 401, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_13);
+    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+    if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_end, __pyx_t_13) < 0) __PYX_ERR(0, 401, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
 
-    /* "hydro_model_cython.pyx":403
+    /* "hydro_model_cython.pyx":407
  *         #-----------------------------------------------------------------------------
  *         #calculates composite fluxes
  *         finf=siv_front + siv_adv             # <<<<<<<<<<<<<<
  *         glsinf = glsinf + finf              #sw cell infiltration
  *         glfin_fgwout[ts,sur,gw]=glfq
  */
-    __pyx_t_15 = PyNumber_Add(__pyx_v_siv_front, __pyx_v_siv_adv); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 403, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_15);
-    __Pyx_XDECREF_SET(__pyx_v_finf, __pyx_t_15);
-    __pyx_t_15 = 0;
+    __pyx_t_13 = PyNumber_Add(__pyx_v_siv_front, __pyx_v_siv_adv); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 407, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_13);
+    __Pyx_XDECREF_SET(__pyx_v_finf, __pyx_t_13);
+    __pyx_t_13 = 0;
 
-    /* "hydro_model_cython.pyx":404
+    /* "hydro_model_cython.pyx":408
  *         #calculates composite fluxes
  *         finf=siv_front + siv_adv
  *         glsinf = glsinf + finf              #sw cell infiltration             # <<<<<<<<<<<<<<
  *         glfin_fgwout[ts,sur,gw]=glfq
  *         glfin_fpre[ts,sur,gw]=glfpv
  */
-    __pyx_t_15 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glsinf); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 404, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_15);
-    __pyx_t_14 = PyNumber_Add(__pyx_t_15, __pyx_v_finf); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 404, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-    __pyx_t_10 = __pyx_PyFloat_AsFloat(__pyx_t_14); if (unlikely((__pyx_t_10 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 404, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-    __pyx_v_18hydro_model_cython_glsinf = __pyx_t_10;
+    __pyx_t_13 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glsinf); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 408, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_13);
+    __pyx_t_12 = PyNumber_Add(__pyx_t_13, __pyx_v_finf); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 408, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
+    __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
+    __pyx_t_8 = __pyx_PyFloat_AsFloat(__pyx_t_12); if (unlikely((__pyx_t_8 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 408, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+    __pyx_v_18hydro_model_cython_glsinf = __pyx_t_8;
 
-    /* "hydro_model_cython.pyx":405
+    /* "hydro_model_cython.pyx":409
  *         finf=siv_front + siv_adv
  *         glsinf = glsinf + finf              #sw cell infiltration
  *         glfin_fgwout[ts,sur,gw]=glfq             # <<<<<<<<<<<<<<
  *         glfin_fpre[ts,sur,gw]=glfpv
  *         glfin_finf[ts,sur,gw]=finf
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_fgwout.memview)) { __Pyx_RaiseUnboundLocalError("glfin_fgwout"); __PYX_ERR(0, 405, __pyx_L1_error) }
-    __pyx_t_11 = __pyx_v_18hydro_model_cython_ts;
-    __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_4 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
-    if (__pyx_t_11 < 0) {
-      __pyx_t_11 += __pyx_v_18hydro_model_cython_glfin_fgwout.shape[0];
-      if (unlikely(__pyx_t_11 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfin_fgwout.shape[0])) __pyx_t_5 = 0;
-    if (__pyx_t_12 < 0) {
-      __pyx_t_12 += __pyx_v_18hydro_model_cython_glfin_fgwout.shape[1];
-      if (unlikely(__pyx_t_12 < 0)) __pyx_t_5 = 1;
-    } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfin_fgwout.shape[1])) __pyx_t_5 = 1;
-    if (__pyx_t_4 < 0) {
-      __pyx_t_4 += __pyx_v_18hydro_model_cython_glfin_fgwout.shape[2];
-      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 2;
-    } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_glfin_fgwout.shape[2])) __pyx_t_5 = 2;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 405, __pyx_L1_error)
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_fgwout.memview)) { __Pyx_RaiseUnboundLocalError("glfin_fgwout"); __PYX_ERR(0, 409, __pyx_L1_error) }
+    __pyx_t_9 = __pyx_v_18hydro_model_cython_ts;
+    __pyx_t_5 = __pyx_v_18hydro_model_cython_sur;
+    __pyx_t_10 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_18hydro_model_cython_glfin_fgwout.shape[0];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_glfin_fgwout.shape[0])) __pyx_t_6 = 0;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_18hydro_model_cython_glfin_fgwout.shape[1];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 1;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfin_fgwout.shape[1])) __pyx_t_6 = 1;
+    if (__pyx_t_10 < 0) {
+      __pyx_t_10 += __pyx_v_18hydro_model_cython_glfin_fgwout.shape[2];
+      if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 2;
+    } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_glfin_fgwout.shape[2])) __pyx_t_6 = 2;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 409, __pyx_L1_error)
     }
-    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_fgwout.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_fgwout.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_fgwout.strides[1]) ) + __pyx_t_4 * __pyx_v_18hydro_model_cython_glfin_fgwout.strides[2]) )) = __pyx_v_18hydro_model_cython_glfq;
+    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_fgwout.data + __pyx_t_9 * __pyx_v_18hydro_model_cython_glfin_fgwout.strides[0]) ) + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfin_fgwout.strides[1]) ) + __pyx_t_10 * __pyx_v_18hydro_model_cython_glfin_fgwout.strides[2]) )) = __pyx_v_18hydro_model_cython_glfq;
 
-    /* "hydro_model_cython.pyx":406
+    /* "hydro_model_cython.pyx":410
  *         glsinf = glsinf + finf              #sw cell infiltration
  *         glfin_fgwout[ts,sur,gw]=glfq
  *         glfin_fpre[ts,sur,gw]=glfpv             # <<<<<<<<<<<<<<
  *         glfin_finf[ts,sur,gw]=finf
  *         glfin_fev[ts,sur,gw]=glfev
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_fpre.memview)) { __Pyx_RaiseUnboundLocalError("glfin_fpre"); __PYX_ERR(0, 406, __pyx_L1_error) }
-    __pyx_t_4 = __pyx_v_18hydro_model_cython_ts;
-    __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_11 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
-    if (__pyx_t_4 < 0) {
-      __pyx_t_4 += __pyx_v_18hydro_model_cython_glfin_fpre.shape[0];
-      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_glfin_fpre.shape[0])) __pyx_t_5 = 0;
-    if (__pyx_t_12 < 0) {
-      __pyx_t_12 += __pyx_v_18hydro_model_cython_glfin_fpre.shape[1];
-      if (unlikely(__pyx_t_12 < 0)) __pyx_t_5 = 1;
-    } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfin_fpre.shape[1])) __pyx_t_5 = 1;
-    if (__pyx_t_11 < 0) {
-      __pyx_t_11 += __pyx_v_18hydro_model_cython_glfin_fpre.shape[2];
-      if (unlikely(__pyx_t_11 < 0)) __pyx_t_5 = 2;
-    } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfin_fpre.shape[2])) __pyx_t_5 = 2;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 406, __pyx_L1_error)
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_fpre.memview)) { __Pyx_RaiseUnboundLocalError("glfin_fpre"); __PYX_ERR(0, 410, __pyx_L1_error) }
+    __pyx_t_10 = __pyx_v_18hydro_model_cython_ts;
+    __pyx_t_5 = __pyx_v_18hydro_model_cython_sur;
+    __pyx_t_9 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_10 < 0) {
+      __pyx_t_10 += __pyx_v_18hydro_model_cython_glfin_fpre.shape[0];
+      if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_glfin_fpre.shape[0])) __pyx_t_6 = 0;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_18hydro_model_cython_glfin_fpre.shape[1];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 1;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfin_fpre.shape[1])) __pyx_t_6 = 1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_18hydro_model_cython_glfin_fpre.shape[2];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 2;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_glfin_fpre.shape[2])) __pyx_t_6 = 2;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 410, __pyx_L1_error)
     }
-    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_fpre.data + __pyx_t_4 * __pyx_v_18hydro_model_cython_glfin_fpre.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_fpre.strides[1]) ) + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_fpre.strides[2]) )) = __pyx_v_18hydro_model_cython_glfpv;
+    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_fpre.data + __pyx_t_10 * __pyx_v_18hydro_model_cython_glfin_fpre.strides[0]) ) + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfin_fpre.strides[1]) ) + __pyx_t_9 * __pyx_v_18hydro_model_cython_glfin_fpre.strides[2]) )) = __pyx_v_18hydro_model_cython_glfpv;
 
-    /* "hydro_model_cython.pyx":407
+    /* "hydro_model_cython.pyx":411
  *         glfin_fgwout[ts,sur,gw]=glfq
  *         glfin_fpre[ts,sur,gw]=glfpv
  *         glfin_finf[ts,sur,gw]=finf             # <<<<<<<<<<<<<<
  *         glfin_fev[ts,sur,gw]=glfev
  *         glfin_fv[ts,sur,gw] = glfv_end
  */
-    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_finf); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 407, __pyx_L1_error)
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_finf.memview)) { __Pyx_RaiseUnboundLocalError("glfin_finf"); __PYX_ERR(0, 407, __pyx_L1_error) }
-    __pyx_t_11 = __pyx_v_18hydro_model_cython_ts;
-    __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_4 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
-    if (__pyx_t_11 < 0) {
-      __pyx_t_11 += __pyx_v_18hydro_model_cython_glfin_finf.shape[0];
-      if (unlikely(__pyx_t_11 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfin_finf.shape[0])) __pyx_t_5 = 0;
-    if (__pyx_t_12 < 0) {
-      __pyx_t_12 += __pyx_v_18hydro_model_cython_glfin_finf.shape[1];
-      if (unlikely(__pyx_t_12 < 0)) __pyx_t_5 = 1;
-    } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfin_finf.shape[1])) __pyx_t_5 = 1;
-    if (__pyx_t_4 < 0) {
-      __pyx_t_4 += __pyx_v_18hydro_model_cython_glfin_finf.shape[2];
-      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 2;
-    } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_glfin_finf.shape[2])) __pyx_t_5 = 2;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 407, __pyx_L1_error)
+    __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_v_finf); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 411, __pyx_L1_error)
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_finf.memview)) { __Pyx_RaiseUnboundLocalError("glfin_finf"); __PYX_ERR(0, 411, __pyx_L1_error) }
+    __pyx_t_9 = __pyx_v_18hydro_model_cython_ts;
+    __pyx_t_5 = __pyx_v_18hydro_model_cython_sur;
+    __pyx_t_10 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_18hydro_model_cython_glfin_finf.shape[0];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_glfin_finf.shape[0])) __pyx_t_6 = 0;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_18hydro_model_cython_glfin_finf.shape[1];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 1;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfin_finf.shape[1])) __pyx_t_6 = 1;
+    if (__pyx_t_10 < 0) {
+      __pyx_t_10 += __pyx_v_18hydro_model_cython_glfin_finf.shape[2];
+      if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 2;
+    } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_glfin_finf.shape[2])) __pyx_t_6 = 2;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 411, __pyx_L1_error)
     }
-    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_finf.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_finf.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_finf.strides[1]) ) + __pyx_t_4 * __pyx_v_18hydro_model_cython_glfin_finf.strides[2]) )) = __pyx_t_9;
+    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_finf.data + __pyx_t_9 * __pyx_v_18hydro_model_cython_glfin_finf.strides[0]) ) + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfin_finf.strides[1]) ) + __pyx_t_10 * __pyx_v_18hydro_model_cython_glfin_finf.strides[2]) )) = __pyx_t_15;
 
-    /* "hydro_model_cython.pyx":408
+    /* "hydro_model_cython.pyx":412
  *         glfin_fpre[ts,sur,gw]=glfpv
  *         glfin_finf[ts,sur,gw]=finf
  *         glfin_fev[ts,sur,gw]=glfev             # <<<<<<<<<<<<<<
  *         glfin_fv[ts,sur,gw] = glfv_end
  * 
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_fev.memview)) { __Pyx_RaiseUnboundLocalError("glfin_fev"); __PYX_ERR(0, 408, __pyx_L1_error) }
-    __pyx_t_4 = __pyx_v_18hydro_model_cython_ts;
-    __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_11 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
-    if (__pyx_t_4 < 0) {
-      __pyx_t_4 += __pyx_v_18hydro_model_cython_glfin_fev.shape[0];
-      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_glfin_fev.shape[0])) __pyx_t_5 = 0;
-    if (__pyx_t_12 < 0) {
-      __pyx_t_12 += __pyx_v_18hydro_model_cython_glfin_fev.shape[1];
-      if (unlikely(__pyx_t_12 < 0)) __pyx_t_5 = 1;
-    } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfin_fev.shape[1])) __pyx_t_5 = 1;
-    if (__pyx_t_11 < 0) {
-      __pyx_t_11 += __pyx_v_18hydro_model_cython_glfin_fev.shape[2];
-      if (unlikely(__pyx_t_11 < 0)) __pyx_t_5 = 2;
-    } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfin_fev.shape[2])) __pyx_t_5 = 2;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 408, __pyx_L1_error)
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_fev.memview)) { __Pyx_RaiseUnboundLocalError("glfin_fev"); __PYX_ERR(0, 412, __pyx_L1_error) }
+    __pyx_t_10 = __pyx_v_18hydro_model_cython_ts;
+    __pyx_t_5 = __pyx_v_18hydro_model_cython_sur;
+    __pyx_t_9 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_10 < 0) {
+      __pyx_t_10 += __pyx_v_18hydro_model_cython_glfin_fev.shape[0];
+      if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_glfin_fev.shape[0])) __pyx_t_6 = 0;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_18hydro_model_cython_glfin_fev.shape[1];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 1;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfin_fev.shape[1])) __pyx_t_6 = 1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_18hydro_model_cython_glfin_fev.shape[2];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 2;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_glfin_fev.shape[2])) __pyx_t_6 = 2;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 412, __pyx_L1_error)
     }
-    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_fev.data + __pyx_t_4 * __pyx_v_18hydro_model_cython_glfin_fev.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_fev.strides[1]) ) + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_fev.strides[2]) )) = __pyx_v_18hydro_model_cython_glfev;
+    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_fev.data + __pyx_t_10 * __pyx_v_18hydro_model_cython_glfin_fev.strides[0]) ) + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfin_fev.strides[1]) ) + __pyx_t_9 * __pyx_v_18hydro_model_cython_glfin_fev.strides[2]) )) = __pyx_v_18hydro_model_cython_glfev;
 
-    /* "hydro_model_cython.pyx":409
+    /* "hydro_model_cython.pyx":413
  *         glfin_finf[ts,sur,gw]=finf
  *         glfin_fev[ts,sur,gw]=glfev
  *         glfin_fv[ts,sur,gw] = glfv_end             # <<<<<<<<<<<<<<
  * 
  *         glfin_iev[ts,sur,gw]=gliev
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 409, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_14); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 409, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_fv.memview)) { __Pyx_RaiseUnboundLocalError("glfin_fv"); __PYX_ERR(0, 409, __pyx_L1_error) }
-    __pyx_t_11 = __pyx_v_18hydro_model_cython_ts;
-    __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_4 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
-    if (__pyx_t_11 < 0) {
-      __pyx_t_11 += __pyx_v_18hydro_model_cython_glfin_fv.shape[0];
-      if (unlikely(__pyx_t_11 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfin_fv.shape[0])) __pyx_t_5 = 0;
-    if (__pyx_t_12 < 0) {
-      __pyx_t_12 += __pyx_v_18hydro_model_cython_glfin_fv.shape[1];
-      if (unlikely(__pyx_t_12 < 0)) __pyx_t_5 = 1;
-    } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfin_fv.shape[1])) __pyx_t_5 = 1;
-    if (__pyx_t_4 < 0) {
-      __pyx_t_4 += __pyx_v_18hydro_model_cython_glfin_fv.shape[2];
-      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 2;
-    } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_glfin_fv.shape[2])) __pyx_t_5 = 2;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 409, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 413, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_12);
+    __pyx_t_15 = __pyx_PyFloat_AsDouble(__pyx_t_12); if (unlikely((__pyx_t_15 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 413, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_fv.memview)) { __Pyx_RaiseUnboundLocalError("glfin_fv"); __PYX_ERR(0, 413, __pyx_L1_error) }
+    __pyx_t_9 = __pyx_v_18hydro_model_cython_ts;
+    __pyx_t_5 = __pyx_v_18hydro_model_cython_sur;
+    __pyx_t_10 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_18hydro_model_cython_glfin_fv.shape[0];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_glfin_fv.shape[0])) __pyx_t_6 = 0;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_18hydro_model_cython_glfin_fv.shape[1];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 1;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfin_fv.shape[1])) __pyx_t_6 = 1;
+    if (__pyx_t_10 < 0) {
+      __pyx_t_10 += __pyx_v_18hydro_model_cython_glfin_fv.shape[2];
+      if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 2;
+    } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_glfin_fv.shape[2])) __pyx_t_6 = 2;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 413, __pyx_L1_error)
     }
-    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_fv.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_fv.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_fv.strides[1]) ) + __pyx_t_4 * __pyx_v_18hydro_model_cython_glfin_fv.strides[2]) )) = __pyx_t_9;
+    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_fv.data + __pyx_t_9 * __pyx_v_18hydro_model_cython_glfin_fv.strides[0]) ) + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfin_fv.strides[1]) ) + __pyx_t_10 * __pyx_v_18hydro_model_cython_glfin_fv.strides[2]) )) = __pyx_t_15;
 
-    /* "hydro_model_cython.pyx":411
+    /* "hydro_model_cython.pyx":415
  *         glfin_fv[ts,sur,gw] = glfv_end
  * 
  *         glfin_iev[ts,sur,gw]=gliev             # <<<<<<<<<<<<<<
  *         glfin_ipre[ts,sur,gw]=glipv
  *         glfin_iv[ts,sur,gw] = gliv_end
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_iev.memview)) { __Pyx_RaiseUnboundLocalError("glfin_iev"); __PYX_ERR(0, 411, __pyx_L1_error) }
-    __pyx_t_4 = __pyx_v_18hydro_model_cython_ts;
-    __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_11 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
-    if (__pyx_t_4 < 0) {
-      __pyx_t_4 += __pyx_v_18hydro_model_cython_glfin_iev.shape[0];
-      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_glfin_iev.shape[0])) __pyx_t_5 = 0;
-    if (__pyx_t_12 < 0) {
-      __pyx_t_12 += __pyx_v_18hydro_model_cython_glfin_iev.shape[1];
-      if (unlikely(__pyx_t_12 < 0)) __pyx_t_5 = 1;
-    } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfin_iev.shape[1])) __pyx_t_5 = 1;
-    if (__pyx_t_11 < 0) {
-      __pyx_t_11 += __pyx_v_18hydro_model_cython_glfin_iev.shape[2];
-      if (unlikely(__pyx_t_11 < 0)) __pyx_t_5 = 2;
-    } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfin_iev.shape[2])) __pyx_t_5 = 2;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 411, __pyx_L1_error)
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_iev.memview)) { __Pyx_RaiseUnboundLocalError("glfin_iev"); __PYX_ERR(0, 415, __pyx_L1_error) }
+    __pyx_t_10 = __pyx_v_18hydro_model_cython_ts;
+    __pyx_t_5 = __pyx_v_18hydro_model_cython_sur;
+    __pyx_t_9 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_10 < 0) {
+      __pyx_t_10 += __pyx_v_18hydro_model_cython_glfin_iev.shape[0];
+      if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_glfin_iev.shape[0])) __pyx_t_6 = 0;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_18hydro_model_cython_glfin_iev.shape[1];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 1;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfin_iev.shape[1])) __pyx_t_6 = 1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_18hydro_model_cython_glfin_iev.shape[2];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 2;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_glfin_iev.shape[2])) __pyx_t_6 = 2;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 415, __pyx_L1_error)
     }
-    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_iev.data + __pyx_t_4 * __pyx_v_18hydro_model_cython_glfin_iev.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_iev.strides[1]) ) + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_iev.strides[2]) )) = __pyx_v_18hydro_model_cython_gliev;
+    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_iev.data + __pyx_t_10 * __pyx_v_18hydro_model_cython_glfin_iev.strides[0]) ) + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfin_iev.strides[1]) ) + __pyx_t_9 * __pyx_v_18hydro_model_cython_glfin_iev.strides[2]) )) = __pyx_v_18hydro_model_cython_gliev;
 
-    /* "hydro_model_cython.pyx":412
+    /* "hydro_model_cython.pyx":416
  * 
  *         glfin_iev[ts,sur,gw]=gliev
  *         glfin_ipre[ts,sur,gw]=glipv             # <<<<<<<<<<<<<<
  *         glfin_iv[ts,sur,gw] = gliv_end
  * 
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_ipre.memview)) { __Pyx_RaiseUnboundLocalError("glfin_ipre"); __PYX_ERR(0, 412, __pyx_L1_error) }
-    __pyx_t_11 = __pyx_v_18hydro_model_cython_ts;
-    __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_4 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
-    if (__pyx_t_11 < 0) {
-      __pyx_t_11 += __pyx_v_18hydro_model_cython_glfin_ipre.shape[0];
-      if (unlikely(__pyx_t_11 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfin_ipre.shape[0])) __pyx_t_5 = 0;
-    if (__pyx_t_12 < 0) {
-      __pyx_t_12 += __pyx_v_18hydro_model_cython_glfin_ipre.shape[1];
-      if (unlikely(__pyx_t_12 < 0)) __pyx_t_5 = 1;
-    } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfin_ipre.shape[1])) __pyx_t_5 = 1;
-    if (__pyx_t_4 < 0) {
-      __pyx_t_4 += __pyx_v_18hydro_model_cython_glfin_ipre.shape[2];
-      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 2;
-    } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_glfin_ipre.shape[2])) __pyx_t_5 = 2;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 412, __pyx_L1_error)
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_ipre.memview)) { __Pyx_RaiseUnboundLocalError("glfin_ipre"); __PYX_ERR(0, 416, __pyx_L1_error) }
+    __pyx_t_9 = __pyx_v_18hydro_model_cython_ts;
+    __pyx_t_5 = __pyx_v_18hydro_model_cython_sur;
+    __pyx_t_10 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_18hydro_model_cython_glfin_ipre.shape[0];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_glfin_ipre.shape[0])) __pyx_t_6 = 0;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_18hydro_model_cython_glfin_ipre.shape[1];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 1;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfin_ipre.shape[1])) __pyx_t_6 = 1;
+    if (__pyx_t_10 < 0) {
+      __pyx_t_10 += __pyx_v_18hydro_model_cython_glfin_ipre.shape[2];
+      if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 2;
+    } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_glfin_ipre.shape[2])) __pyx_t_6 = 2;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 416, __pyx_L1_error)
     }
-    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_ipre.data + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_ipre.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_ipre.strides[1]) ) + __pyx_t_4 * __pyx_v_18hydro_model_cython_glfin_ipre.strides[2]) )) = __pyx_v_18hydro_model_cython_glipv;
+    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_ipre.data + __pyx_t_9 * __pyx_v_18hydro_model_cython_glfin_ipre.strides[0]) ) + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfin_ipre.strides[1]) ) + __pyx_t_10 * __pyx_v_18hydro_model_cython_glfin_ipre.strides[2]) )) = __pyx_v_18hydro_model_cython_glipv;
 
-    /* "hydro_model_cython.pyx":413
+    /* "hydro_model_cython.pyx":417
  *         glfin_iev[ts,sur,gw]=gliev
  *         glfin_ipre[ts,sur,gw]=glipv
  *         glfin_iv[ts,sur,gw] = gliv_end             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_iv.memview)) { __Pyx_RaiseUnboundLocalError("glfin_iv"); __PYX_ERR(0, 413, __pyx_L1_error) }
-    __pyx_t_4 = __pyx_v_18hydro_model_cython_ts;
-    __pyx_t_12 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_11 = __pyx_v_18hydro_model_cython_gw;
-    __pyx_t_5 = -1;
-    if (__pyx_t_4 < 0) {
-      __pyx_t_4 += __pyx_v_18hydro_model_cython_glfin_iv.shape[0];
-      if (unlikely(__pyx_t_4 < 0)) __pyx_t_5 = 0;
-    } else if (unlikely(__pyx_t_4 >= __pyx_v_18hydro_model_cython_glfin_iv.shape[0])) __pyx_t_5 = 0;
-    if (__pyx_t_12 < 0) {
-      __pyx_t_12 += __pyx_v_18hydro_model_cython_glfin_iv.shape[1];
-      if (unlikely(__pyx_t_12 < 0)) __pyx_t_5 = 1;
-    } else if (unlikely(__pyx_t_12 >= __pyx_v_18hydro_model_cython_glfin_iv.shape[1])) __pyx_t_5 = 1;
-    if (__pyx_t_11 < 0) {
-      __pyx_t_11 += __pyx_v_18hydro_model_cython_glfin_iv.shape[2];
-      if (unlikely(__pyx_t_11 < 0)) __pyx_t_5 = 2;
-    } else if (unlikely(__pyx_t_11 >= __pyx_v_18hydro_model_cython_glfin_iv.shape[2])) __pyx_t_5 = 2;
-    if (unlikely(__pyx_t_5 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 413, __pyx_L1_error)
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_iv.memview)) { __Pyx_RaiseUnboundLocalError("glfin_iv"); __PYX_ERR(0, 417, __pyx_L1_error) }
+    __pyx_t_10 = __pyx_v_18hydro_model_cython_ts;
+    __pyx_t_5 = __pyx_v_18hydro_model_cython_sur;
+    __pyx_t_9 = __pyx_v_18hydro_model_cython_gw;
+    __pyx_t_6 = -1;
+    if (__pyx_t_10 < 0) {
+      __pyx_t_10 += __pyx_v_18hydro_model_cython_glfin_iv.shape[0];
+      if (unlikely(__pyx_t_10 < 0)) __pyx_t_6 = 0;
+    } else if (unlikely(__pyx_t_10 >= __pyx_v_18hydro_model_cython_glfin_iv.shape[0])) __pyx_t_6 = 0;
+    if (__pyx_t_5 < 0) {
+      __pyx_t_5 += __pyx_v_18hydro_model_cython_glfin_iv.shape[1];
+      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 1;
+    } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfin_iv.shape[1])) __pyx_t_6 = 1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_18hydro_model_cython_glfin_iv.shape[2];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_6 = 2;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_18hydro_model_cython_glfin_iv.shape[2])) __pyx_t_6 = 2;
+    if (unlikely(__pyx_t_6 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_6);
+      __PYX_ERR(0, 417, __pyx_L1_error)
     }
-    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_iv.data + __pyx_t_4 * __pyx_v_18hydro_model_cython_glfin_iv.strides[0]) ) + __pyx_t_12 * __pyx_v_18hydro_model_cython_glfin_iv.strides[1]) ) + __pyx_t_11 * __pyx_v_18hydro_model_cython_glfin_iv.strides[2]) )) = __pyx_v_18hydro_model_cython_gliv_end;
+    *((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_iv.data + __pyx_t_10 * __pyx_v_18hydro_model_cython_glfin_iv.strides[0]) ) + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfin_iv.strides[1]) ) + __pyx_t_9 * __pyx_v_18hydro_model_cython_glfin_iv.strides[2]) )) = __pyx_v_18hydro_model_cython_gliv_end;
   }
 
-  /* "hydro_model_cython.pyx":330
+  /* "hydro_model_cython.pyx":337
  * 
  * #*****************************************************************************
  * cdef calc_gw_iter():             # <<<<<<<<<<<<<<
@@ -6419,13 +6167,12 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_gw_iter(void) {
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   goto __pyx_L0;
   __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_12);
+  __Pyx_XDECREF(__pyx_t_13);
   __Pyx_XDECREF(__pyx_t_14);
-  __Pyx_XDECREF(__pyx_t_15);
-  __Pyx_XDECREF(__pyx_t_16);
   __Pyx_AddTraceback("hydro_model_cython.calc_gw_iter", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_glfv_max);
   __Pyx_XDECREF(__pyx_v_siv_adv);
   __Pyx_XDECREF(__pyx_v_siv_front);
   __Pyx_XDECREF(__pyx_v_finf);
@@ -6434,7 +6181,7 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_gw_iter(void) {
   return __pyx_r;
 }
 
-/* "hydro_model_cython.pyx":416
+/* "hydro_model_cython.pyx":420
  * 
  * 
  * cdef iteration_1():             # <<<<<<<<<<<<<<
@@ -6443,7 +6190,6 @@ static PyObject *__pyx_f_18hydro_model_cython_calc_gw_iter(void) {
  */
 
 static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
-  PyObject *__pyx_v_temp = NULL;
   PyObject *__pyx_v_fv_endc = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -6453,15 +6199,14 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
   PyObject *__pyx_t_4 = NULL;
   Py_ssize_t __pyx_t_5;
   int __pyx_t_6;
-  Py_ssize_t __pyx_t_7;
-  float __pyx_t_8;
-  PyObject *__pyx_t_9 = NULL;
+  float __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("iteration_1", 0);
 
-  /* "hydro_model_cython.pyx":425
+  /* "hydro_model_cython.pyx":429
  *     #prepare data
  * 
  *     fiter_flag = 1             # <<<<<<<<<<<<<<
@@ -6470,7 +6215,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
  */
   __pyx_v_18hydro_model_cython_fiter_flag = 1;
 
-  /* "hydro_model_cython.pyx":426
+  /* "hydro_model_cython.pyx":430
  * 
  *     fiter_flag = 1
  *     fitern = 0             # <<<<<<<<<<<<<<
@@ -6479,7 +6224,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
  */
   __pyx_v_18hydro_model_cython_fitern = 0;
 
-  /* "hydro_model_cython.pyx":427
+  /* "hydro_model_cython.pyx":431
  *     fiter_flag = 1
  *     fitern = 0
  *     fv_endmin = 0             # <<<<<<<<<<<<<<
@@ -6488,7 +6233,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
  */
   __pyx_v_18hydro_model_cython_fv_endmin = 0.0;
 
-  /* "hydro_model_cython.pyx":428
+  /* "hydro_model_cython.pyx":432
  *     fitern = 0
  *     fv_endmin = 0
  *     fv_endmax = -999             # <<<<<<<<<<<<<<
@@ -6497,19 +6242,19 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
  */
   __pyx_v_18hydro_model_cython_fv_endmax = -999.0;
 
-  /* "hydro_model_cython.pyx":430
+  /* "hydro_model_cython.pyx":434
  *     fv_endmax = -999
  * 
  *     glfv_end = glfv_beg       #initial guess of end floodplain groundwater volume             # <<<<<<<<<<<<<<
  *     #**********************************************************************************
  *     #outer iteration start
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_beg); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 430, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_beg); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 434, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_end, __pyx_t_1) < 0) __PYX_ERR(0, 430, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_end, __pyx_t_1) < 0) __PYX_ERR(0, 434, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hydro_model_cython.pyx":433
+  /* "hydro_model_cython.pyx":437
  *     #**********************************************************************************
  *     #outer iteration start
  *     while fiter_flag:             # <<<<<<<<<<<<<<
@@ -6520,92 +6265,70 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
     __pyx_t_2 = (__pyx_v_18hydro_model_cython_fiter_flag != 0);
     if (!__pyx_t_2) break;
 
-    /* "hydro_model_cython.pyx":434
+    /* "hydro_model_cython.pyx":438
  *     #outer iteration start
  *     while fiter_flag:
  *         glfv_av = (glfv_end + glfv_beg) / 2             # <<<<<<<<<<<<<<
  *         glfev = 0
- *         if glfv_av > ((glidet - glfdet) * glfa[sur] * glfpor):
+ * #        if glfv_av > ((glidet - glfdet) * glfa[sur] * glfpor):
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 434, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 438, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_glfv_beg); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 434, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_glfv_beg); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 438, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = PyNumber_Add(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 434, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Add(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 438, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_int_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 434, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_int_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 438, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_av, __pyx_t_3) < 0) __PYX_ERR(0, 434, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_av, __pyx_t_3) < 0) __PYX_ERR(0, 438, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "hydro_model_cython.pyx":435
+    /* "hydro_model_cython.pyx":439
  *     while fiter_flag:
  *         glfv_av = (glfv_end + glfv_beg) / 2
  *         glfev = 0             # <<<<<<<<<<<<<<
- *         if glfv_av > ((glidet - glfdet) * glfa[sur] * glfpor):
- *             #if average volume greater than something???
+ * #        if glfv_av > ((glidet - glfdet) * glfa[sur] * glfpor):
+ *         if glfv_av > ((glidet - glfdet) * glfarea * glfpor):
  */
     __pyx_v_18hydro_model_cython_glfev = 0.0;
 
-    /* "hydro_model_cython.pyx":436
- *         glfv_av = (glfv_end + glfv_beg) / 2
+    /* "hydro_model_cython.pyx":441
  *         glfev = 0
- *         if glfv_av > ((glidet - glfdet) * glfa[sur] * glfpor):             # <<<<<<<<<<<<<<
+ * #        if glfv_av > ((glidet - glfdet) * glfa[sur] * glfpor):
+ *         if glfv_av > ((glidet - glfdet) * glfarea * glfpor):             # <<<<<<<<<<<<<<
  *             #if average volume greater than something???
- *             temp = ((glfv_av - ((glidet - glfdet) * glfa[sur] * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
+ * #            evapf = ((glfv_av - ((glidet - glfdet) * glfa[sur] * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_glfv_av); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 436, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_glfv_av); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 441, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 436, __pyx_L1_error) }
-    __pyx_t_5 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_6 = -1;
-    if (__pyx_t_5 < 0) {
-      __pyx_t_5 += __pyx_v_18hydro_model_cython_glfa.shape[0];
-      if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 0;
-    } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_6 = 0;
-    if (unlikely(__pyx_t_6 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      __PYX_ERR(0, 436, __pyx_L1_error)
-    }
-    __pyx_t_4 = PyFloat_FromDouble((((__pyx_v_18hydro_model_cython_glidet - __pyx_v_18hydro_model_cython_glfdet) * (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfa.strides[0]) )))) * __pyx_v_18hydro_model_cython_glfpor)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 436, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble((((__pyx_v_18hydro_model_cython_glidet - __pyx_v_18hydro_model_cython_glfdet) * __pyx_v_18hydro_model_cython_glfarea) * __pyx_v_18hydro_model_cython_glfpor)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 441, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_1 = PyObject_RichCompare(__pyx_t_3, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 436, __pyx_L1_error)
+    __pyx_t_1 = PyObject_RichCompare(__pyx_t_3, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 441, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 436, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 441, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_2) {
 
-      /* "hydro_model_cython.pyx":438
- *         if glfv_av > ((glidet - glfdet) * glfa[sur] * glfpor):
+      /* "hydro_model_cython.pyx":444
  *             #if average volume greater than something???
- *             temp = ((glfv_av - ((glidet - glfdet) * glfa[sur] * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])             # <<<<<<<<<<<<<<
- *             if temp > 1:
- *                 temp = 1
+ * #            evapf = ((glfv_av - ((glidet - glfdet) * glfa[sur] * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
+ *             evapf = ((glfv_av - ((glidet - glfdet) * glfarea * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])             # <<<<<<<<<<<<<<
+ *             if evapf > 1:
+ *                 evapf = 1
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_av); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 438, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_av); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 444, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 438, __pyx_L1_error) }
-      __pyx_t_5 = __pyx_v_18hydro_model_cython_sur;
-      __pyx_t_6 = -1;
-      if (__pyx_t_5 < 0) {
-        __pyx_t_5 += __pyx_v_18hydro_model_cython_glfa.shape[0];
-        if (unlikely(__pyx_t_5 < 0)) __pyx_t_6 = 0;
-      } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_6 = 0;
-      if (unlikely(__pyx_t_6 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_6);
-        __PYX_ERR(0, 438, __pyx_L1_error)
-      }
-      __pyx_t_4 = PyFloat_FromDouble((((__pyx_v_18hydro_model_cython_glidet - __pyx_v_18hydro_model_cython_glfdet) * (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfa.strides[0]) )))) * __pyx_v_18hydro_model_cython_glfpor)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 438, __pyx_L1_error)
+      __pyx_t_4 = PyFloat_FromDouble((((__pyx_v_18hydro_model_cython_glidet - __pyx_v_18hydro_model_cython_glfdet) * __pyx_v_18hydro_model_cython_glfarea) * __pyx_v_18hydro_model_cython_glfpor)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 444, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_3 = PyNumber_Subtract(__pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 438, __pyx_L1_error)
+      __pyx_t_3 = PyNumber_Subtract(__pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 444, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 438, __pyx_L1_error) }
+      if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 444, __pyx_L1_error) }
       __pyx_t_5 = __pyx_v_18hydro_model_cython_sur;
       __pyx_t_6 = -1;
       if (__pyx_t_5 < 0) {
@@ -6614,15 +6337,15 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
       } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_6 = 0;
       if (unlikely(__pyx_t_6 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_6);
-        __PYX_ERR(0, 438, __pyx_L1_error)
+        __PYX_ERR(0, 444, __pyx_L1_error)
       }
-      __pyx_t_4 = PyFloat_FromDouble(((__pyx_v_18hydro_model_cython_glfdet * (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfa.strides[0]) )))) * __pyx_v_18hydro_model_cython_glfpor)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 438, __pyx_L1_error)
+      __pyx_t_4 = PyFloat_FromDouble(((__pyx_v_18hydro_model_cython_glfdet * (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfa.strides[0]) )))) * __pyx_v_18hydro_model_cython_glfpor)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 444, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 438, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 444, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_avg.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_avg"); __PYX_ERR(0, 438, __pyx_L1_error) }
+      if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_avg.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_avg"); __PYX_ERR(0, 444, __pyx_L1_error) }
       __pyx_t_5 = __pyx_v_18hydro_model_cython_gw;
       __pyx_t_6 = -1;
       if (__pyx_t_5 < 0) {
@@ -6631,56 +6354,54 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
       } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfa_frac_avg.shape[0])) __pyx_t_6 = 0;
       if (unlikely(__pyx_t_6 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_6);
-        __PYX_ERR(0, 438, __pyx_L1_error)
+        __PYX_ERR(0, 444, __pyx_L1_error)
       }
-      __pyx_t_4 = PyFloat_FromDouble((1.0 - (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_avg.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfa_frac_avg.strides[0]) ))))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 438, __pyx_L1_error)
+      __pyx_t_4 = PyFloat_FromDouble((1.0 - (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_avg.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfa_frac_avg.strides[0]) ))))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 444, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 438, __pyx_L1_error)
+      __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 444, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __Pyx_XDECREF_SET(__pyx_v_temp, __pyx_t_3);
-      __pyx_t_3 = 0;
-
-      /* "hydro_model_cython.pyx":439
- *             #if average volume greater than something???
- *             temp = ((glfv_av - ((glidet - glfdet) * glfa[sur] * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
- *             if temp > 1:             # <<<<<<<<<<<<<<
- *                 temp = 1
- *             glfev = (glpet[ts] / 1000 * glfa[sur] * temp)
- */
-      __pyx_t_3 = PyObject_RichCompare(__pyx_v_temp, __pyx_int_1, Py_GT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 439, __pyx_L1_error)
-      __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 439, __pyx_L1_error)
+      __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_t_3); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 444, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_v_18hydro_model_cython_evapf = __pyx_t_7;
+
+      /* "hydro_model_cython.pyx":445
+ * #            evapf = ((glfv_av - ((glidet - glfdet) * glfa[sur] * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
+ *             evapf = ((glfv_av - ((glidet - glfdet) * glfarea * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
+ *             if evapf > 1:             # <<<<<<<<<<<<<<
+ *                 evapf = 1
+ * #            glfev = (glpet[ts] / 1000 * glfa[sur] * evapf)
+ */
+      __pyx_t_2 = ((__pyx_v_18hydro_model_cython_evapf > 1.0) != 0);
       if (__pyx_t_2) {
 
-        /* "hydro_model_cython.pyx":440
- *             temp = ((glfv_av - ((glidet - glfdet) * glfa[sur] * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
- *             if temp > 1:
- *                 temp = 1             # <<<<<<<<<<<<<<
- *             glfev = (glpet[ts] / 1000 * glfa[sur] * temp)
- * 
+        /* "hydro_model_cython.pyx":446
+ *             evapf = ((glfv_av - ((glidet - glfdet) * glfarea * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
+ *             if evapf > 1:
+ *                 evapf = 1             # <<<<<<<<<<<<<<
+ * #            glfev = (glpet[ts] / 1000 * glfa[sur] * evapf)
+ *             glfev = (glpet[ts] / 1000 * glfarea * evapf)
  */
-        __Pyx_INCREF(__pyx_int_1);
-        __Pyx_DECREF_SET(__pyx_v_temp, __pyx_int_1);
+        __pyx_v_18hydro_model_cython_evapf = 1.0;
 
-        /* "hydro_model_cython.pyx":439
- *             #if average volume greater than something???
- *             temp = ((glfv_av - ((glidet - glfdet) * glfa[sur] * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
- *             if temp > 1:             # <<<<<<<<<<<<<<
- *                 temp = 1
- *             glfev = (glpet[ts] / 1000 * glfa[sur] * temp)
+        /* "hydro_model_cython.pyx":445
+ * #            evapf = ((glfv_av - ((glidet - glfdet) * glfa[sur] * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
+ *             evapf = ((glfv_av - ((glidet - glfdet) * glfarea * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
+ *             if evapf > 1:             # <<<<<<<<<<<<<<
+ *                 evapf = 1
+ * #            glfev = (glpet[ts] / 1000 * glfa[sur] * evapf)
  */
       }
 
-      /* "hydro_model_cython.pyx":441
- *             if temp > 1:
- *                 temp = 1
- *             glfev = (glpet[ts] / 1000 * glfa[sur] * temp)             # <<<<<<<<<<<<<<
+      /* "hydro_model_cython.pyx":448
+ *                 evapf = 1
+ * #            glfev = (glpet[ts] / 1000 * glfa[sur] * evapf)
+ *             glfev = (glpet[ts] / 1000 * glfarea * evapf)             # <<<<<<<<<<<<<<
  * 
  * #            glfpv = (glrain / 1000 * glfa[scell]) * (1 - glfa_frac_avg[gwcell])
  */
-      if (unlikely(!__pyx_v_18hydro_model_cython_glpet.memview)) { __Pyx_RaiseUnboundLocalError("glpet"); __PYX_ERR(0, 441, __pyx_L1_error) }
+      if (unlikely(!__pyx_v_18hydro_model_cython_glpet.memview)) { __Pyx_RaiseUnboundLocalError("glpet"); __PYX_ERR(0, 448, __pyx_L1_error) }
       __pyx_t_5 = __pyx_v_18hydro_model_cython_ts;
       __pyx_t_6 = -1;
       if (__pyx_t_5 < 0) {
@@ -6689,56 +6410,27 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
       } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glpet.shape[0])) __pyx_t_6 = 0;
       if (unlikely(__pyx_t_6 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_6);
-        __PYX_ERR(0, 441, __pyx_L1_error)
+        __PYX_ERR(0, 448, __pyx_L1_error)
       }
-      if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 441, __pyx_L1_error) }
-      __pyx_t_7 = __pyx_v_18hydro_model_cython_sur;
-      __pyx_t_6 = -1;
-      if (__pyx_t_7 < 0) {
-        __pyx_t_7 += __pyx_v_18hydro_model_cython_glfa.shape[0];
-        if (unlikely(__pyx_t_7 < 0)) __pyx_t_6 = 0;
-      } else if (unlikely(__pyx_t_7 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_6 = 0;
-      if (unlikely(__pyx_t_6 != -1)) {
-        __Pyx_RaiseBufferIndexError(__pyx_t_6);
-        __PYX_ERR(0, 441, __pyx_L1_error)
-      }
-      __pyx_t_3 = PyFloat_FromDouble((((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glpet.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_glpet.strides[0]) ))) / 1000.0) * (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_7 * __pyx_v_18hydro_model_cython_glfa.strides[0]) ))))); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 441, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = PyNumber_Multiply(__pyx_t_3, __pyx_v_temp); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 441, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_8 = __pyx_PyFloat_AsFloat(__pyx_t_4); if (unlikely((__pyx_t_8 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 441, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_v_18hydro_model_cython_glfev = __pyx_t_8;
+      __pyx_v_18hydro_model_cython_glfev = ((((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glpet.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_glpet.strides[0]) ))) / 1000.0) * __pyx_v_18hydro_model_cython_glfarea) * __pyx_v_18hydro_model_cython_evapf);
 
-      /* "hydro_model_cython.pyx":436
- *         glfv_av = (glfv_end + glfv_beg) / 2
+      /* "hydro_model_cython.pyx":441
  *         glfev = 0
- *         if glfv_av > ((glidet - glfdet) * glfa[sur] * glfpor):             # <<<<<<<<<<<<<<
+ * #        if glfv_av > ((glidet - glfdet) * glfa[sur] * glfpor):
+ *         if glfv_av > ((glidet - glfdet) * glfarea * glfpor):             # <<<<<<<<<<<<<<
  *             #if average volume greater than something???
- *             temp = ((glfv_av - ((glidet - glfdet) * glfa[sur] * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
+ * #            evapf = ((glfv_av - ((glidet - glfdet) * glfa[sur] * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
  */
     }
 
-    /* "hydro_model_cython.pyx":444
- * 
+    /* "hydro_model_cython.pyx":452
  * #            glfpv = (glrain / 1000 * glfa[scell]) * (1 - glfa_frac_avg[gwcell])
- *         glfpv = (glrain / 1000 * glfa[sur]) * (1 - glfa_frac_avg[gw])             # <<<<<<<<<<<<<<
+ * #        glfpv = (glrain / 1000 * glfa[sur]) * (1 - glfa_frac_avg[gw])
+ *         glfpv = (glrain / 1000 * glfarea) * (1 - glfa_frac_avg[gw])             # <<<<<<<<<<<<<<
  * 
  * #        if debug==1 and ts==dts:
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 444, __pyx_L1_error) }
-    __pyx_t_7 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_6 = -1;
-    if (__pyx_t_7 < 0) {
-      __pyx_t_7 += __pyx_v_18hydro_model_cython_glfa.shape[0];
-      if (unlikely(__pyx_t_7 < 0)) __pyx_t_6 = 0;
-    } else if (unlikely(__pyx_t_7 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_6 = 0;
-    if (unlikely(__pyx_t_6 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      __PYX_ERR(0, 444, __pyx_L1_error)
-    }
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_avg.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_avg"); __PYX_ERR(0, 444, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_avg.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_avg"); __PYX_ERR(0, 452, __pyx_L1_error) }
     __pyx_t_5 = __pyx_v_18hydro_model_cython_gw;
     __pyx_t_6 = -1;
     if (__pyx_t_5 < 0) {
@@ -6747,49 +6439,49 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
     } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfa_frac_avg.shape[0])) __pyx_t_6 = 0;
     if (unlikely(__pyx_t_6 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      __PYX_ERR(0, 444, __pyx_L1_error)
+      __PYX_ERR(0, 452, __pyx_L1_error)
     }
-    __pyx_v_18hydro_model_cython_glfpv = (((__pyx_v_18hydro_model_cython_glrain / 1000.0) * (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_7 * __pyx_v_18hydro_model_cython_glfa.strides[0]) )))) * (1.0 - (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_avg.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfa_frac_avg.strides[0]) )))));
+    __pyx_v_18hydro_model_cython_glfpv = (((__pyx_v_18hydro_model_cython_glrain / 1000.0) * __pyx_v_18hydro_model_cython_glfarea) * (1.0 - (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_avg.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfa_frac_avg.strides[0]) )))));
 
-    /* "hydro_model_cython.pyx":449
+    /* "hydro_model_cython.pyx":457
  * #            print("i1-0",glfv_beg, glfv_end,glfv_av,glfpv,glfev,glfq,glfa_frac_avg[gw])
  * 
  *         iteration_2()             # <<<<<<<<<<<<<<
  * #        if debug==1 and ts==dts:
  * #            print("i1-1",glfv_beg, glfv_end,glfv_av,glfpv,glfev,glfq,glfa_frac_avg[gw])
  */
-    __pyx_t_4 = __pyx_f_18hydro_model_cython_iteration_2(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 449, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_3 = __pyx_f_18hydro_model_cython_iteration_2(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 457, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "hydro_model_cython.pyx":454
+    /* "hydro_model_cython.pyx":462
  * 
  * 
  *         fv_endc = glfv_beg + glfpv - glfq - glfev+ glfa_frac_avg[gw]*glfq             # <<<<<<<<<<<<<<
  *         #-----------------------------------------------------------------------------
  *         #check if outer iteration convergence is achieved
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_glfv_beg); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 454, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glfpv); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 454, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_glfv_beg); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 462, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_1 = PyNumber_Add(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 454, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glfpv); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 462, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_1 = PyNumber_Add(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 462, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glfq); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 454, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = PyNumber_Subtract(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 454, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glfq); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 462, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_3 = PyNumber_Subtract(__pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 462, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glfev); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 454, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_1 = PyNumber_Subtract(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 454, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glfev); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 462, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_1 = PyNumber_Subtract(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 462, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_avg.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_avg"); __PYX_ERR(0, 454, __pyx_L1_error) }
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfa_frac_avg.memview)) { __Pyx_RaiseUnboundLocalError("glfa_frac_avg"); __PYX_ERR(0, 462, __pyx_L1_error) }
     __pyx_t_5 = __pyx_v_18hydro_model_cython_gw;
     __pyx_t_6 = -1;
     if (__pyx_t_5 < 0) {
@@ -6798,48 +6490,48 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
     } else if (unlikely(__pyx_t_5 >= __pyx_v_18hydro_model_cython_glfa_frac_avg.shape[0])) __pyx_t_6 = 0;
     if (unlikely(__pyx_t_6 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      __PYX_ERR(0, 454, __pyx_L1_error)
+      __PYX_ERR(0, 462, __pyx_L1_error)
     }
-    __pyx_t_3 = PyFloat_FromDouble(((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_avg.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfa_frac_avg.strides[0]) ))) * __pyx_v_18hydro_model_cython_glfq)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 454, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = PyNumber_Add(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 454, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble(((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa_frac_avg.data + __pyx_t_5 * __pyx_v_18hydro_model_cython_glfa_frac_avg.strides[0]) ))) * __pyx_v_18hydro_model_cython_glfq)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 462, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_3 = PyNumber_Add(__pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 462, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_XDECREF_SET(__pyx_v_fv_endc, __pyx_t_4);
-    __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_XDECREF_SET(__pyx_v_fv_endc, __pyx_t_3);
+    __pyx_t_3 = 0;
 
-    /* "hydro_model_cython.pyx":457
+    /* "hydro_model_cython.pyx":465
  *         #-----------------------------------------------------------------------------
  *         #check if outer iteration convergence is achieved
  *         if abs(fv_endc - glfv_end) < (glconvcrit * glfv_end):             # <<<<<<<<<<<<<<
  *             fiter_flag = 0
  *         elif glfv_end < 0.001:
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 457, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = PyNumber_Subtract(__pyx_v_fv_endc, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 457, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 465, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyNumber_Absolute(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 457, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Subtract(__pyx_v_fv_endc, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 465, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glconvcrit); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 457, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 465, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 457, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glconvcrit); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 465, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 465, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_9 = PyNumber_Multiply(__pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 457, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = PyObject_RichCompare(__pyx_t_4, __pyx_t_9, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 457, __pyx_L1_error)
+    __pyx_t_8 = PyNumber_Multiply(__pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 465, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 457, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_1 = PyObject_RichCompare(__pyx_t_3, __pyx_t_8, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 465, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 465, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_2) {
 
-      /* "hydro_model_cython.pyx":458
+      /* "hydro_model_cython.pyx":466
  *         #check if outer iteration convergence is achieved
  *         if abs(fv_endc - glfv_end) < (glconvcrit * glfv_end):
  *             fiter_flag = 0             # <<<<<<<<<<<<<<
@@ -6848,7 +6540,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
  */
       __pyx_v_18hydro_model_cython_fiter_flag = 0;
 
-      /* "hydro_model_cython.pyx":457
+      /* "hydro_model_cython.pyx":465
  *         #-----------------------------------------------------------------------------
  *         #check if outer iteration convergence is achieved
  *         if abs(fv_endc - glfv_end) < (glconvcrit * glfv_end):             # <<<<<<<<<<<<<<
@@ -6858,22 +6550,22 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
       goto __pyx_L7;
     }
 
-    /* "hydro_model_cython.pyx":459
+    /* "hydro_model_cython.pyx":467
  *         if abs(fv_endc - glfv_end) < (glconvcrit * glfv_end):
  *             fiter_flag = 0
  *         elif glfv_end < 0.001:             # <<<<<<<<<<<<<<
  *             fiter_flag = 0
  *         else:
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 459, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 467, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_9 = PyObject_RichCompare(__pyx_t_1, __pyx_float_0_001, Py_LT); __Pyx_XGOTREF(__pyx_t_9); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 459, __pyx_L1_error)
+    __pyx_t_8 = PyObject_RichCompare(__pyx_t_1, __pyx_float_0_001, Py_LT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 467, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 459, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 467, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     if (__pyx_t_2) {
 
-      /* "hydro_model_cython.pyx":460
+      /* "hydro_model_cython.pyx":468
  *             fiter_flag = 0
  *         elif glfv_end < 0.001:
  *             fiter_flag = 0             # <<<<<<<<<<<<<<
@@ -6882,7 +6574,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
  */
       __pyx_v_18hydro_model_cython_fiter_flag = 0;
 
-      /* "hydro_model_cython.pyx":459
+      /* "hydro_model_cython.pyx":467
  *         if abs(fv_endc - glfv_end) < (glconvcrit * glfv_end):
  *             fiter_flag = 0
  *         elif glfv_end < 0.001:             # <<<<<<<<<<<<<<
@@ -6892,7 +6584,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
       goto __pyx_L7;
     }
 
-    /* "hydro_model_cython.pyx":462
+    /* "hydro_model_cython.pyx":470
  *             fiter_flag = 0
  *         else:
  *             if glfv_end > fv_endc:             # <<<<<<<<<<<<<<
@@ -6900,28 +6592,28 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
  *             else:
  */
     /*else*/ {
-      __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 462, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_1 = PyObject_RichCompare(__pyx_t_9, __pyx_v_fv_endc, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 462, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 462, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 470, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_1 = PyObject_RichCompare(__pyx_t_8, __pyx_v_fv_endc, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 470, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 470, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       if (__pyx_t_2) {
 
-        /* "hydro_model_cython.pyx":463
+        /* "hydro_model_cython.pyx":471
  *         else:
  *             if glfv_end > fv_endc:
  *                 fv_endmax = glfv_end             # <<<<<<<<<<<<<<
  *             else:
  *                 fv_endmin = glfv_end
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 463, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 471, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_8 = __pyx_PyFloat_AsFloat(__pyx_t_1); if (unlikely((__pyx_t_8 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 463, __pyx_L1_error)
+        __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_t_1); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 471, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_v_18hydro_model_cython_fv_endmax = __pyx_t_8;
+        __pyx_v_18hydro_model_cython_fv_endmax = __pyx_t_7;
 
-        /* "hydro_model_cython.pyx":462
+        /* "hydro_model_cython.pyx":470
  *             fiter_flag = 0
  *         else:
  *             if glfv_end > fv_endc:             # <<<<<<<<<<<<<<
@@ -6931,7 +6623,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
         goto __pyx_L8;
       }
 
-      /* "hydro_model_cython.pyx":465
+      /* "hydro_model_cython.pyx":473
  *                 fv_endmax = glfv_end
  *             else:
  *                 fv_endmin = glfv_end             # <<<<<<<<<<<<<<
@@ -6939,15 +6631,15 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
  *             #----------------------------------------------------
  */
       /*else*/ {
-        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 465, __pyx_L1_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_glfv_end); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 473, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_8 = __pyx_PyFloat_AsFloat(__pyx_t_1); if (unlikely((__pyx_t_8 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 465, __pyx_L1_error)
+        __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_t_1); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 473, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_v_18hydro_model_cython_fv_endmin = __pyx_t_8;
+        __pyx_v_18hydro_model_cython_fv_endmin = __pyx_t_7;
       }
       __pyx_L8:;
 
-      /* "hydro_model_cython.pyx":468
+      /* "hydro_model_cython.pyx":476
  * 
  *             #----------------------------------------------------
  *             if fv_endmax==-999:             # <<<<<<<<<<<<<<
@@ -6957,16 +6649,16 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
       __pyx_t_2 = ((__pyx_v_18hydro_model_cython_fv_endmax == -999.0) != 0);
       if (__pyx_t_2) {
 
-        /* "hydro_model_cython.pyx":469
+        /* "hydro_model_cython.pyx":477
  *             #----------------------------------------------------
  *             if fv_endmax==-999:
  *                 glfv_end = fv_endc             # <<<<<<<<<<<<<<
  *             else:
  *                 glfv_end = fv_endmin + 0.5 * (fv_endmax - fv_endmin)
  */
-        if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_end, __pyx_v_fv_endc) < 0) __PYX_ERR(0, 469, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_end, __pyx_v_fv_endc) < 0) __PYX_ERR(0, 477, __pyx_L1_error)
 
-        /* "hydro_model_cython.pyx":468
+        /* "hydro_model_cython.pyx":476
  * 
  *             #----------------------------------------------------
  *             if fv_endmax==-999:             # <<<<<<<<<<<<<<
@@ -6976,7 +6668,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
         goto __pyx_L9;
       }
 
-      /* "hydro_model_cython.pyx":471
+      /* "hydro_model_cython.pyx":479
  *                 glfv_end = fv_endc
  *             else:
  *                 glfv_end = fv_endmin + 0.5 * (fv_endmax - fv_endmin)             # <<<<<<<<<<<<<<
@@ -6984,16 +6676,16 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
  *     #-----------------------------------------------------------------------------
  */
       /*else*/ {
-        __pyx_t_1 = PyFloat_FromDouble((__pyx_v_18hydro_model_cython_fv_endmin + (0.5 * (__pyx_v_18hydro_model_cython_fv_endmax - __pyx_v_18hydro_model_cython_fv_endmin)))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 471, __pyx_L1_error)
+        __pyx_t_1 = PyFloat_FromDouble((__pyx_v_18hydro_model_cython_fv_endmin + (0.5 * (__pyx_v_18hydro_model_cython_fv_endmax - __pyx_v_18hydro_model_cython_fv_endmin)))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 479, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
-        if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_end, __pyx_t_1) < 0) __PYX_ERR(0, 471, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_d, __pyx_n_s_glfv_end, __pyx_t_1) < 0) __PYX_ERR(0, 479, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       }
       __pyx_L9:;
     }
     __pyx_L7:;
 
-    /* "hydro_model_cython.pyx":475
+    /* "hydro_model_cython.pyx":483
  *     #-----------------------------------------------------------------------------
  *     #advance the iteration
  *         fitern = fitern + 1             # <<<<<<<<<<<<<<
@@ -7002,7 +6694,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
  */
     __pyx_v_18hydro_model_cython_fitern = (__pyx_v_18hydro_model_cython_fitern + 1);
 
-    /* "hydro_model_cython.pyx":476
+    /* "hydro_model_cython.pyx":484
  *     #advance the iteration
  *         fitern = fitern + 1
  *         if fitern > glmaxiter:             # <<<<<<<<<<<<<<
@@ -7012,58 +6704,58 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
     __pyx_t_2 = ((__pyx_v_18hydro_model_cython_fitern > __pyx_v_18hydro_model_cython_glmaxiter) != 0);
     if (__pyx_t_2) {
 
-      /* "hydro_model_cython.pyx":477
+      /* "hydro_model_cython.pyx":485
  *         fitern = fitern + 1
  *         if fitern > glmaxiter:
  *             print (str(glmaxiter) + " f iterations in scell " + str(sur) + ", gwcell"+str(gw)+" in " + str(ts))             # <<<<<<<<<<<<<<
  *             fiter_flag=0
  * 
  */
-      __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_18hydro_model_cython_glmaxiter); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 477, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_18hydro_model_cython_glmaxiter); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 485, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_9 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 477, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
+      __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyNumber_Add(__pyx_t_9, __pyx_kp_s_f_iterations_in_scell); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 477, __pyx_L1_error)
+      __pyx_t_1 = PyNumber_Add(__pyx_t_8, __pyx_kp_s_f_iterations_in_scell); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 485, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_sur); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 477, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_4 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 477, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = PyNumber_Add(__pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 477, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_8 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_sur); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_8 = PyNumber_Add(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyNumber_Add(__pyx_t_9, __pyx_kp_s_gwcell); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 477, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_gw); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 477, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 477, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_t_3 = PyNumber_Add(__pyx_t_8, __pyx_kp_s_gwcell); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_8 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_gw); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_1 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 485, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = PyNumber_Add(__pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 477, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_8 = PyNumber_Add(__pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = PyNumber_Add(__pyx_t_9, __pyx_kp_s_in); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 477, __pyx_L1_error)
+      __pyx_t_1 = PyNumber_Add(__pyx_t_8, __pyx_kp_s_in); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 485, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ts); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 477, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_4 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 477, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = PyNumber_Add(__pyx_t_1, __pyx_t_4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 477, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_8 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ts); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_8 = PyNumber_Add(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 485, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (__Pyx_PrintOne(0, __pyx_t_9) < 0) __PYX_ERR(0, 477, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (__Pyx_PrintOne(0, __pyx_t_8) < 0) __PYX_ERR(0, 485, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-      /* "hydro_model_cython.pyx":478
+      /* "hydro_model_cython.pyx":486
  *         if fitern > glmaxiter:
  *             print (str(glmaxiter) + " f iterations in scell " + str(sur) + ", gwcell"+str(gw)+" in " + str(ts))
  *             fiter_flag=0             # <<<<<<<<<<<<<<
@@ -7072,7 +6764,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
  */
       __pyx_v_18hydro_model_cython_fiter_flag = 0;
 
-      /* "hydro_model_cython.pyx":476
+      /* "hydro_model_cython.pyx":484
  *     #advance the iteration
  *         fitern = fitern + 1
  *         if fitern > glmaxiter:             # <<<<<<<<<<<<<<
@@ -7082,7 +6774,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
     }
   }
 
-  /* "hydro_model_cython.pyx":416
+  /* "hydro_model_cython.pyx":420
  * 
  * 
  * cdef iteration_1():             # <<<<<<<<<<<<<<
@@ -7097,18 +6789,17 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_1(void) {
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_8);
   __Pyx_AddTraceback("hydro_model_cython.iteration_1", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_temp);
   __Pyx_XDECREF(__pyx_v_fv_endc);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "hydro_model_cython.pyx":485
+/* "hydro_model_cython.pyx":493
  * 
  * 
  * cdef iteration_2():             # <<<<<<<<<<<<<<
@@ -7129,19 +6820,21 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
   Py_ssize_t __pyx_t_6;
   float __pyx_t_7;
   PyObject *__pyx_t_8 = NULL;
-  PyObject *__pyx_t_9 = NULL;
-  int __pyx_t_10;
+  double __pyx_t_9;
+  double __pyx_t_10;
   PyObject *__pyx_t_11 = NULL;
-  PyObject *__pyx_t_12 = NULL;
+  int __pyx_t_12;
   PyObject *__pyx_t_13 = NULL;
   PyObject *__pyx_t_14 = NULL;
   PyObject *__pyx_t_15 = NULL;
+  PyObject *__pyx_t_16 = NULL;
+  PyObject *__pyx_t_17 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("iteration_2", 0);
 
-  /* "hydro_model_cython.pyx":496
+  /* "hydro_model_cython.pyx":504
  *     #*********************************************************************************
  *     #prepare data
  *     iitern = 0             # <<<<<<<<<<<<<<
@@ -7150,7 +6843,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
  */
   __pyx_v_18hydro_model_cython_iitern = 0;
 
-  /* "hydro_model_cython.pyx":497
+  /* "hydro_model_cython.pyx":505
  *     #prepare data
  *     iitern = 0
  *     iiter_flag = 1             # <<<<<<<<<<<<<<
@@ -7159,7 +6852,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
  */
   __pyx_v_18hydro_model_cython_iiter_flag = 1;
 
-  /* "hydro_model_cython.pyx":498
+  /* "hydro_model_cython.pyx":506
  *     iitern = 0
  *     iiter_flag = 1
  *     iv_endmin = 0             # <<<<<<<<<<<<<<
@@ -7168,7 +6861,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
  */
   __pyx_v_18hydro_model_cython_iv_endmin = 0.0;
 
-  /* "hydro_model_cython.pyx":499
+  /* "hydro_model_cython.pyx":507
  *     iiter_flag = 1
  *     iv_endmin = 0
  *     iv_endmax = -999             # <<<<<<<<<<<<<<
@@ -7177,7 +6870,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
  */
   __pyx_v_18hydro_model_cython_iv_endmax = -999.0;
 
-  /* "hydro_model_cython.pyx":502
+  /* "hydro_model_cython.pyx":510
  *     #-----------------------------------------------------------------------------
  *     #initial guess of end island volume
  *     if ts==0:             # <<<<<<<<<<<<<<
@@ -7187,14 +6880,14 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
   __pyx_t_1 = ((__pyx_v_18hydro_model_cython_ts == 0) != 0);
   if (__pyx_t_1) {
 
-    /* "hydro_model_cython.pyx":503
+    /* "hydro_model_cython.pyx":511
  *     #initial guess of end island volume
  *     if ts==0:
  *         iv_beg=gliv_init[sur,gw]             # <<<<<<<<<<<<<<
  *     else:
  *         iv_beg = glfin_iv[ts-1, sur, gw]
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_gliv_init.memview)) { __Pyx_RaiseUnboundLocalError("gliv_init"); __PYX_ERR(0, 503, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_gliv_init.memview)) { __Pyx_RaiseUnboundLocalError("gliv_init"); __PYX_ERR(0, 511, __pyx_L1_error) }
     __pyx_t_2 = __pyx_v_18hydro_model_cython_sur;
     __pyx_t_3 = __pyx_v_18hydro_model_cython_gw;
     __pyx_t_4 = -1;
@@ -7208,14 +6901,14 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
     } else if (unlikely(__pyx_t_3 >= __pyx_v_18hydro_model_cython_gliv_init.shape[1])) __pyx_t_4 = 1;
     if (unlikely(__pyx_t_4 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      __PYX_ERR(0, 503, __pyx_L1_error)
+      __PYX_ERR(0, 511, __pyx_L1_error)
     }
-    __pyx_t_5 = PyFloat_FromDouble((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_gliv_init.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_gliv_init.strides[0]) ) + __pyx_t_3 * __pyx_v_18hydro_model_cython_gliv_init.strides[1]) )))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 503, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble((*((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_gliv_init.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_gliv_init.strides[0]) ) + __pyx_t_3 * __pyx_v_18hydro_model_cython_gliv_init.strides[1]) )))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 511, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_v_iv_beg = __pyx_t_5;
     __pyx_t_5 = 0;
 
-    /* "hydro_model_cython.pyx":502
+    /* "hydro_model_cython.pyx":510
  *     #-----------------------------------------------------------------------------
  *     #initial guess of end island volume
  *     if ts==0:             # <<<<<<<<<<<<<<
@@ -7225,7 +6918,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
     goto __pyx_L3;
   }
 
-  /* "hydro_model_cython.pyx":505
+  /* "hydro_model_cython.pyx":513
  *         iv_beg=gliv_init[sur,gw]
  *     else:
  *         iv_beg = glfin_iv[ts-1, sur, gw]             # <<<<<<<<<<<<<<
@@ -7233,7 +6926,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
  *     #**********************************************************************************
  */
   /*else*/ {
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_iv.memview)) { __Pyx_RaiseUnboundLocalError("glfin_iv"); __PYX_ERR(0, 505, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfin_iv.memview)) { __Pyx_RaiseUnboundLocalError("glfin_iv"); __PYX_ERR(0, 513, __pyx_L1_error) }
     __pyx_t_3 = (__pyx_v_18hydro_model_cython_ts - 1);
     __pyx_t_2 = __pyx_v_18hydro_model_cython_sur;
     __pyx_t_6 = __pyx_v_18hydro_model_cython_gw;
@@ -7252,64 +6945,74 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
     } else if (unlikely(__pyx_t_6 >= __pyx_v_18hydro_model_cython_glfin_iv.shape[2])) __pyx_t_4 = 2;
     if (unlikely(__pyx_t_4 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      __PYX_ERR(0, 505, __pyx_L1_error)
+      __PYX_ERR(0, 513, __pyx_L1_error)
     }
-    __pyx_t_5 = PyFloat_FromDouble((*((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_iv.data + __pyx_t_3 * __pyx_v_18hydro_model_cython_glfin_iv.strides[0]) ) + __pyx_t_2 * __pyx_v_18hydro_model_cython_glfin_iv.strides[1]) ) + __pyx_t_6 * __pyx_v_18hydro_model_cython_glfin_iv.strides[2]) )))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 505, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble((*((double *) ( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfin_iv.data + __pyx_t_3 * __pyx_v_18hydro_model_cython_glfin_iv.strides[0]) ) + __pyx_t_2 * __pyx_v_18hydro_model_cython_glfin_iv.strides[1]) ) + __pyx_t_6 * __pyx_v_18hydro_model_cython_glfin_iv.strides[2]) )))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 513, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_v_iv_beg = __pyx_t_5;
     __pyx_t_5 = 0;
   }
   __pyx_L3:;
 
-  /* "hydro_model_cython.pyx":506
+  /* "hydro_model_cython.pyx":514
  *     else:
  *         iv_beg = glfin_iv[ts-1, sur, gw]
  *     gliv_end = iv_beg             # <<<<<<<<<<<<<<
  *     #**********************************************************************************
  *     #inner iteration start
  */
-  __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_v_iv_beg); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 506, __pyx_L1_error)
+  __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_v_iv_beg); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 514, __pyx_L1_error)
   __pyx_v_18hydro_model_cython_gliv_end = __pyx_t_7;
 
-  /* "hydro_model_cython.pyx":509
+  /* "hydro_model_cython.pyx":517
  *     #**********************************************************************************
  *     #inner iteration start
  *     while iiter_flag:             # <<<<<<<<<<<<<<
  *         iv_av = (gliv_end + iv_beg) / 2
- *         glfq = ((glfv_av / (glfa[sur] * glfpor)) - (iv_av / ((glia[sur]) * glipor))) * glkgw[sur]
+ *         gliarea=glfarea*glia[sur]/glfa[sur]
  */
   while (1) {
     __pyx_t_1 = (__pyx_v_18hydro_model_cython_iiter_flag != 0);
     if (!__pyx_t_1) break;
 
-    /* "hydro_model_cython.pyx":510
+    /* "hydro_model_cython.pyx":518
  *     #inner iteration start
  *     while iiter_flag:
  *         iv_av = (gliv_end + iv_beg) / 2             # <<<<<<<<<<<<<<
- *         glfq = ((glfv_av / (glfa[sur] * glfpor)) - (iv_av / ((glia[sur]) * glipor))) * glkgw[sur]
- *         evapi = iv_av / (glipor * glidet * glia[sur])
+ *         gliarea=glfarea*glia[sur]/glfa[sur]
+ * #        glfq = ((glfv_av / (glfa[sur] * glfpor)) - (iv_av / ((glia[sur]) * glipor))) * glkgw[sur]
  */
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_gliv_end); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 510, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_gliv_end); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 518, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_8 = PyNumber_Add(__pyx_t_5, __pyx_v_iv_beg); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 510, __pyx_L1_error)
+    __pyx_t_8 = PyNumber_Add(__pyx_t_5, __pyx_v_iv_beg); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 518, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_t_8, __pyx_int_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 510, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_t_8, __pyx_int_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 518, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_XDECREF_SET(__pyx_v_iv_av, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "hydro_model_cython.pyx":511
+    /* "hydro_model_cython.pyx":519
  *     while iiter_flag:
  *         iv_av = (gliv_end + iv_beg) / 2
- *         glfq = ((glfv_av / (glfa[sur] * glfpor)) - (iv_av / ((glia[sur]) * glipor))) * glkgw[sur]             # <<<<<<<<<<<<<<
- *         evapi = iv_av / (glipor * glidet * glia[sur])
- *         if evapi > 0.6:
+ *         gliarea=glfarea*glia[sur]/glfa[sur]             # <<<<<<<<<<<<<<
+ * #        glfq = ((glfv_av / (glfa[sur] * glfpor)) - (iv_av / ((glia[sur]) * glipor))) * glkgw[sur]
+ *         glfq = ((glfv_av / (glfarea * glfpor)) - (iv_av / ((gliarea) * glipor))) * glkgw[sur]
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_glfv_av); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 511, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 511, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_glia.memview)) { __Pyx_RaiseUnboundLocalError("glia"); __PYX_ERR(0, 519, __pyx_L1_error) }
+    __pyx_t_6 = __pyx_v_18hydro_model_cython_sur;
+    __pyx_t_4 = -1;
+    if (__pyx_t_6 < 0) {
+      __pyx_t_6 += __pyx_v_18hydro_model_cython_glia.shape[0];
+      if (unlikely(__pyx_t_6 < 0)) __pyx_t_4 = 0;
+    } else if (unlikely(__pyx_t_6 >= __pyx_v_18hydro_model_cython_glia.shape[0])) __pyx_t_4 = 0;
+    if (unlikely(__pyx_t_4 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_4);
+      __PYX_ERR(0, 519, __pyx_L1_error)
+    }
+    __pyx_t_9 = (__pyx_v_18hydro_model_cython_glfarea * (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glia.data + __pyx_t_6 * __pyx_v_18hydro_model_cython_glia.strides[0]) ))));
+    if (unlikely(!__pyx_v_18hydro_model_cython_glfa.memview)) { __Pyx_RaiseUnboundLocalError("glfa"); __PYX_ERR(0, 519, __pyx_L1_error) }
     __pyx_t_6 = __pyx_v_18hydro_model_cython_sur;
     __pyx_t_4 = -1;
     if (__pyx_t_6 < 0) {
@@ -7318,35 +7021,40 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
     } else if (unlikely(__pyx_t_6 >= __pyx_v_18hydro_model_cython_glfa.shape[0])) __pyx_t_4 = 0;
     if (unlikely(__pyx_t_4 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      __PYX_ERR(0, 511, __pyx_L1_error)
+      __PYX_ERR(0, 519, __pyx_L1_error)
     }
-    __pyx_t_8 = PyFloat_FromDouble(((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_6 * __pyx_v_18hydro_model_cython_glfa.strides[0]) ))) * __pyx_v_18hydro_model_cython_glfpor)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 511, __pyx_L1_error)
+    __pyx_t_10 = (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glfa.data + __pyx_t_6 * __pyx_v_18hydro_model_cython_glfa.strides[0]) )));
+    if (unlikely(__pyx_t_10 == 0)) {
+      PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+      __PYX_ERR(0, 519, __pyx_L1_error)
+    }
+    __pyx_v_18hydro_model_cython_gliarea = (__pyx_t_9 / __pyx_t_10);
+
+    /* "hydro_model_cython.pyx":521
+ *         gliarea=glfarea*glia[sur]/glfa[sur]
+ * #        glfq = ((glfv_av / (glfa[sur] * glfpor)) - (iv_av / ((glia[sur]) * glipor))) * glkgw[sur]
+ *         glfq = ((glfv_av / (glfarea * glfpor)) - (iv_av / ((gliarea) * glipor))) * glkgw[sur]             # <<<<<<<<<<<<<<
+ * #        evapi = iv_av / (glipor * glidet * glia[sur])
+ *         evapi = iv_av / (glipor * glidet * (gliarea))
+ */
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_glfv_av); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 521, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_8 = PyFloat_FromDouble((__pyx_v_18hydro_model_cython_glfarea * __pyx_v_18hydro_model_cython_glfpor)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 521, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_9 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 511, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_t_11 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_8); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 521, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (unlikely(!__pyx_v_18hydro_model_cython_glia.memview)) { __Pyx_RaiseUnboundLocalError("glia"); __PYX_ERR(0, 511, __pyx_L1_error) }
-    __pyx_t_6 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_4 = -1;
-    if (__pyx_t_6 < 0) {
-      __pyx_t_6 += __pyx_v_18hydro_model_cython_glia.shape[0];
-      if (unlikely(__pyx_t_6 < 0)) __pyx_t_4 = 0;
-    } else if (unlikely(__pyx_t_6 >= __pyx_v_18hydro_model_cython_glia.shape[0])) __pyx_t_4 = 0;
-    if (unlikely(__pyx_t_4 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      __PYX_ERR(0, 511, __pyx_L1_error)
-    }
-    __pyx_t_8 = PyFloat_FromDouble(((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glia.data + __pyx_t_6 * __pyx_v_18hydro_model_cython_glia.strides[0]) ))) * __pyx_v_18hydro_model_cython_glipor)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 511, __pyx_L1_error)
+    __pyx_t_8 = PyFloat_FromDouble((__pyx_v_18hydro_model_cython_gliarea * __pyx_v_18hydro_model_cython_glipor)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 521, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_v_iv_av, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 511, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_v_iv_av, __pyx_t_8); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 521, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = PyNumber_Subtract(__pyx_t_9, __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 511, __pyx_L1_error)
+    __pyx_t_8 = PyNumber_Subtract(__pyx_t_11, __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 521, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_v_18hydro_model_cython_glkgw.memview)) { __Pyx_RaiseUnboundLocalError("glkgw"); __PYX_ERR(0, 511, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_glkgw.memview)) { __Pyx_RaiseUnboundLocalError("glkgw"); __PYX_ERR(0, 521, __pyx_L1_error) }
     __pyx_t_6 = __pyx_v_18hydro_model_cython_sur;
     __pyx_t_4 = -1;
     if (__pyx_t_6 < 0) {
@@ -7355,81 +7063,70 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
     } else if (unlikely(__pyx_t_6 >= __pyx_v_18hydro_model_cython_glkgw.shape[0])) __pyx_t_4 = 0;
     if (unlikely(__pyx_t_4 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      __PYX_ERR(0, 511, __pyx_L1_error)
+      __PYX_ERR(0, 521, __pyx_L1_error)
     }
-    __pyx_t_5 = PyFloat_FromDouble((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glkgw.data + __pyx_t_6 * __pyx_v_18hydro_model_cython_glkgw.strides[0]) )))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 511, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glkgw.data + __pyx_t_6 * __pyx_v_18hydro_model_cython_glkgw.strides[0]) )))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 521, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_9 = PyNumber_Multiply(__pyx_t_8, __pyx_t_5); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 511, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_t_11 = PyNumber_Multiply(__pyx_t_8, __pyx_t_5); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 521, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_t_9); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 511, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_t_11); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 521, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     __pyx_v_18hydro_model_cython_glfq = __pyx_t_7;
 
-    /* "hydro_model_cython.pyx":512
- *         iv_av = (gliv_end + iv_beg) / 2
- *         glfq = ((glfv_av / (glfa[sur] * glfpor)) - (iv_av / ((glia[sur]) * glipor))) * glkgw[sur]
- *         evapi = iv_av / (glipor * glidet * glia[sur])             # <<<<<<<<<<<<<<
+    /* "hydro_model_cython.pyx":523
+ *         glfq = ((glfv_av / (glfarea * glfpor)) - (iv_av / ((gliarea) * glipor))) * glkgw[sur]
+ * #        evapi = iv_av / (glipor * glidet * glia[sur])
+ *         evapi = iv_av / (glipor * glidet * (gliarea))             # <<<<<<<<<<<<<<
  *         if evapi > 0.6:
  *             evapi = 0.6
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glia.memview)) { __Pyx_RaiseUnboundLocalError("glia"); __PYX_ERR(0, 512, __pyx_L1_error) }
-    __pyx_t_6 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_4 = -1;
-    if (__pyx_t_6 < 0) {
-      __pyx_t_6 += __pyx_v_18hydro_model_cython_glia.shape[0];
-      if (unlikely(__pyx_t_6 < 0)) __pyx_t_4 = 0;
-    } else if (unlikely(__pyx_t_6 >= __pyx_v_18hydro_model_cython_glia.shape[0])) __pyx_t_4 = 0;
-    if (unlikely(__pyx_t_4 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      __PYX_ERR(0, 512, __pyx_L1_error)
-    }
-    __pyx_t_9 = PyFloat_FromDouble(((__pyx_v_18hydro_model_cython_glipor * __pyx_v_18hydro_model_cython_glidet) * (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glia.data + __pyx_t_6 * __pyx_v_18hydro_model_cython_glia.strides[0]) ))))); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 512, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_v_iv_av, __pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 512, __pyx_L1_error)
+    __pyx_t_11 = PyFloat_FromDouble(((__pyx_v_18hydro_model_cython_glipor * __pyx_v_18hydro_model_cython_glidet) * __pyx_v_18hydro_model_cython_gliarea)); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 523, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_11);
+    __pyx_t_5 = __Pyx_PyNumber_Divide(__pyx_v_iv_av, __pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 523, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_t_5); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 512, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+    __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_t_5); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 523, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_18hydro_model_cython_evapi = __pyx_t_7;
 
-    /* "hydro_model_cython.pyx":513
- *         glfq = ((glfv_av / (glfa[sur] * glfpor)) - (iv_av / ((glia[sur]) * glipor))) * glkgw[sur]
- *         evapi = iv_av / (glipor * glidet * glia[sur])
+    /* "hydro_model_cython.pyx":524
+ * #        evapi = iv_av / (glipor * glidet * glia[sur])
+ *         evapi = iv_av / (glipor * glidet * (gliarea))
  *         if evapi > 0.6:             # <<<<<<<<<<<<<<
  *             evapi = 0.6
- *         gliev = glpet[ts]  / 1000 * (glia[sur]) * evapi
+ * #        gliev = glpet[ts]  / 1000 * (glia[sur]) * evapi
  */
     __pyx_t_1 = ((__pyx_v_18hydro_model_cython_evapi > 0.6) != 0);
     if (__pyx_t_1) {
 
-      /* "hydro_model_cython.pyx":514
- *         evapi = iv_av / (glipor * glidet * glia[sur])
+      /* "hydro_model_cython.pyx":525
+ *         evapi = iv_av / (glipor * glidet * (gliarea))
  *         if evapi > 0.6:
  *             evapi = 0.6             # <<<<<<<<<<<<<<
- *         gliev = glpet[ts]  / 1000 * (glia[sur]) * evapi
- *         glipv = glrain / 1000 * glia[sur]
+ * #        gliev = glpet[ts]  / 1000 * (glia[sur]) * evapi
+ * #        glipv = glrain / 1000 * glia[sur]
  */
       __pyx_v_18hydro_model_cython_evapi = 0.6;
 
-      /* "hydro_model_cython.pyx":513
- *         glfq = ((glfv_av / (glfa[sur] * glfpor)) - (iv_av / ((glia[sur]) * glipor))) * glkgw[sur]
- *         evapi = iv_av / (glipor * glidet * glia[sur])
+      /* "hydro_model_cython.pyx":524
+ * #        evapi = iv_av / (glipor * glidet * glia[sur])
+ *         evapi = iv_av / (glipor * glidet * (gliarea))
  *         if evapi > 0.6:             # <<<<<<<<<<<<<<
  *             evapi = 0.6
- *         gliev = glpet[ts]  / 1000 * (glia[sur]) * evapi
+ * #        gliev = glpet[ts]  / 1000 * (glia[sur]) * evapi
  */
     }
 
-    /* "hydro_model_cython.pyx":515
- *         if evapi > 0.6:
- *             evapi = 0.6
- *         gliev = glpet[ts]  / 1000 * (glia[sur]) * evapi             # <<<<<<<<<<<<<<
- *         glipv = glrain / 1000 * glia[sur]
+    /* "hydro_model_cython.pyx":528
+ * #        gliev = glpet[ts]  / 1000 * (glia[sur]) * evapi
+ * #        glipv = glrain / 1000 * glia[sur]
+ *         gliev = glpet[ts]  / 1000 * (gliarea) * evapi             # <<<<<<<<<<<<<<
+ *         glipv = glrain / 1000 * gliarea
  * 
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glpet.memview)) { __Pyx_RaiseUnboundLocalError("glpet"); __PYX_ERR(0, 515, __pyx_L1_error) }
+    if (unlikely(!__pyx_v_18hydro_model_cython_glpet.memview)) { __Pyx_RaiseUnboundLocalError("glpet"); __PYX_ERR(0, 528, __pyx_L1_error) }
     __pyx_t_6 = __pyx_v_18hydro_model_cython_ts;
     __pyx_t_4 = -1;
     if (__pyx_t_6 < 0) {
@@ -7438,153 +7135,131 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
     } else if (unlikely(__pyx_t_6 >= __pyx_v_18hydro_model_cython_glpet.shape[0])) __pyx_t_4 = 0;
     if (unlikely(__pyx_t_4 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      __PYX_ERR(0, 515, __pyx_L1_error)
+      __PYX_ERR(0, 528, __pyx_L1_error)
     }
-    if (unlikely(!__pyx_v_18hydro_model_cython_glia.memview)) { __Pyx_RaiseUnboundLocalError("glia"); __PYX_ERR(0, 515, __pyx_L1_error) }
-    __pyx_t_2 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_4 = -1;
-    if (__pyx_t_2 < 0) {
-      __pyx_t_2 += __pyx_v_18hydro_model_cython_glia.shape[0];
-      if (unlikely(__pyx_t_2 < 0)) __pyx_t_4 = 0;
-    } else if (unlikely(__pyx_t_2 >= __pyx_v_18hydro_model_cython_glia.shape[0])) __pyx_t_4 = 0;
-    if (unlikely(__pyx_t_4 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      __PYX_ERR(0, 515, __pyx_L1_error)
-    }
-    __pyx_v_18hydro_model_cython_gliev = ((((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glpet.data + __pyx_t_6 * __pyx_v_18hydro_model_cython_glpet.strides[0]) ))) / 1000.0) * (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glia.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_glia.strides[0]) )))) * __pyx_v_18hydro_model_cython_evapi);
+    __pyx_v_18hydro_model_cython_gliev = ((((*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glpet.data + __pyx_t_6 * __pyx_v_18hydro_model_cython_glpet.strides[0]) ))) / 1000.0) * __pyx_v_18hydro_model_cython_gliarea) * __pyx_v_18hydro_model_cython_evapi);
 
-    /* "hydro_model_cython.pyx":516
- *             evapi = 0.6
- *         gliev = glpet[ts]  / 1000 * (glia[sur]) * evapi
- *         glipv = glrain / 1000 * glia[sur]             # <<<<<<<<<<<<<<
+    /* "hydro_model_cython.pyx":529
+ * #        glipv = glrain / 1000 * glia[sur]
+ *         gliev = glpet[ts]  / 1000 * (gliarea) * evapi
+ *         glipv = glrain / 1000 * gliarea             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    if (unlikely(!__pyx_v_18hydro_model_cython_glia.memview)) { __Pyx_RaiseUnboundLocalError("glia"); __PYX_ERR(0, 516, __pyx_L1_error) }
-    __pyx_t_2 = __pyx_v_18hydro_model_cython_sur;
-    __pyx_t_4 = -1;
-    if (__pyx_t_2 < 0) {
-      __pyx_t_2 += __pyx_v_18hydro_model_cython_glia.shape[0];
-      if (unlikely(__pyx_t_2 < 0)) __pyx_t_4 = 0;
-    } else if (unlikely(__pyx_t_2 >= __pyx_v_18hydro_model_cython_glia.shape[0])) __pyx_t_4 = 0;
-    if (unlikely(__pyx_t_4 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      __PYX_ERR(0, 516, __pyx_L1_error)
-    }
-    __pyx_v_18hydro_model_cython_glipv = ((__pyx_v_18hydro_model_cython_glrain / 1000.0) * (*((double *) ( /* dim=0 */ (__pyx_v_18hydro_model_cython_glia.data + __pyx_t_2 * __pyx_v_18hydro_model_cython_glia.strides[0]) ))));
+    __pyx_v_18hydro_model_cython_glipv = ((__pyx_v_18hydro_model_cython_glrain / 1000.0) * __pyx_v_18hydro_model_cython_gliarea);
 
-    /* "hydro_model_cython.pyx":519
+    /* "hydro_model_cython.pyx":532
  * 
  * 
  *         iv_endc = iv_beg + glfq - gliev + glipv             # <<<<<<<<<<<<<<
  * 
  *         if debug and ts==dts:
  */
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glfq); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 519, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glfq); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 532, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_9 = PyNumber_Add(__pyx_v_iv_beg, __pyx_t_5); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 519, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_t_11 = PyNumber_Add(__pyx_v_iv_beg, __pyx_t_5); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 532, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_gliev); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 519, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_gliev); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 532, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_8 = PyNumber_Subtract(__pyx_t_9, __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 519, __pyx_L1_error)
+    __pyx_t_8 = PyNumber_Subtract(__pyx_t_11, __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 532, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glipv); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 519, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glipv); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 532, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_9 = PyNumber_Add(__pyx_t_8, __pyx_t_5); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 519, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_t_11 = PyNumber_Add(__pyx_t_8, __pyx_t_5); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 532, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_t_9); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 519, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_t_11); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 532, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     __pyx_v_18hydro_model_cython_iv_endc = __pyx_t_7;
 
-    /* "hydro_model_cython.pyx":521
+    /* "hydro_model_cython.pyx":534
  *         iv_endc = iv_beg + glfq - gliev + glipv
  * 
  *         if debug and ts==dts:             # <<<<<<<<<<<<<<
- *             print "iter2", iv_beg, iv_av, glfq, gliev, glipv, evapi, glfv_av,iv_endmax, iv_endmin
+ *             print ("iter2", iv_beg, iv_av, glfq, gliev, glipv, evapi, glfv_av,iv_endmax, iv_endmin)
  * 
  */
-    __pyx_t_10 = (__pyx_v_18hydro_model_cython_debug != 0);
-    if (__pyx_t_10) {
+    __pyx_t_12 = (__pyx_v_18hydro_model_cython_debug != 0);
+    if (__pyx_t_12) {
     } else {
-      __pyx_t_1 = __pyx_t_10;
+      __pyx_t_1 = __pyx_t_12;
       goto __pyx_L8_bool_binop_done;
     }
-    __pyx_t_10 = ((__pyx_v_18hydro_model_cython_ts == __pyx_v_18hydro_model_cython_dts) != 0);
-    __pyx_t_1 = __pyx_t_10;
+    __pyx_t_12 = ((__pyx_v_18hydro_model_cython_ts == __pyx_v_18hydro_model_cython_dts) != 0);
+    __pyx_t_1 = __pyx_t_12;
     __pyx_L8_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "hydro_model_cython.pyx":522
+      /* "hydro_model_cython.pyx":535
  * 
  *         if debug and ts==dts:
- *             print "iter2", iv_beg, iv_av, glfq, gliev, glipv, evapi, glfv_av,iv_endmax, iv_endmin             # <<<<<<<<<<<<<<
+ *             print ("iter2", iv_beg, iv_av, glfq, gliev, glipv, evapi, glfv_av,iv_endmax, iv_endmin)             # <<<<<<<<<<<<<<
  * 
  *         #-----------------------------------------------------------------------------
  */
-      __pyx_t_9 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glfq); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 522, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_gliev); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 522, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_8 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glipv); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 522, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_11 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_evapi); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 522, __pyx_L1_error)
+      __pyx_t_11 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glfq); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 535, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
-      __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_n_s_glfv_av); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 522, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_12);
-      __pyx_t_13 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_iv_endmax); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 522, __pyx_L1_error)
+      __pyx_t_5 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_gliev); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 535, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __pyx_t_8 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_glipv); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 535, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_13 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_evapi); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 535, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_13);
-      __pyx_t_14 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_iv_endmin); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 522, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_n_s_glfv_av); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 535, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_14);
-      __pyx_t_15 = PyTuple_New(10); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 522, __pyx_L1_error)
+      __pyx_t_15 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_iv_endmax); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 535, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
+      __pyx_t_16 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_iv_endmin); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 535, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_16);
+      __pyx_t_17 = PyTuple_New(10); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 535, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_17);
       __Pyx_INCREF(__pyx_n_s_iter2);
       __Pyx_GIVEREF(__pyx_n_s_iter2);
-      PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_n_s_iter2);
+      PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_n_s_iter2);
       __Pyx_INCREF(__pyx_v_iv_beg);
       __Pyx_GIVEREF(__pyx_v_iv_beg);
-      PyTuple_SET_ITEM(__pyx_t_15, 1, __pyx_v_iv_beg);
+      PyTuple_SET_ITEM(__pyx_t_17, 1, __pyx_v_iv_beg);
       __Pyx_INCREF(__pyx_v_iv_av);
       __Pyx_GIVEREF(__pyx_v_iv_av);
-      PyTuple_SET_ITEM(__pyx_t_15, 2, __pyx_v_iv_av);
-      __Pyx_GIVEREF(__pyx_t_9);
-      PyTuple_SET_ITEM(__pyx_t_15, 3, __pyx_t_9);
-      __Pyx_GIVEREF(__pyx_t_5);
-      PyTuple_SET_ITEM(__pyx_t_15, 4, __pyx_t_5);
-      __Pyx_GIVEREF(__pyx_t_8);
-      PyTuple_SET_ITEM(__pyx_t_15, 5, __pyx_t_8);
+      PyTuple_SET_ITEM(__pyx_t_17, 2, __pyx_v_iv_av);
       __Pyx_GIVEREF(__pyx_t_11);
-      PyTuple_SET_ITEM(__pyx_t_15, 6, __pyx_t_11);
-      __Pyx_GIVEREF(__pyx_t_12);
-      PyTuple_SET_ITEM(__pyx_t_15, 7, __pyx_t_12);
+      PyTuple_SET_ITEM(__pyx_t_17, 3, __pyx_t_11);
+      __Pyx_GIVEREF(__pyx_t_5);
+      PyTuple_SET_ITEM(__pyx_t_17, 4, __pyx_t_5);
+      __Pyx_GIVEREF(__pyx_t_8);
+      PyTuple_SET_ITEM(__pyx_t_17, 5, __pyx_t_8);
       __Pyx_GIVEREF(__pyx_t_13);
-      PyTuple_SET_ITEM(__pyx_t_15, 8, __pyx_t_13);
+      PyTuple_SET_ITEM(__pyx_t_17, 6, __pyx_t_13);
       __Pyx_GIVEREF(__pyx_t_14);
-      PyTuple_SET_ITEM(__pyx_t_15, 9, __pyx_t_14);
-      __pyx_t_9 = 0;
+      PyTuple_SET_ITEM(__pyx_t_17, 7, __pyx_t_14);
+      __Pyx_GIVEREF(__pyx_t_15);
+      PyTuple_SET_ITEM(__pyx_t_17, 8, __pyx_t_15);
+      __Pyx_GIVEREF(__pyx_t_16);
+      PyTuple_SET_ITEM(__pyx_t_17, 9, __pyx_t_16);
+      __pyx_t_11 = 0;
       __pyx_t_5 = 0;
       __pyx_t_8 = 0;
-      __pyx_t_11 = 0;
-      __pyx_t_12 = 0;
       __pyx_t_13 = 0;
       __pyx_t_14 = 0;
-      if (__Pyx_Print(0, __pyx_t_15, 1) < 0) __PYX_ERR(0, 522, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
+      __pyx_t_15 = 0;
+      __pyx_t_16 = 0;
+      if (__Pyx_PrintOne(0, __pyx_t_17) < 0) __PYX_ERR(0, 535, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
 
-      /* "hydro_model_cython.pyx":521
+      /* "hydro_model_cython.pyx":534
  *         iv_endc = iv_beg + glfq - gliev + glipv
  * 
  *         if debug and ts==dts:             # <<<<<<<<<<<<<<
- *             print "iter2", iv_beg, iv_av, glfq, gliev, glipv, evapi, glfv_av,iv_endmax, iv_endmin
+ *             print ("iter2", iv_beg, iv_av, glfq, gliev, glipv, evapi, glfv_av,iv_endmax, iv_endmin)
  * 
  */
     }
 
-    /* "hydro_model_cython.pyx":527
+    /* "hydro_model_cython.pyx":540
  *         #check if inner iteration convergence is achieved
  * 
  *         if abs(iv_endc - gliv_end) < glconvcrit * gliv_end:             # <<<<<<<<<<<<<<
@@ -7594,7 +7269,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
     __pyx_t_1 = ((fabsf((__pyx_v_18hydro_model_cython_iv_endc - __pyx_v_18hydro_model_cython_gliv_end)) < (__pyx_v_18hydro_model_cython_glconvcrit * __pyx_v_18hydro_model_cython_gliv_end)) != 0);
     if (__pyx_t_1) {
 
-      /* "hydro_model_cython.pyx":528
+      /* "hydro_model_cython.pyx":541
  * 
  *         if abs(iv_endc - gliv_end) < glconvcrit * gliv_end:
  *             iiter_flag = 0             # <<<<<<<<<<<<<<
@@ -7603,7 +7278,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
  */
       __pyx_v_18hydro_model_cython_iiter_flag = 0;
 
-      /* "hydro_model_cython.pyx":527
+      /* "hydro_model_cython.pyx":540
  *         #check if inner iteration convergence is achieved
  * 
  *         if abs(iv_endc - gliv_end) < glconvcrit * gliv_end:             # <<<<<<<<<<<<<<
@@ -7613,7 +7288,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
       goto __pyx_L10;
     }
 
-    /* "hydro_model_cython.pyx":531
+    /* "hydro_model_cython.pyx":544
  * #            if debug:
  * #                print "\t\t\tcase 1", glconvcrit, iv_endc - gliv_end,  glconvcrit * gliv_end
  *         elif gliv_end < glconvcrit:             # <<<<<<<<<<<<<<
@@ -7623,7 +7298,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
     __pyx_t_1 = ((__pyx_v_18hydro_model_cython_gliv_end < __pyx_v_18hydro_model_cython_glconvcrit) != 0);
     if (__pyx_t_1) {
 
-      /* "hydro_model_cython.pyx":532
+      /* "hydro_model_cython.pyx":545
  * #                print "\t\t\tcase 1", glconvcrit, iv_endc - gliv_end,  glconvcrit * gliv_end
  *         elif gliv_end < glconvcrit:
  *             iiter_flag = 0             # <<<<<<<<<<<<<<
@@ -7632,7 +7307,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
  */
       __pyx_v_18hydro_model_cython_iiter_flag = 0;
 
-      /* "hydro_model_cython.pyx":531
+      /* "hydro_model_cython.pyx":544
  * #            if debug:
  * #                print "\t\t\tcase 1", glconvcrit, iv_endc - gliv_end,  glconvcrit * gliv_end
  *         elif gliv_end < glconvcrit:             # <<<<<<<<<<<<<<
@@ -7642,7 +7317,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
       goto __pyx_L10;
     }
 
-    /* "hydro_model_cython.pyx":538
+    /* "hydro_model_cython.pyx":551
  * #            if debug:
  * #                print "\t\t\tcase 3", iv_endc - gliv_end,  glconvcrit * gliv_end
  *             if gliv_end > iv_endc:             # <<<<<<<<<<<<<<
@@ -7653,41 +7328,41 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
       __pyx_t_1 = ((__pyx_v_18hydro_model_cython_gliv_end > __pyx_v_18hydro_model_cython_iv_endc) != 0);
       if (__pyx_t_1) {
 
-        /* "hydro_model_cython.pyx":539
+        /* "hydro_model_cython.pyx":552
  * #                print "\t\t\tcase 3", iv_endc - gliv_end,  glconvcrit * gliv_end
  *             if gliv_end > iv_endc:
  *                 iv_endmax = np.copy(gliv_end)             # <<<<<<<<<<<<<<
  *             else:
  *                 iv_endmin = gliv_end
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_n_s_np); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 539, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_14);
-        __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_n_s_copy); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 539, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_13);
-        __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-        __pyx_t_14 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_gliv_end); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 539, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_14);
-        __pyx_t_12 = NULL;
-        if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_13))) {
-          __pyx_t_12 = PyMethod_GET_SELF(__pyx_t_13);
-          if (likely(__pyx_t_12)) {
-            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_13);
-            __Pyx_INCREF(__pyx_t_12);
+        __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_n_s_np); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 552, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_16);
+        __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_n_s_copy); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 552, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_15);
+        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+        __pyx_t_16 = PyFloat_FromDouble(__pyx_v_18hydro_model_cython_gliv_end); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 552, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_16);
+        __pyx_t_14 = NULL;
+        if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_15))) {
+          __pyx_t_14 = PyMethod_GET_SELF(__pyx_t_15);
+          if (likely(__pyx_t_14)) {
+            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_15);
+            __Pyx_INCREF(__pyx_t_14);
             __Pyx_INCREF(function);
-            __Pyx_DECREF_SET(__pyx_t_13, function);
+            __Pyx_DECREF_SET(__pyx_t_15, function);
           }
         }
-        __pyx_t_15 = (__pyx_t_12) ? __Pyx_PyObject_Call2Args(__pyx_t_13, __pyx_t_12, __pyx_t_14) : __Pyx_PyObject_CallOneArg(__pyx_t_13, __pyx_t_14);
-        __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
-        __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-        if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 539, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_15);
-        __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-        __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_t_15); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 539, __pyx_L1_error)
+        __pyx_t_17 = (__pyx_t_14) ? __Pyx_PyObject_Call2Args(__pyx_t_15, __pyx_t_14, __pyx_t_16) : __Pyx_PyObject_CallOneArg(__pyx_t_15, __pyx_t_16);
+        __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
+        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+        if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 552, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_17);
         __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
+        __pyx_t_7 = __pyx_PyFloat_AsFloat(__pyx_t_17); if (unlikely((__pyx_t_7 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 552, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
         __pyx_v_18hydro_model_cython_iv_endmax = __pyx_t_7;
 
-        /* "hydro_model_cython.pyx":538
+        /* "hydro_model_cython.pyx":551
  * #            if debug:
  * #                print "\t\t\tcase 3", iv_endc - gliv_end,  glconvcrit * gliv_end
  *             if gliv_end > iv_endc:             # <<<<<<<<<<<<<<
@@ -7697,7 +7372,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
         goto __pyx_L11;
       }
 
-      /* "hydro_model_cython.pyx":541
+      /* "hydro_model_cython.pyx":554
  *                 iv_endmax = np.copy(gliv_end)
  *             else:
  *                 iv_endmin = gliv_end             # <<<<<<<<<<<<<<
@@ -7709,7 +7384,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
       }
       __pyx_L11:;
 
-      /* "hydro_model_cython.pyx":543
+      /* "hydro_model_cython.pyx":556
  *                 iv_endmin = gliv_end
  * 
  *             if iv_endmax==-999:             # <<<<<<<<<<<<<<
@@ -7719,7 +7394,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
       __pyx_t_1 = ((__pyx_v_18hydro_model_cython_iv_endmax == -999.0) != 0);
       if (__pyx_t_1) {
 
-        /* "hydro_model_cython.pyx":544
+        /* "hydro_model_cython.pyx":557
  * 
  *             if iv_endmax==-999:
  *                 gliv_end = iv_endc             # <<<<<<<<<<<<<<
@@ -7728,7 +7403,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
  */
         __pyx_v_18hydro_model_cython_gliv_end = __pyx_v_18hydro_model_cython_iv_endc;
 
-        /* "hydro_model_cython.pyx":543
+        /* "hydro_model_cython.pyx":556
  *                 iv_endmin = gliv_end
  * 
  *             if iv_endmax==-999:             # <<<<<<<<<<<<<<
@@ -7738,7 +7413,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
         goto __pyx_L12;
       }
 
-      /* "hydro_model_cython.pyx":546
+      /* "hydro_model_cython.pyx":559
  *                 gliv_end = iv_endc
  *             else:
  *                 gliv_end = iv_endmin + 0.5 * (iv_endmax - iv_endmin)             # <<<<<<<<<<<<<<
@@ -7752,7 +7427,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
     }
     __pyx_L10:;
 
-    /* "hydro_model_cython.pyx":552
+    /* "hydro_model_cython.pyx":565
  *         #-----------------------------------------------------------------------------
  *         #advance the iteration
  *         iitern = iitern + 1             # <<<<<<<<<<<<<<
@@ -7761,7 +7436,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
  */
     __pyx_v_18hydro_model_cython_iitern = (__pyx_v_18hydro_model_cython_iitern + 1);
 
-    /* "hydro_model_cython.pyx":553
+    /* "hydro_model_cython.pyx":566
  *         #advance the iteration
  *         iitern = iitern + 1
  *         if iitern > glmaxiter:             # <<<<<<<<<<<<<<
@@ -7771,58 +7446,58 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
     __pyx_t_1 = ((__pyx_v_18hydro_model_cython_iitern > __pyx_v_18hydro_model_cython_glmaxiter) != 0);
     if (__pyx_t_1) {
 
-      /* "hydro_model_cython.pyx":554
+      /* "hydro_model_cython.pyx":567
  *         iitern = iitern + 1
  *         if iitern > glmaxiter:
  *             print (str(glmaxiter) + " i iterations in scell " + str(sur) + ", gwcell"+str(gw)+" in " + str(ts))             # <<<<<<<<<<<<<<
  *             iiter_flag=0
  * 
  */
-      __pyx_t_15 = __Pyx_PyInt_From_int(__pyx_v_18hydro_model_cython_glmaxiter); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 554, __pyx_L1_error)
+      __pyx_t_17 = __Pyx_PyInt_From_int(__pyx_v_18hydro_model_cython_glmaxiter); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 567, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_17);
+      __pyx_t_15 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_17); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 567, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
-      __pyx_t_13 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_15); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 554, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_13);
+      __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+      __pyx_t_17 = PyNumber_Add(__pyx_t_15, __pyx_kp_s_i_iterations_in_scell); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 567, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_17);
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-      __pyx_t_15 = PyNumber_Add(__pyx_t_13, __pyx_kp_s_i_iterations_in_scell); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 554, __pyx_L1_error)
+      __pyx_t_15 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_sur); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 567, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
-      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-      __pyx_t_13 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_sur); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 554, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_13);
-      __pyx_t_14 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_13); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 554, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-      __pyx_t_13 = PyNumber_Add(__pyx_t_15, __pyx_t_14); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 554, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_13);
+      __pyx_t_16 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_15); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 567, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_16);
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-      __pyx_t_14 = PyNumber_Add(__pyx_t_13, __pyx_kp_s_gwcell); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 554, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-      __pyx_t_13 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_gw); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 554, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_13);
-      __pyx_t_15 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_13); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 554, __pyx_L1_error)
+      __pyx_t_15 = PyNumber_Add(__pyx_t_17, __pyx_t_16); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 567, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
-      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-      __pyx_t_13 = PyNumber_Add(__pyx_t_14, __pyx_t_15); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 554, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_13);
-      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+      __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+      __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+      __pyx_t_16 = PyNumber_Add(__pyx_t_15, __pyx_kp_s_gwcell); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 567, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_16);
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-      __pyx_t_15 = PyNumber_Add(__pyx_t_13, __pyx_kp_s_in); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 554, __pyx_L1_error)
+      __pyx_t_15 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_gw); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 567, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
-      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-      __pyx_t_13 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ts); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 554, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_13);
-      __pyx_t_14 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_13); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 554, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-      __pyx_t_13 = PyNumber_Add(__pyx_t_15, __pyx_t_14); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 554, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_13);
+      __pyx_t_17 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_15); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 567, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_17);
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-      __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-      if (__Pyx_PrintOne(0, __pyx_t_13) < 0) __PYX_ERR(0, 554, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
+      __pyx_t_15 = PyNumber_Add(__pyx_t_16, __pyx_t_17); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 567, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_15);
+      __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+      __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+      __pyx_t_17 = PyNumber_Add(__pyx_t_15, __pyx_kp_s_in); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 567, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_17);
+      __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
+      __pyx_t_15 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ts); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 567, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_15);
+      __pyx_t_16 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_15); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 567, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_16);
+      __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
+      __pyx_t_15 = PyNumber_Add(__pyx_t_17, __pyx_t_16); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 567, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_15);
+      __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+      __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
+      if (__Pyx_PrintOne(0, __pyx_t_15) < 0) __PYX_ERR(0, 567, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
 
-      /* "hydro_model_cython.pyx":555
+      /* "hydro_model_cython.pyx":568
  *         if iitern > glmaxiter:
  *             print (str(glmaxiter) + " i iterations in scell " + str(sur) + ", gwcell"+str(gw)+" in " + str(ts))
  *             iiter_flag=0             # <<<<<<<<<<<<<<
@@ -7831,7 +7506,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
  */
       __pyx_v_18hydro_model_cython_iiter_flag = 0;
 
-      /* "hydro_model_cython.pyx":553
+      /* "hydro_model_cython.pyx":566
  *         #advance the iteration
  *         iitern = iitern + 1
  *         if iitern > glmaxiter:             # <<<<<<<<<<<<<<
@@ -7841,7 +7516,7 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
     }
   }
 
-  /* "hydro_model_cython.pyx":485
+  /* "hydro_model_cython.pyx":493
  * 
  * 
  * cdef iteration_2():             # <<<<<<<<<<<<<<
@@ -7855,12 +7530,12 @@ static PyObject *__pyx_f_18hydro_model_cython_iteration_2(void) {
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_XDECREF(__pyx_t_9);
   __Pyx_XDECREF(__pyx_t_11);
-  __Pyx_XDECREF(__pyx_t_12);
   __Pyx_XDECREF(__pyx_t_13);
   __Pyx_XDECREF(__pyx_t_14);
   __Pyx_XDECREF(__pyx_t_15);
+  __Pyx_XDECREF(__pyx_t_16);
+  __Pyx_XDECREF(__pyx_t_17);
   __Pyx_AddTraceback("hydro_model_cython.iteration_2", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
@@ -24156,6 +23831,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_glfv_beg, __pyx_k_glfv_beg, sizeof(__pyx_k_glfv_beg), 0, 0, 1, 1},
   {&__pyx_n_s_glfv_end, __pyx_k_glfv_end, sizeof(__pyx_k_glfv_end), 0, 0, 1, 1},
   {&__pyx_n_s_glfv_init, __pyx_k_glfv_init, sizeof(__pyx_k_glfv_init), 0, 0, 1, 1},
+  {&__pyx_n_s_glfv_max, __pyx_k_glfv_max, sizeof(__pyx_k_glfv_max), 0, 0, 1, 1},
   {&__pyx_n_s_gliv_init, __pyx_k_gliv_init, sizeof(__pyx_k_gliv_init), 0, 0, 1, 1},
   {&__pyx_n_s_glsv_init, __pyx_k_glsv_init, sizeof(__pyx_k_glsv_init), 0, 0, 1, 1},
   {&__pyx_kp_s_got_differing_extents_in_dimensi, __pyx_k_got_differing_extents_in_dimensi, sizeof(__pyx_k_got_differing_extents_in_dimensi), 0, 0, 1, 0},
@@ -24220,6 +23896,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_strided_and_indirect, __pyx_k_strided_and_indirect, sizeof(__pyx_k_strided_and_indirect), 0, 0, 1, 0},
   {&__pyx_kp_s_stringsource, __pyx_k_stringsource, sizeof(__pyx_k_stringsource), 0, 0, 1, 0},
   {&__pyx_n_s_struct, __pyx_k_struct, sizeof(__pyx_k_struct), 0, 0, 1, 1},
+  {&__pyx_n_s_success, __pyx_k_success, sizeof(__pyx_k_success), 0, 0, 1, 1},
   {&__pyx_n_s_sum, __pyx_k_sum, sizeof(__pyx_k_sum), 0, 0, 1, 1},
   {&__pyx_n_s_sys, __pyx_k_sys, sizeof(__pyx_k_sys), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
@@ -24234,7 +23911,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 148, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 155, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 272, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 855, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 1037, __pyx_L1_error)
@@ -24253,14 +23930,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "hydro_model_cython.pyx":154
+  /* "hydro_model_cython.pyx":161
  * 
  *     cdef list results
  *     results=[_glfin_sqin[0:nts,:],_glfin_sa[0:nts,:], _glfin_sv[0:nts,:], _glfin_sev[0:nts,:],\             # <<<<<<<<<<<<<<
  *              _glfin_spre[0:nts,:],_glfin_sqout[0:nts,:], _glfin_sinf[0:nts,:],\
  *              _glfin_fv[0:nts,:], _glfin_fev[0:nts,:],_glfin_fpre[0:nts,:], _glfin_fgwout[0:nts,:],\
  */
-  __pyx_slice_ = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice_)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_slice_ = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice_)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_slice_);
   __Pyx_GIVEREF(__pyx_slice_);
 
@@ -24522,17 +24199,17 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__25);
   __Pyx_GIVEREF(__pyx_tuple__25);
 
-  /* "hydro_model_cython.pyx":106
+  /* "hydro_model_cython.pyx":113
  * 
  * #***************************************************************************
  * def model_calc(double[:] _inflow, double[:,:] _precip, double[:] _pet, double[:] _glsv_init, double[:,:] _glfv_init, double[:,:] _gliv_init, double[:,:] _unitpar, double[:] _gwpar):             # <<<<<<<<<<<<<<
  *     global glfin_sqin, glfin_sqout, glfin_spre, glfin_sev, glfin_sinf, glfin_fpre, glfin_finf, glfin_fev
  *     global glfin_fgwout,glfin_ipre,glfin_iev,glfin_sa,glfin_sv,glfin_fv, glfin_iv, glfdet, glfpor, glidet, glipor
  */
-  __pyx_tuple__26 = PyTuple_Pack(11, __pyx_n_s_inflow, __pyx_n_s_precip, __pyx_n_s_pet, __pyx_n_s_glsv_init, __pyx_n_s_glfv_init, __pyx_n_s_gliv_init, __pyx_n_s_unitpar, __pyx_n_s_gwpar, __pyx_n_s_dts, __pyx_n_s_last, __pyx_n_s_results); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 106, __pyx_L1_error)
+  __pyx_tuple__26 = PyTuple_Pack(11, __pyx_n_s_inflow, __pyx_n_s_precip, __pyx_n_s_pet, __pyx_n_s_glsv_init, __pyx_n_s_glfv_init, __pyx_n_s_gliv_init, __pyx_n_s_unitpar, __pyx_n_s_gwpar, __pyx_n_s_dts, __pyx_n_s_last, __pyx_n_s_results); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__26);
   __Pyx_GIVEREF(__pyx_tuple__26);
-  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(8, 0, 11, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_hydro_model_cython_pyx, __pyx_n_s_model_calc, 106, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 106, __pyx_L1_error)
+  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(8, 0, 11, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_hydro_model_cython_pyx, __pyx_n_s_model_calc, 113, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 113, __pyx_L1_error)
 
   /* "View.MemoryView":286
  *         return self.name
@@ -24611,11 +24288,8 @@ static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_5 = PyInt_FromLong(5); if (unlikely(!__pyx_int_5)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_10 = PyInt_FromLong(10); if (unlikely(!__pyx_int_10)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_16 = PyInt_FromLong(16); if (unlikely(!__pyx_int_16)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_30 = PyInt_FromLong(30); if (unlikely(!__pyx_int_30)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_600 = PyInt_FromLong(600); if (unlikely(!__pyx_int_600)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_184977713 = PyInt_FromLong(184977713L); if (unlikely(!__pyx_int_184977713)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_neg_1 = PyInt_FromLong(-1); if (unlikely(!__pyx_int_neg_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
@@ -24666,6 +24340,7 @@ static int __Pyx_modinit_global_init_code(void) {
   __pyx_v_18hydro_model_cython__glkgw = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   __pyx_v_18hydro_model_cython__celloutflows = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   __pyx_v_18hydro_model_cython__fa_frac = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
+  __pyx_v_18hydro_model_cython__fa_incrfrac = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   generic = Py_None; Py_INCREF(Py_None);
   strided = Py_None; Py_INCREF(Py_None);
   indirect = Py_None; Py_INCREF(Py_None);
@@ -25037,7 +24712,7 @@ if (!__Pyx_RefNanny) {
  * cimport numpy as cnp
  * import sys             # <<<<<<<<<<<<<<
  * 
- * cdef cnp.ndarray _glfin_sqin = np.zeros([600,16], dtype=np.float)
+ * cdef int nn=1200
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_sys, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -25047,432 +24722,335 @@ if (!__Pyx_RefNanny) {
   /* "hydro_model_cython.pyx":5
  * import sys
  * 
- * cdef cnp.ndarray _glfin_sqin = np.zeros([600,16], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfin_sqout = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_spre = np.zeros([600,16], dtype=np.float)
+ * cdef int nn=1200             # <<<<<<<<<<<<<<
+ * cdef Py_ssize_t nsu=15
+ * cdef Py_ssize_t ngw=10
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_v_18hydro_model_cython_nn = 0x4B0;
+
+  /* "hydro_model_cython.pyx":6
+ * 
+ * cdef int nn=1200
+ * cdef Py_ssize_t nsu=15             # <<<<<<<<<<<<<<
+ * cdef Py_ssize_t ngw=10
+ * cdef Py_ssize_t nts=1200
+ */
+  __pyx_v_18hydro_model_cython_nsu = 15;
+
+  /* "hydro_model_cython.pyx":7
+ * cdef int nn=1200
+ * cdef Py_ssize_t nsu=15
+ * cdef Py_ssize_t ngw=10             # <<<<<<<<<<<<<<
+ * cdef Py_ssize_t nts=1200
+ * cdef Py_ssize_t n
+ */
+  __pyx_v_18hydro_model_cython_ngw = 10;
+
+  /* "hydro_model_cython.pyx":8
+ * cdef Py_ssize_t nsu=15
+ * cdef Py_ssize_t ngw=10
+ * cdef Py_ssize_t nts=1200             # <<<<<<<<<<<<<<
+ * cdef Py_ssize_t n
+ * cdef Py_ssize_t ts, sur, gw, isl,delayindex
+ */
+  __pyx_v_18hydro_model_cython_nts = 0x4B0;
+
+  /* "hydro_model_cython.pyx":11
+ * cdef Py_ssize_t n
+ * cdef Py_ssize_t ts, sur, gw, isl,delayindex
+ * cdef float glconvcrit=0.001             # <<<<<<<<<<<<<<
+ * cdef int glmaxiter=100
+ * cdef int glfarea=250
+ */
+  __pyx_v_18hydro_model_cython_glconvcrit = 0.001;
+
+  /* "hydro_model_cython.pyx":12
+ * cdef Py_ssize_t ts, sur, gw, isl,delayindex
+ * cdef float glconvcrit=0.001
+ * cdef int glmaxiter=100             # <<<<<<<<<<<<<<
+ * cdef int glfarea=250
+ * cdef float gliarea
+ */
+  __pyx_v_18hydro_model_cython_glmaxiter = 0x64;
+
+  /* "hydro_model_cython.pyx":13
+ * cdef float glconvcrit=0.001
+ * cdef int glmaxiter=100
+ * cdef int glfarea=250             # <<<<<<<<<<<<<<
+ * cdef float gliarea
+ * 
+ */
+  __pyx_v_18hydro_model_cython_glfarea = 0xFA;
+
+  /* "hydro_model_cython.pyx":16
+ * cdef float gliarea
+ * 
+ * cdef cnp.ndarray _glfin_sqin = np.zeros([nts,nsu], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfin_sqout = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_spre = np.zeros([nts,nsu], dtype=np.float)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_int_16);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
-  __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_t_3);
+  __pyx_t_1 = 0;
+  __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 5, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sqin));
   __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_sqin, ((PyArrayObject *)__pyx_t_5));
   __Pyx_GIVEREF(__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "hydro_model_cython.pyx":6
+  /* "hydro_model_cython.pyx":17
  * 
- * cdef cnp.ndarray _glfin_sqin = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_sqout = np.zeros([600,16], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfin_spre = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_sev = np.zeros([600,16], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sqin = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sqout = np.zeros([nts,nsu], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfin_spre = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sev = np.zeros([nts,nsu], dtype=np.float)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyList_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_5, 1, __pyx_int_16);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sqout));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_sqout, ((PyArrayObject *)__pyx_t_4));
-  __Pyx_GIVEREF(__pyx_t_4);
-  __pyx_t_4 = 0;
-
-  /* "hydro_model_cython.pyx":7
- * cdef cnp.ndarray _glfin_sqin = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_sqout = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_spre = np.zeros([600,16], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfin_sev = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_sinf = np.zeros([600,16], dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_int_16);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 7, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_spre));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_spre, ((PyArrayObject *)__pyx_t_2));
-  __Pyx_GIVEREF(__pyx_t_2);
-  __pyx_t_2 = 0;
-
-  /* "hydro_model_cython.pyx":8
- * cdef cnp.ndarray _glfin_sqout = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_spre = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_sev = np.zeros([600,16], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfin_sinf = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_sa = np.zeros([600,16], dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_int_16);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 8, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 17, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sqout));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_sqout, ((PyArrayObject *)__pyx_t_1));
+  __Pyx_GIVEREF(__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "hydro_model_cython.pyx":18
+ * cdef cnp.ndarray _glfin_sqin = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sqout = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_spre = np.zeros([nts,nsu], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfin_sev = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sinf = np.zeros([nts,nsu], dtype=np.float)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_t_3);
+  __pyx_t_1 = 0;
+  __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 18, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_spre));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_spre, ((PyArrayObject *)__pyx_t_5));
+  __Pyx_GIVEREF(__pyx_t_5);
+  __pyx_t_5 = 0;
+
+  /* "hydro_model_cython.pyx":19
+ * cdef cnp.ndarray _glfin_sqout = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_spre = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sev = np.zeros([nts,nsu], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfin_sinf = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sa = np.zeros([nts,nsu], dtype=np.float)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
+  __pyx_t_5 = 0;
+  __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sev));
   __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_sev, ((PyArrayObject *)__pyx_t_1));
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hydro_model_cython.pyx":9
- * cdef cnp.ndarray _glfin_spre = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_sev = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_sinf = np.zeros([600,16], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfin_sa = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_sv = np.zeros([600,16], dtype=np.float)
+  /* "hydro_model_cython.pyx":20
+ * cdef cnp.ndarray _glfin_spre = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sev = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sinf = np.zeros([nts,nsu], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfin_sa = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sv = np.zeros([nts,nsu], dtype=np.float)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_int_16);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
-  __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_t_3);
+  __pyx_t_1 = 0;
+  __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sinf));
   __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_sinf, ((PyArrayObject *)__pyx_t_5));
   __Pyx_GIVEREF(__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "hydro_model_cython.pyx":10
- * cdef cnp.ndarray _glfin_sev = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_sinf = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_sa = np.zeros([600,16], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfin_sv = np.zeros([600,16], dtype=np.float)
- * 
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyList_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_5, 1, __pyx_int_16);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 10, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sa));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_sa, ((PyArrayObject *)__pyx_t_4));
-  __Pyx_GIVEREF(__pyx_t_4);
-  __pyx_t_4 = 0;
-
-  /* "hydro_model_cython.pyx":11
- * cdef cnp.ndarray _glfin_sinf = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_sa = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glfin_sv = np.zeros([600,16], dtype=np.float)             # <<<<<<<<<<<<<<
- * 
- * cdef double[:,:] glfin_sqin=_glfin_sqin
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 11, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 11, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 11, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_int_16);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 11, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 11, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 11, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 11, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 11, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 11, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sv));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_sv, ((PyArrayObject *)__pyx_t_2));
-  __Pyx_GIVEREF(__pyx_t_2);
-  __pyx_t_2 = 0;
-
-  /* "hydro_model_cython.pyx":13
- * cdef cnp.ndarray _glfin_sv = np.zeros([600,16], dtype=np.float)
- * 
- * cdef double[:,:] glfin_sqin=_glfin_sqin             # <<<<<<<<<<<<<<
- * cdef double[:,:] glfin_sqout=_glfin_sqout
- * cdef double[:,:] glfin_spre=_glfin_spre
- */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sqin), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 13, __pyx_L1_error)
-  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_sqin, 1);
-  __pyx_v_18hydro_model_cython_glfin_sqin = __pyx_t_6;
-  __pyx_t_6.memview = NULL;
-  __pyx_t_6.data = NULL;
-
-  /* "hydro_model_cython.pyx":14
- * 
- * cdef double[:,:] glfin_sqin=_glfin_sqin
- * cdef double[:,:] glfin_sqout=_glfin_sqout             # <<<<<<<<<<<<<<
- * cdef double[:,:] glfin_spre=_glfin_spre
- * cdef double[:,:] glfin_sev=_glfin_sev
- */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sqout), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 14, __pyx_L1_error)
-  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_sqout, 1);
-  __pyx_v_18hydro_model_cython_glfin_sqout = __pyx_t_6;
-  __pyx_t_6.memview = NULL;
-  __pyx_t_6.data = NULL;
-
-  /* "hydro_model_cython.pyx":15
- * cdef double[:,:] glfin_sqin=_glfin_sqin
- * cdef double[:,:] glfin_sqout=_glfin_sqout
- * cdef double[:,:] glfin_spre=_glfin_spre             # <<<<<<<<<<<<<<
- * cdef double[:,:] glfin_sev=_glfin_sev
- * cdef double[:,:] glfin_sinf=_glfin_sinf
- */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_spre), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 15, __pyx_L1_error)
-  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_spre, 1);
-  __pyx_v_18hydro_model_cython_glfin_spre = __pyx_t_6;
-  __pyx_t_6.memview = NULL;
-  __pyx_t_6.data = NULL;
-
-  /* "hydro_model_cython.pyx":16
- * cdef double[:,:] glfin_sqout=_glfin_sqout
- * cdef double[:,:] glfin_spre=_glfin_spre
- * cdef double[:,:] glfin_sev=_glfin_sev             # <<<<<<<<<<<<<<
- * cdef double[:,:] glfin_sinf=_glfin_sinf
- * cdef double[:,:] glfin_sa=_glfin_sa
- */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sev), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 16, __pyx_L1_error)
-  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_sev, 1);
-  __pyx_v_18hydro_model_cython_glfin_sev = __pyx_t_6;
-  __pyx_t_6.memview = NULL;
-  __pyx_t_6.data = NULL;
-
-  /* "hydro_model_cython.pyx":17
- * cdef double[:,:] glfin_spre=_glfin_spre
- * cdef double[:,:] glfin_sev=_glfin_sev
- * cdef double[:,:] glfin_sinf=_glfin_sinf             # <<<<<<<<<<<<<<
- * cdef double[:,:] glfin_sa=_glfin_sa
- * cdef double[:,:] glfin_sv=_glfin_sv
- */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sinf), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 17, __pyx_L1_error)
-  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_sinf, 1);
-  __pyx_v_18hydro_model_cython_glfin_sinf = __pyx_t_6;
-  __pyx_t_6.memview = NULL;
-  __pyx_t_6.data = NULL;
-
-  /* "hydro_model_cython.pyx":18
- * cdef double[:,:] glfin_sev=_glfin_sev
- * cdef double[:,:] glfin_sinf=_glfin_sinf
- * cdef double[:,:] glfin_sa=_glfin_sa             # <<<<<<<<<<<<<<
- * cdef double[:,:] glfin_sv=_glfin_sv
- * 
- */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sa), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 18, __pyx_L1_error)
-  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_sa, 1);
-  __pyx_v_18hydro_model_cython_glfin_sa = __pyx_t_6;
-  __pyx_t_6.memview = NULL;
-  __pyx_t_6.data = NULL;
-
-  /* "hydro_model_cython.pyx":19
- * cdef double[:,:] glfin_sinf=_glfin_sinf
- * cdef double[:,:] glfin_sa=_glfin_sa
- * cdef double[:,:] glfin_sv=_glfin_sv             # <<<<<<<<<<<<<<
- * 
- * cdef cnp.ndarray _glfin_fpre = np.zeros([600,16,5], dtype=np.float)
- */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sv), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_sv, 1);
-  __pyx_v_18hydro_model_cython_glfin_sv = __pyx_t_6;
-  __pyx_t_6.memview = NULL;
-  __pyx_t_6.data = NULL;
-
   /* "hydro_model_cython.pyx":21
- * cdef double[:,:] glfin_sv=_glfin_sv
+ * cdef cnp.ndarray _glfin_sev = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sinf = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sa = np.zeros([nts,nsu], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfin_sv = np.zeros([nts,nsu], dtype=np.float)
  * 
- * cdef cnp.ndarray _glfin_fpre = np.zeros([600,16,5], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfin_fev = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_finf = np.zeros([600,16,5], dtype=np.float)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyList_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_int_16);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_2, 2, __pyx_int_5);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
+  __pyx_t_5 = 0;
+  __pyx_t_3 = 0;
   __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
@@ -25493,387 +25071,342 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 21, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fpre));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_fpre, ((PyArrayObject *)__pyx_t_1));
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sa));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_sa, ((PyArrayObject *)__pyx_t_1));
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
   /* "hydro_model_cython.pyx":22
+ * cdef cnp.ndarray _glfin_sinf = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sa = np.zeros([nts,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glfin_sv = np.zeros([nts,nsu], dtype=np.float)             # <<<<<<<<<<<<<<
  * 
- * cdef cnp.ndarray _glfin_fpre = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_fev = np.zeros([600,16,5], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfin_finf = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_fgwout = np.zeros([600,16,5], dtype=np.float)
+ * cdef double[:,:] glfin_sqin=_glfin_sqin
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyList_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_int_16);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_1, 2, __pyx_int_5);
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_t_3);
+  __pyx_t_1 = 0;
+  __pyx_t_3 = 0;
   __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
-  __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sv));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_sv, ((PyArrayObject *)__pyx_t_5));
+  __Pyx_GIVEREF(__pyx_t_5);
+  __pyx_t_5 = 0;
+
+  /* "hydro_model_cython.pyx":24
+ * cdef cnp.ndarray _glfin_sv = np.zeros([nts,nsu], dtype=np.float)
+ * 
+ * cdef double[:,:] glfin_sqin=_glfin_sqin             # <<<<<<<<<<<<<<
+ * cdef double[:,:] glfin_sqout=_glfin_sqout
+ * cdef double[:,:] glfin_spre=_glfin_spre
+ */
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sqin), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_sqin, 1);
+  __pyx_v_18hydro_model_cython_glfin_sqin = __pyx_t_6;
+  __pyx_t_6.memview = NULL;
+  __pyx_t_6.data = NULL;
+
+  /* "hydro_model_cython.pyx":25
+ * 
+ * cdef double[:,:] glfin_sqin=_glfin_sqin
+ * cdef double[:,:] glfin_sqout=_glfin_sqout             # <<<<<<<<<<<<<<
+ * cdef double[:,:] glfin_spre=_glfin_spre
+ * cdef double[:,:] glfin_sev=_glfin_sev
+ */
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sqout), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_sqout, 1);
+  __pyx_v_18hydro_model_cython_glfin_sqout = __pyx_t_6;
+  __pyx_t_6.memview = NULL;
+  __pyx_t_6.data = NULL;
+
+  /* "hydro_model_cython.pyx":26
+ * cdef double[:,:] glfin_sqin=_glfin_sqin
+ * cdef double[:,:] glfin_sqout=_glfin_sqout
+ * cdef double[:,:] glfin_spre=_glfin_spre             # <<<<<<<<<<<<<<
+ * cdef double[:,:] glfin_sev=_glfin_sev
+ * cdef double[:,:] glfin_sinf=_glfin_sinf
+ */
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_spre), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_spre, 1);
+  __pyx_v_18hydro_model_cython_glfin_spre = __pyx_t_6;
+  __pyx_t_6.memview = NULL;
+  __pyx_t_6.data = NULL;
+
+  /* "hydro_model_cython.pyx":27
+ * cdef double[:,:] glfin_sqout=_glfin_sqout
+ * cdef double[:,:] glfin_spre=_glfin_spre
+ * cdef double[:,:] glfin_sev=_glfin_sev             # <<<<<<<<<<<<<<
+ * cdef double[:,:] glfin_sinf=_glfin_sinf
+ * cdef double[:,:] glfin_sa=_glfin_sa
+ */
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sev), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_sev, 1);
+  __pyx_v_18hydro_model_cython_glfin_sev = __pyx_t_6;
+  __pyx_t_6.memview = NULL;
+  __pyx_t_6.data = NULL;
+
+  /* "hydro_model_cython.pyx":28
+ * cdef double[:,:] glfin_spre=_glfin_spre
+ * cdef double[:,:] glfin_sev=_glfin_sev
+ * cdef double[:,:] glfin_sinf=_glfin_sinf             # <<<<<<<<<<<<<<
+ * cdef double[:,:] glfin_sa=_glfin_sa
+ * cdef double[:,:] glfin_sv=_glfin_sv
+ */
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sinf), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_sinf, 1);
+  __pyx_v_18hydro_model_cython_glfin_sinf = __pyx_t_6;
+  __pyx_t_6.memview = NULL;
+  __pyx_t_6.data = NULL;
+
+  /* "hydro_model_cython.pyx":29
+ * cdef double[:,:] glfin_sev=_glfin_sev
+ * cdef double[:,:] glfin_sinf=_glfin_sinf
+ * cdef double[:,:] glfin_sa=_glfin_sa             # <<<<<<<<<<<<<<
+ * cdef double[:,:] glfin_sv=_glfin_sv
+ * 
+ */
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sa), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_sa, 1);
+  __pyx_v_18hydro_model_cython_glfin_sa = __pyx_t_6;
+  __pyx_t_6.memview = NULL;
+  __pyx_t_6.data = NULL;
+
+  /* "hydro_model_cython.pyx":30
+ * cdef double[:,:] glfin_sinf=_glfin_sinf
+ * cdef double[:,:] glfin_sa=_glfin_sa
+ * cdef double[:,:] glfin_sv=_glfin_sv             # <<<<<<<<<<<<<<
+ * 
+ * cdef cnp.ndarray _glfin_fpre = np.zeros([nts,nsu,ngw], dtype=np.float)
+ */
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_sv), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_sv, 1);
+  __pyx_v_18hydro_model_cython_glfin_sv = __pyx_t_6;
+  __pyx_t_6.memview = NULL;
+  __pyx_t_6.data = NULL;
+
+  /* "hydro_model_cython.pyx":32
+ * cdef double[:,:] glfin_sv=_glfin_sv
+ * 
+ * cdef cnp.ndarray _glfin_fpre = np.zeros([nts,nsu,ngw], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfin_fev = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_finf = np.zeros([nts,nsu,ngw], dtype=np.float)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = PyList_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyList_SET_ITEM(__pyx_t_1, 2, __pyx_t_2);
+  __pyx_t_5 = 0;
+  __pyx_t_3 = 0;
+  __pyx_t_2 = 0;
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
+  __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fpre));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_fpre, ((PyArrayObject *)__pyx_t_5));
+  __Pyx_GIVEREF(__pyx_t_5);
+  __pyx_t_5 = 0;
+
+  /* "hydro_model_cython.pyx":33
+ * 
+ * cdef cnp.ndarray _glfin_fpre = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_fev = np.zeros([nts,nsu,ngw], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfin_finf = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_fgwout = np.zeros([nts,nsu,ngw], dtype=np.float)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = PyList_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyList_SET_ITEM(__pyx_t_3, 1, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyList_SET_ITEM(__pyx_t_3, 2, __pyx_t_4);
+  __pyx_t_5 = 0;
+  __pyx_t_2 = 0;
+  __pyx_t_4 = 0;
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3);
+  __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fev));
   __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_fev, ((PyArrayObject *)__pyx_t_5));
   __Pyx_GIVEREF(__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "hydro_model_cython.pyx":23
- * cdef cnp.ndarray _glfin_fpre = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_fev = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_finf = np.zeros([600,16,5], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfin_fgwout = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_fv = np.zeros([600,16,5], dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyList_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_5, 1, __pyx_int_16);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_5, 2, __pyx_int_5);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 23, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_finf));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_finf, ((PyArrayObject *)__pyx_t_4));
-  __Pyx_GIVEREF(__pyx_t_4);
-  __pyx_t_4 = 0;
-
-  /* "hydro_model_cython.pyx":24
- * cdef cnp.ndarray _glfin_fev = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_finf = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_fgwout = np.zeros([600,16,5], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfin_fv = np.zeros([600,16,5], dtype=np.float)
- * 
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 24, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 24, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyList_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 24, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_int_16);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_4, 2, __pyx_int_5);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 24, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 24, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 24, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fgwout));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_fgwout, ((PyArrayObject *)__pyx_t_2));
-  __Pyx_GIVEREF(__pyx_t_2);
-  __pyx_t_2 = 0;
-
-  /* "hydro_model_cython.pyx":25
- * cdef cnp.ndarray _glfin_finf = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_fgwout = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_fv = np.zeros([600,16,5], dtype=np.float)             # <<<<<<<<<<<<<<
- * 
- * cdef double[:,:,:] glfin_fpre=_glfin_fpre
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyList_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_int_16);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_2, 2, __pyx_int_5);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
-  __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fv));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_fv, ((PyArrayObject *)__pyx_t_1));
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "hydro_model_cython.pyx":27
- * cdef cnp.ndarray _glfin_fv = np.zeros([600,16,5], dtype=np.float)
- * 
- * cdef double[:,:,:] glfin_fpre=_glfin_fpre             # <<<<<<<<<<<<<<
- * cdef double[:,:,:] glfin_fev=_glfin_fev
- * cdef double[:,:,:] glfin_finf=_glfin_finf
- */
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fpre), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 27, __pyx_L1_error)
-  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_fpre, 1);
-  __pyx_v_18hydro_model_cython_glfin_fpre = __pyx_t_7;
-  __pyx_t_7.memview = NULL;
-  __pyx_t_7.data = NULL;
-
-  /* "hydro_model_cython.pyx":28
- * 
- * cdef double[:,:,:] glfin_fpre=_glfin_fpre
- * cdef double[:,:,:] glfin_fev=_glfin_fev             # <<<<<<<<<<<<<<
- * cdef double[:,:,:] glfin_finf=_glfin_finf
- * cdef double[:,:,:] glfin_fgwout=_glfin_fgwout
- */
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fev), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_fev, 1);
-  __pyx_v_18hydro_model_cython_glfin_fev = __pyx_t_7;
-  __pyx_t_7.memview = NULL;
-  __pyx_t_7.data = NULL;
-
-  /* "hydro_model_cython.pyx":29
- * cdef double[:,:,:] glfin_fpre=_glfin_fpre
- * cdef double[:,:,:] glfin_fev=_glfin_fev
- * cdef double[:,:,:] glfin_finf=_glfin_finf             # <<<<<<<<<<<<<<
- * cdef double[:,:,:] glfin_fgwout=_glfin_fgwout
- * cdef double[:,:,:] glfin_fv=_glfin_fv
- */
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_finf), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 29, __pyx_L1_error)
-  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_finf, 1);
-  __pyx_v_18hydro_model_cython_glfin_finf = __pyx_t_7;
-  __pyx_t_7.memview = NULL;
-  __pyx_t_7.data = NULL;
-
-  /* "hydro_model_cython.pyx":30
- * cdef double[:,:,:] glfin_fev=_glfin_fev
- * cdef double[:,:,:] glfin_finf=_glfin_finf
- * cdef double[:,:,:] glfin_fgwout=_glfin_fgwout             # <<<<<<<<<<<<<<
- * cdef double[:,:,:] glfin_fv=_glfin_fv
- * 
- */
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fgwout), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 30, __pyx_L1_error)
-  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_fgwout, 1);
-  __pyx_v_18hydro_model_cython_glfin_fgwout = __pyx_t_7;
-  __pyx_t_7.memview = NULL;
-  __pyx_t_7.data = NULL;
-
-  /* "hydro_model_cython.pyx":31
- * cdef double[:,:,:] glfin_finf=_glfin_finf
- * cdef double[:,:,:] glfin_fgwout=_glfin_fgwout
- * cdef double[:,:,:] glfin_fv=_glfin_fv             # <<<<<<<<<<<<<<
- * 
- * cdef cnp.ndarray _glfin_ipre = np.zeros([600,16,5], dtype=np.float)
- */
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fv), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 31, __pyx_L1_error)
-  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_fv, 1);
-  __pyx_v_18hydro_model_cython_glfin_fv = __pyx_t_7;
-  __pyx_t_7.memview = NULL;
-  __pyx_t_7.data = NULL;
-
-  /* "hydro_model_cython.pyx":33
- * cdef double[:,:,:] glfin_fv=_glfin_fv
- * 
- * cdef cnp.ndarray _glfin_ipre = np.zeros([600,16,5], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfin_iev = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_iv = np.zeros([600,16,5], dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyList_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_int_16);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_1, 2, __pyx_int_5);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
-  __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_ipre));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_ipre, ((PyArrayObject *)__pyx_t_5));
-  __Pyx_GIVEREF(__pyx_t_5);
-  __pyx_t_5 = 0;
-
   /* "hydro_model_cython.pyx":34
- * 
- * cdef cnp.ndarray _glfin_ipre = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_iev = np.zeros([600,16,5], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfin_iv = np.zeros([600,16,5], dtype=np.float)
- * 
+ * cdef cnp.ndarray _glfin_fpre = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_fev = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_finf = np.zeros([nts,nsu,ngw], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfin_fgwout = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_fv = np.zeros([nts,nsu,ngw], dtype=np.float)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyList_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 34, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_5, 1, __pyx_int_16);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_5, 2, __pyx_int_5);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 34, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 34, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 34, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 34, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_iev));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_iev, ((PyArrayObject *)__pyx_t_4));
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyList_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_4);
+  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyList_SET_ITEM(__pyx_t_2, 2, __pyx_t_1);
+  __pyx_t_5 = 0;
   __pyx_t_4 = 0;
+  __pyx_t_1 = 0;
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_finf));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_finf, ((PyArrayObject *)__pyx_t_5));
+  __Pyx_GIVEREF(__pyx_t_5);
+  __pyx_t_5 = 0;
 
   /* "hydro_model_cython.pyx":35
- * cdef cnp.ndarray _glfin_ipre = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_iev = np.zeros([600,16,5], dtype=np.float)
- * cdef cnp.ndarray _glfin_iv = np.zeros([600,16,5], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfin_fev = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_finf = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_fgwout = np.zeros([nts,nsu,ngw], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfin_fv = np.zeros([nts,nsu,ngw], dtype=np.float)
  * 
- * cdef double[:,:,:] glfin_ipre=_glfin_ipre
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 35, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = PyList_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_int_16);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_4, 2, __pyx_int_5);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_4, 2, __pyx_t_3);
+  __pyx_t_5 = 0;
+  __pyx_t_1 = 0;
+  __pyx_t_3 = 0;
   __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_4);
@@ -25883,1019 +25416,1361 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 35, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 35, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_iv));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_iv, ((PyArrayObject *)__pyx_t_2));
-  __Pyx_GIVEREF(__pyx_t_2);
-  __pyx_t_2 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fgwout));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_fgwout, ((PyArrayObject *)__pyx_t_5));
+  __Pyx_GIVEREF(__pyx_t_5);
+  __pyx_t_5 = 0;
 
-  /* "hydro_model_cython.pyx":37
- * cdef cnp.ndarray _glfin_iv = np.zeros([600,16,5], dtype=np.float)
+  /* "hydro_model_cython.pyx":36
+ * cdef cnp.ndarray _glfin_finf = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_fgwout = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_fv = np.zeros([nts,nsu,ngw], dtype=np.float)             # <<<<<<<<<<<<<<
+ * 
+ * cdef double[:,:,:] glfin_fpre=_glfin_fpre
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = PyList_New(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyList_SET_ITEM(__pyx_t_1, 2, __pyx_t_2);
+  __pyx_t_5 = 0;
+  __pyx_t_3 = 0;
+  __pyx_t_2 = 0;
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
+  __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 36, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fv));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_fv, ((PyArrayObject *)__pyx_t_5));
+  __Pyx_GIVEREF(__pyx_t_5);
+  __pyx_t_5 = 0;
+
+  /* "hydro_model_cython.pyx":38
+ * cdef cnp.ndarray _glfin_fv = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * 
+ * cdef double[:,:,:] glfin_fpre=_glfin_fpre             # <<<<<<<<<<<<<<
+ * cdef double[:,:,:] glfin_fev=_glfin_fev
+ * cdef double[:,:,:] glfin_finf=_glfin_finf
+ */
+  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fpre), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_fpre, 1);
+  __pyx_v_18hydro_model_cython_glfin_fpre = __pyx_t_7;
+  __pyx_t_7.memview = NULL;
+  __pyx_t_7.data = NULL;
+
+  /* "hydro_model_cython.pyx":39
+ * 
+ * cdef double[:,:,:] glfin_fpre=_glfin_fpre
+ * cdef double[:,:,:] glfin_fev=_glfin_fev             # <<<<<<<<<<<<<<
+ * cdef double[:,:,:] glfin_finf=_glfin_finf
+ * cdef double[:,:,:] glfin_fgwout=_glfin_fgwout
+ */
+  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fev), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_fev, 1);
+  __pyx_v_18hydro_model_cython_glfin_fev = __pyx_t_7;
+  __pyx_t_7.memview = NULL;
+  __pyx_t_7.data = NULL;
+
+  /* "hydro_model_cython.pyx":40
+ * cdef double[:,:,:] glfin_fpre=_glfin_fpre
+ * cdef double[:,:,:] glfin_fev=_glfin_fev
+ * cdef double[:,:,:] glfin_finf=_glfin_finf             # <<<<<<<<<<<<<<
+ * cdef double[:,:,:] glfin_fgwout=_glfin_fgwout
+ * cdef double[:,:,:] glfin_fv=_glfin_fv
+ */
+  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_finf), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_finf, 1);
+  __pyx_v_18hydro_model_cython_glfin_finf = __pyx_t_7;
+  __pyx_t_7.memview = NULL;
+  __pyx_t_7.data = NULL;
+
+  /* "hydro_model_cython.pyx":41
+ * cdef double[:,:,:] glfin_fev=_glfin_fev
+ * cdef double[:,:,:] glfin_finf=_glfin_finf
+ * cdef double[:,:,:] glfin_fgwout=_glfin_fgwout             # <<<<<<<<<<<<<<
+ * cdef double[:,:,:] glfin_fv=_glfin_fv
+ * 
+ */
+  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fgwout), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_fgwout, 1);
+  __pyx_v_18hydro_model_cython_glfin_fgwout = __pyx_t_7;
+  __pyx_t_7.memview = NULL;
+  __pyx_t_7.data = NULL;
+
+  /* "hydro_model_cython.pyx":42
+ * cdef double[:,:,:] glfin_finf=_glfin_finf
+ * cdef double[:,:,:] glfin_fgwout=_glfin_fgwout
+ * cdef double[:,:,:] glfin_fv=_glfin_fv             # <<<<<<<<<<<<<<
+ * 
+ * cdef cnp.ndarray _glfin_ipre = np.zeros([nts,nsu,ngw], dtype=np.float)
+ */
+  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_fv), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_fv, 1);
+  __pyx_v_18hydro_model_cython_glfin_fv = __pyx_t_7;
+  __pyx_t_7.memview = NULL;
+  __pyx_t_7.data = NULL;
+
+  /* "hydro_model_cython.pyx":44
+ * cdef double[:,:,:] glfin_fv=_glfin_fv
+ * 
+ * cdef cnp.ndarray _glfin_ipre = np.zeros([nts,nsu,ngw], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfin_iev = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_iv = np.zeros([nts,nsu,ngw], dtype=np.float)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = PyList_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyList_SET_ITEM(__pyx_t_3, 1, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyList_SET_ITEM(__pyx_t_3, 2, __pyx_t_4);
+  __pyx_t_5 = 0;
+  __pyx_t_2 = 0;
+  __pyx_t_4 = 0;
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3);
+  __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_ipre));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_ipre, ((PyArrayObject *)__pyx_t_5));
+  __Pyx_GIVEREF(__pyx_t_5);
+  __pyx_t_5 = 0;
+
+  /* "hydro_model_cython.pyx":45
+ * 
+ * cdef cnp.ndarray _glfin_ipre = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_iev = np.zeros([nts,nsu,ngw], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfin_iv = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * 
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyList_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyList_SET_ITEM(__pyx_t_2, 2, __pyx_t_1);
+  __pyx_t_5 = 0;
+  __pyx_t_4 = 0;
+  __pyx_t_1 = 0;
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_iev));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_iev, ((PyArrayObject *)__pyx_t_5));
+  __Pyx_GIVEREF(__pyx_t_5);
+  __pyx_t_5 = 0;
+
+  /* "hydro_model_cython.pyx":46
+ * cdef cnp.ndarray _glfin_ipre = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_iev = np.zeros([nts,nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfin_iv = np.zeros([nts,nsu,ngw], dtype=np.float)             # <<<<<<<<<<<<<<
+ * 
+ * cdef double[:,:,:] glfin_ipre=_glfin_ipre
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nts); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = PyList_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_4, 2, __pyx_t_3);
+  __pyx_t_5 = 0;
+  __pyx_t_1 = 0;
+  __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfin_iv));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfin_iv, ((PyArrayObject *)__pyx_t_5));
+  __Pyx_GIVEREF(__pyx_t_5);
+  __pyx_t_5 = 0;
+
+  /* "hydro_model_cython.pyx":48
+ * cdef cnp.ndarray _glfin_iv = np.zeros([nts,nsu,ngw], dtype=np.float)
  * 
  * cdef double[:,:,:] glfin_ipre=_glfin_ipre             # <<<<<<<<<<<<<<
  * cdef double[:,:,:] glfin_iev=_glfin_iev
  * cdef double[:,:,:] glfin_iv=_glfin_iv
  */
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_ipre), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_ipre), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 48, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_ipre, 1);
   __pyx_v_18hydro_model_cython_glfin_ipre = __pyx_t_7;
   __pyx_t_7.memview = NULL;
   __pyx_t_7.data = NULL;
 
-  /* "hydro_model_cython.pyx":38
+  /* "hydro_model_cython.pyx":49
  * 
  * cdef double[:,:,:] glfin_ipre=_glfin_ipre
  * cdef double[:,:,:] glfin_iev=_glfin_iev             # <<<<<<<<<<<<<<
  * cdef double[:,:,:] glfin_iv=_glfin_iv
  * 
  */
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_iev), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_iev), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 49, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_iev, 1);
   __pyx_v_18hydro_model_cython_glfin_iev = __pyx_t_7;
   __pyx_t_7.memview = NULL;
   __pyx_t_7.data = NULL;
 
-  /* "hydro_model_cython.pyx":39
+  /* "hydro_model_cython.pyx":50
  * cdef double[:,:,:] glfin_ipre=_glfin_ipre
  * cdef double[:,:,:] glfin_iev=_glfin_iev
  * cdef double[:,:,:] glfin_iv=_glfin_iv             # <<<<<<<<<<<<<<
  * 
- * cdef cnp.ndarray _glfa_frac_start = np.zeros([16,5], dtype=np.float)
+ * cdef cnp.ndarray _glfa_frac_start = np.zeros([nsu,ngw], dtype=np.float)
  */
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_iv), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_dsdsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfin_iv), PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 50, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfin_iv, 1);
   __pyx_v_18hydro_model_cython_glfin_iv = __pyx_t_7;
   __pyx_t_7.memview = NULL;
   __pyx_t_7.data = NULL;
 
-  /* "hydro_model_cython.pyx":41
+  /* "hydro_model_cython.pyx":52
  * cdef double[:,:,:] glfin_iv=_glfin_iv
  * 
- * cdef cnp.ndarray _glfa_frac_start = np.zeros([16,5], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfa_frac_finish = np.zeros([16,5], dtype=np.float)
- * cdef cnp.ndarray _glfa_frac_avg = np.zeros([5,], dtype=np.float)
+ * cdef cnp.ndarray _glfa_frac_start = np.zeros([nsu,ngw], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfa_frac_finish = np.zeros([nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfa_frac_avg = np.zeros([ngw,], dtype=np.float)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 41, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_int_16);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_int_5);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
+  __pyx_t_5 = 0;
+  __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 41, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 41, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfa_frac_start));
   __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfa_frac_start, ((PyArrayObject *)__pyx_t_1));
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hydro_model_cython.pyx":42
+  /* "hydro_model_cython.pyx":53
  * 
- * cdef cnp.ndarray _glfa_frac_start = np.zeros([16,5], dtype=np.float)
- * cdef cnp.ndarray _glfa_frac_finish = np.zeros([16,5], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfa_frac_avg = np.zeros([5,], dtype=np.float)
+ * cdef cnp.ndarray _glfa_frac_start = np.zeros([nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfa_frac_finish = np.zeros([nsu,ngw], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfa_frac_avg = np.zeros([ngw,], dtype=np.float)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_int_16);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_int_5);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
-  __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_t_3);
+  __pyx_t_1 = 0;
+  __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfa_frac_finish));
   __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfa_frac_finish, ((PyArrayObject *)__pyx_t_5));
   __Pyx_GIVEREF(__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "hydro_model_cython.pyx":43
- * cdef cnp.ndarray _glfa_frac_start = np.zeros([16,5], dtype=np.float)
- * cdef cnp.ndarray _glfa_frac_finish = np.zeros([16,5], dtype=np.float)
- * cdef cnp.ndarray _glfa_frac_avg = np.zeros([5,], dtype=np.float)             # <<<<<<<<<<<<<<
+  /* "hydro_model_cython.pyx":54
+ * cdef cnp.ndarray _glfa_frac_start = np.zeros([nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfa_frac_finish = np.zeros([nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfa_frac_avg = np.zeros([ngw,], dtype=np.float)             # <<<<<<<<<<<<<<
  * 
  * cdef double[:,:] glfa_frac_start=_glfa_frac_start
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 54, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyList_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 54, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_int_5);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 54, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 54, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3);
+  __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 54, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 54, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 43, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 54, __pyx_L1_error)
   __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfa_frac_avg));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfa_frac_avg, ((PyArrayObject *)__pyx_t_4));
-  __Pyx_GIVEREF(__pyx_t_4);
-  __pyx_t_4 = 0;
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfa_frac_avg, ((PyArrayObject *)__pyx_t_1));
+  __Pyx_GIVEREF(__pyx_t_1);
+  __pyx_t_1 = 0;
 
-  /* "hydro_model_cython.pyx":45
- * cdef cnp.ndarray _glfa_frac_avg = np.zeros([5,], dtype=np.float)
+  /* "hydro_model_cython.pyx":56
+ * cdef cnp.ndarray _glfa_frac_avg = np.zeros([ngw,], dtype=np.float)
  * 
  * cdef double[:,:] glfa_frac_start=_glfa_frac_start             # <<<<<<<<<<<<<<
  * cdef double[:,:] glfa_frac_finish=_glfa_frac_finish
  * cdef double[:] glfa_frac_avg=_glfa_frac_avg
  */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfa_frac_start), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfa_frac_start), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 56, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfa_frac_start, 1);
   __pyx_v_18hydro_model_cython_glfa_frac_start = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "hydro_model_cython.pyx":46
+  /* "hydro_model_cython.pyx":57
  * 
  * cdef double[:,:] glfa_frac_start=_glfa_frac_start
  * cdef double[:,:] glfa_frac_finish=_glfa_frac_finish             # <<<<<<<<<<<<<<
  * cdef double[:] glfa_frac_avg=_glfa_frac_avg
  * 
  */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfa_frac_finish), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfa_frac_finish), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 57, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfa_frac_finish, 1);
   __pyx_v_18hydro_model_cython_glfa_frac_finish = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "hydro_model_cython.pyx":47
+  /* "hydro_model_cython.pyx":58
  * cdef double[:,:] glfa_frac_start=_glfa_frac_start
  * cdef double[:,:] glfa_frac_finish=_glfa_frac_finish
  * cdef double[:] glfa_frac_avg=_glfa_frac_avg             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfa_frac_avg), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfa_frac_avg), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 58, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfa_frac_avg, 1);
   __pyx_v_18hydro_model_cython_glfa_frac_avg = __pyx_t_8;
   __pyx_t_8.memview = NULL;
   __pyx_t_8.data = NULL;
 
-  /* "hydro_model_cython.pyx":50
+  /* "hydro_model_cython.pyx":61
  * 
  * 
- * cdef cnp.ndarray _glprecip = np.zeros([600,16], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glpet = np.zeros([600,], dtype=np.float)
+ * cdef cnp.ndarray _glprecip = np.zeros([nn,nsu], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glpet = np.zeros([nn,], dtype=np.float)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_int_600);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_int_16);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_18hydro_model_cython_nn); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_t_5);
+  __pyx_t_1 = 0;
+  __pyx_t_5 = 0;
+  __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 50, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 50, __pyx_L1_error)
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glprecip));
   __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glprecip, ((PyArrayObject *)__pyx_t_2));
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "hydro_model_cython.pyx":51
+  /* "hydro_model_cython.pyx":62
  * 
- * cdef cnp.ndarray _glprecip = np.zeros([600,16], dtype=np.float)
- * cdef cnp.ndarray _glpet = np.zeros([600,], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glprecip = np.zeros([nn,nsu], dtype=np.float)
+ * cdef cnp.ndarray _glpet = np.zeros([nn,], dtype=np.float)             # <<<<<<<<<<<<<<
  * 
  * cdef double[:,:] glprecip=_glprecip
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_18hydro_model_cython_nn); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_int_600);
-  __Pyx_GIVEREF(__pyx_int_600);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_int_600);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 51, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
-  __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 51, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __pyx_t_5 = PyList_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_5);
+  __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 51, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 51, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glpet));
   __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glpet, ((PyArrayObject *)__pyx_t_1));
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hydro_model_cython.pyx":53
- * cdef cnp.ndarray _glpet = np.zeros([600,], dtype=np.float)
+  /* "hydro_model_cython.pyx":64
+ * cdef cnp.ndarray _glpet = np.zeros([nn,], dtype=np.float)
  * 
  * cdef double[:,:] glprecip=_glprecip             # <<<<<<<<<<<<<<
  * cdef double[:] glpet=_glpet
  * 
  */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glprecip), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glprecip), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 64, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glprecip, 1);
   __pyx_v_18hydro_model_cython_glprecip = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "hydro_model_cython.pyx":54
+  /* "hydro_model_cython.pyx":65
  * 
  * cdef double[:,:] glprecip=_glprecip
  * cdef double[:] glpet=_glpet             # <<<<<<<<<<<<<<
  * 
- * cdef Py_ssize_t nsu=16
+ * 
  */
-  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__glpet), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__glpet), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 65, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glpet, 1);
   __pyx_v_18hydro_model_cython_glpet = __pyx_t_8;
   __pyx_t_8.memview = NULL;
   __pyx_t_8.data = NULL;
 
-  /* "hydro_model_cython.pyx":56
- * cdef double[:] glpet=_glpet
+  /* "hydro_model_cython.pyx":69
  * 
- * cdef Py_ssize_t nsu=16             # <<<<<<<<<<<<<<
- * cdef Py_ssize_t ngw=5
- * cdef Py_ssize_t nts
- */
-  __pyx_v_18hydro_model_cython_nsu = 16;
-
-  /* "hydro_model_cython.pyx":57
  * 
- * cdef Py_ssize_t nsu=16
- * cdef Py_ssize_t ngw=5             # <<<<<<<<<<<<<<
- * cdef Py_ssize_t nts
- * cdef Py_ssize_t n
+ * cdef cnp.ndarray _gldelay = np.zeros([nsu,], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _gltopopar = np.zeros([nsu,2], dtype=np.float)
+ * cdef cnp.ndarray _glspar = np.zeros([nsu,30], dtype=np.float)
  */
-  __pyx_v_18hydro_model_cython_ngw = 5;
-
-  /* "hydro_model_cython.pyx":61
- * cdef Py_ssize_t n
- * cdef Py_ssize_t ts, sur, gw, isl, delayindex
- * cdef float glconvcrit=0.001             # <<<<<<<<<<<<<<
- * cdef int glmaxiter=100
- * 
- */
-  __pyx_v_18hydro_model_cython_glconvcrit = 0.001;
-
-  /* "hydro_model_cython.pyx":62
- * cdef Py_ssize_t ts, sur, gw, isl, delayindex
- * cdef float glconvcrit=0.001
- * cdef int glmaxiter=100             # <<<<<<<<<<<<<<
- * 
- * cdef cnp.ndarray _gldelay = np.zeros([16,], dtype=np.float)
- */
-  __pyx_v_18hydro_model_cython_glmaxiter = 0x64;
-
-  /* "hydro_model_cython.pyx":64
- * cdef int glmaxiter=100
- * 
- * cdef cnp.ndarray _gldelay = np.zeros([16,], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _gltopopar = np.zeros([16,2], dtype=np.float)
- * cdef cnp.ndarray _glspar = np.zeros([16,30], dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 64, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_int_16);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
+  __pyx_t_1 = 0;
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_3) < 0) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__gldelay));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__gldelay, ((PyArrayObject *)__pyx_t_3));
+  __Pyx_GIVEREF(__pyx_t_3);
+  __pyx_t_3 = 0;
+
+  /* "hydro_model_cython.pyx":70
+ * 
+ * cdef cnp.ndarray _gldelay = np.zeros([nsu,], dtype=np.float)
+ * cdef cnp.ndarray _gltopopar = np.zeros([nsu,2], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glspar = np.zeros([nsu,30], dtype=np.float)
+ * cdef cnp.ndarray _glsv_init = np.zeros([nsu,], dtype=np.float)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
+  __Pyx_INCREF(__pyx_int_2);
+  __Pyx_GIVEREF(__pyx_int_2);
+  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_int_2);
+  __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 64, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 64, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 70, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 64, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__gldelay));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__gldelay, ((PyArrayObject *)__pyx_t_5));
-  __Pyx_GIVEREF(__pyx_t_5);
-  __pyx_t_5 = 0;
-
-  /* "hydro_model_cython.pyx":65
- * 
- * cdef cnp.ndarray _gldelay = np.zeros([16,], dtype=np.float)
- * cdef cnp.ndarray _gltopopar = np.zeros([16,2], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glspar = np.zeros([16,30], dtype=np.float)
- * cdef cnp.ndarray _glsv_init = np.zeros([16,], dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 65, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyList_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 65, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_int_16);
-  __Pyx_INCREF(__pyx_int_2);
-  __Pyx_GIVEREF(__pyx_int_2);
-  PyList_SET_ITEM(__pyx_t_5, 1, __pyx_int_2);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 65, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 65, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 65, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 65, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 65, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 65, __pyx_L1_error)
+  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__gltopopar));
   __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__gltopopar, ((PyArrayObject *)__pyx_t_4));
   __Pyx_GIVEREF(__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "hydro_model_cython.pyx":66
- * cdef cnp.ndarray _gldelay = np.zeros([16,], dtype=np.float)
- * cdef cnp.ndarray _gltopopar = np.zeros([16,2], dtype=np.float)
- * cdef cnp.ndarray _glspar = np.zeros([16,30], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glsv_init = np.zeros([16,], dtype=np.float)
- * cdef cnp.ndarray _glfv_init = np.zeros([16,5], dtype=np.float)
+  /* "hydro_model_cython.pyx":71
+ * cdef cnp.ndarray _gldelay = np.zeros([nsu,], dtype=np.float)
+ * cdef cnp.ndarray _gltopopar = np.zeros([nsu,2], dtype=np.float)
+ * cdef cnp.ndarray _glspar = np.zeros([nsu,30], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glsv_init = np.zeros([nsu,], dtype=np.float)
+ * cdef cnp.ndarray _glfv_init = np.zeros([nsu,ngw], dtype=np.float)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 66, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_4 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_int_16);
+  __pyx_t_3 = PyList_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
   __Pyx_INCREF(__pyx_int_30);
   __Pyx_GIVEREF(__pyx_int_30);
-  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_int_30);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 66, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
+  PyList_SET_ITEM(__pyx_t_3, 1, __pyx_int_30);
   __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 66, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 66, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glspar));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glspar, ((PyArrayObject *)__pyx_t_2));
-  __Pyx_GIVEREF(__pyx_t_2);
-  __pyx_t_2 = 0;
-
-  /* "hydro_model_cython.pyx":67
- * cdef cnp.ndarray _gltopopar = np.zeros([16,2], dtype=np.float)
- * cdef cnp.ndarray _glspar = np.zeros([16,30], dtype=np.float)
- * cdef cnp.ndarray _glsv_init = np.zeros([16,], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfv_init = np.zeros([16,5], dtype=np.float)
- * cdef cnp.ndarray _gliv_init = np.zeros([16,5], dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 67, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_int_16);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3);
+  __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
-  __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 67, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 67, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 67, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glsv_init));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glsv_init, ((PyArrayObject *)__pyx_t_1));
-  __Pyx_GIVEREF(__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "hydro_model_cython.pyx":68
- * cdef cnp.ndarray _glspar = np.zeros([16,30], dtype=np.float)
- * cdef cnp.ndarray _glsv_init = np.zeros([16,], dtype=np.float)
- * cdef cnp.ndarray _glfv_init = np.zeros([16,5], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _gliv_init = np.zeros([16,5], dtype=np.float)
- * cdef cnp.ndarray _glfa = np.zeros([16,], dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_int_16);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_int_5);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
-  __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 68, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 68, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 68, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 68, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 68, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfv_init));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfv_init, ((PyArrayObject *)__pyx_t_5));
-  __Pyx_GIVEREF(__pyx_t_5);
-  __pyx_t_5 = 0;
-
-  /* "hydro_model_cython.pyx":69
- * cdef cnp.ndarray _glsv_init = np.zeros([16,], dtype=np.float)
- * cdef cnp.ndarray _glfv_init = np.zeros([16,5], dtype=np.float)
- * cdef cnp.ndarray _gliv_init = np.zeros([16,5], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glfa = np.zeros([16,], dtype=np.float)
- * cdef cnp.ndarray _glia = np.zeros([16,], dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 69, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyList_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 69, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_int_16);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_5, 1, __pyx_int_5);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 69, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 69, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 69, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 69, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 69, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 69, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__gliv_init));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__gliv_init, ((PyArrayObject *)__pyx_t_4));
-  __Pyx_GIVEREF(__pyx_t_4);
-  __pyx_t_4 = 0;
-
-  /* "hydro_model_cython.pyx":70
- * cdef cnp.ndarray _glfv_init = np.zeros([16,5], dtype=np.float)
- * cdef cnp.ndarray _gliv_init = np.zeros([16,5], dtype=np.float)
- * cdef cnp.ndarray _glfa = np.zeros([16,], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glia = np.zeros([16,], dtype=np.float)
- * cdef cnp.ndarray _glkgw = np.zeros([16,], dtype=np.float)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 70, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 70, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 70, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_int_16);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 70, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 70, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 70, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 70, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfa));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfa, ((PyArrayObject *)__pyx_t_2));
-  __Pyx_GIVEREF(__pyx_t_2);
-  __pyx_t_2 = 0;
-
-  /* "hydro_model_cython.pyx":71
- * cdef cnp.ndarray _gliv_init = np.zeros([16,5], dtype=np.float)
- * cdef cnp.ndarray _glfa = np.zeros([16,], dtype=np.float)
- * cdef cnp.ndarray _glia = np.zeros([16,], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _glkgw = np.zeros([16,], dtype=np.float)
- * 
- */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 71, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 71, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_int_16);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 71, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
-  __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 71, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 71, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glspar));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glspar, ((PyArrayObject *)__pyx_t_5));
+  __Pyx_GIVEREF(__pyx_t_5);
+  __pyx_t_5 = 0;
+
+  /* "hydro_model_cython.pyx":72
+ * cdef cnp.ndarray _gltopopar = np.zeros([nsu,2], dtype=np.float)
+ * cdef cnp.ndarray _glspar = np.zeros([nsu,30], dtype=np.float)
+ * cdef cnp.ndarray _glsv_init = np.zeros([nsu,], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfv_init = np.zeros([nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _gliv_init = np.zeros([nsu,ngw], dtype=np.float)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_5);
+  __pyx_t_5 = 0;
+  __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 71, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glia));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glia, ((PyArrayObject *)__pyx_t_1));
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glsv_init));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glsv_init, ((PyArrayObject *)__pyx_t_2));
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
+
+  /* "hydro_model_cython.pyx":73
+ * cdef cnp.ndarray _glspar = np.zeros([nsu,30], dtype=np.float)
+ * cdef cnp.ndarray _glsv_init = np.zeros([nsu,], dtype=np.float)
+ * cdef cnp.ndarray _glfv_init = np.zeros([nsu,ngw], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _gliv_init = np.zeros([nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfa = np.zeros([nsu,], dtype=np.float)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = PyList_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_3, 1, __pyx_t_5);
+  __pyx_t_2 = 0;
+  __pyx_t_5 = 0;
+  __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3);
+  __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 73, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfv_init));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfv_init, ((PyArrayObject *)__pyx_t_1));
   __Pyx_GIVEREF(__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hydro_model_cython.pyx":72
- * cdef cnp.ndarray _glfa = np.zeros([16,], dtype=np.float)
- * cdef cnp.ndarray _glia = np.zeros([16,], dtype=np.float)
- * cdef cnp.ndarray _glkgw = np.zeros([16,], dtype=np.float)             # <<<<<<<<<<<<<<
+  /* "hydro_model_cython.pyx":74
+ * cdef cnp.ndarray _glsv_init = np.zeros([nsu,], dtype=np.float)
+ * cdef cnp.ndarray _glfv_init = np.zeros([nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _gliv_init = np.zeros([nsu,ngw], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glfa = np.zeros([nsu,], dtype=np.float)
+ * cdef cnp.ndarray _glia = np.zeros([nsu,], dtype=np.float)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_t_5);
+  __pyx_t_1 = 0;
+  __pyx_t_5 = 0;
+  __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 74, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__gliv_init));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__gliv_init, ((PyArrayObject *)__pyx_t_2));
+  __Pyx_GIVEREF(__pyx_t_2);
+  __pyx_t_2 = 0;
+
+  /* "hydro_model_cython.pyx":75
+ * cdef cnp.ndarray _glfv_init = np.zeros([nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _gliv_init = np.zeros([nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfa = np.zeros([nsu,], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glia = np.zeros([nsu,], dtype=np.float)
+ * cdef cnp.ndarray _glkgw = np.zeros([nsu,], dtype=np.float)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = PyList_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_5);
+  __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glfa));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glfa, ((PyArrayObject *)__pyx_t_1));
+  __Pyx_GIVEREF(__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "hydro_model_cython.pyx":76
+ * cdef cnp.ndarray _gliv_init = np.zeros([nsu,ngw], dtype=np.float)
+ * cdef cnp.ndarray _glfa = np.zeros([nsu,], dtype=np.float)
+ * cdef cnp.ndarray _glia = np.zeros([nsu,], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _glkgw = np.zeros([nsu,], dtype=np.float)
+ * 
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
+  __pyx_t_1 = 0;
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_3) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glia));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glia, ((PyArrayObject *)__pyx_t_3));
+  __Pyx_GIVEREF(__pyx_t_3);
+  __pyx_t_3 = 0;
+
+  /* "hydro_model_cython.pyx":77
+ * cdef cnp.ndarray _glfa = np.zeros([nsu,], dtype=np.float)
+ * cdef cnp.ndarray _glia = np.zeros([nsu,], dtype=np.float)
+ * cdef cnp.ndarray _glkgw = np.zeros([nsu,], dtype=np.float)             # <<<<<<<<<<<<<<
  * 
  * cdef double[:] gldelay=_gldelay
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_nsu); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_int_16);
-  __Pyx_GIVEREF(__pyx_int_16);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_int_16);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
+  __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 72, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 72, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 77, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 72, __pyx_L1_error)
+  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__glkgw));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glkgw, ((PyArrayObject *)__pyx_t_5));
-  __Pyx_GIVEREF(__pyx_t_5);
-  __pyx_t_5 = 0;
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__glkgw, ((PyArrayObject *)__pyx_t_4));
+  __Pyx_GIVEREF(__pyx_t_4);
+  __pyx_t_4 = 0;
 
-  /* "hydro_model_cython.pyx":74
- * cdef cnp.ndarray _glkgw = np.zeros([16,], dtype=np.float)
+  /* "hydro_model_cython.pyx":79
+ * cdef cnp.ndarray _glkgw = np.zeros([nsu,], dtype=np.float)
  * 
  * cdef double[:] gldelay=_gldelay             # <<<<<<<<<<<<<<
  * cdef double[:,:] gltopopar=_gltopopar
  * cdef double[:,:] glspar=_glspar
  */
-  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__gldelay), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__gldelay), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 79, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_gldelay, 1);
   __pyx_v_18hydro_model_cython_gldelay = __pyx_t_8;
   __pyx_t_8.memview = NULL;
   __pyx_t_8.data = NULL;
 
-  /* "hydro_model_cython.pyx":75
+  /* "hydro_model_cython.pyx":80
  * 
  * cdef double[:] gldelay=_gldelay
  * cdef double[:,:] gltopopar=_gltopopar             # <<<<<<<<<<<<<<
  * cdef double[:,:] glspar=_glspar
  * cdef double[:] glsv_init=_glsv_init
  */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__gltopopar), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__gltopopar), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 80, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_gltopopar, 1);
   __pyx_v_18hydro_model_cython_gltopopar = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "hydro_model_cython.pyx":76
+  /* "hydro_model_cython.pyx":81
  * cdef double[:] gldelay=_gldelay
  * cdef double[:,:] gltopopar=_gltopopar
  * cdef double[:,:] glspar=_glspar             # <<<<<<<<<<<<<<
  * cdef double[:] glsv_init=_glsv_init
  * cdef double[:,:] glfv_init=_glfv_init
  */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glspar), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glspar), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 81, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glspar, 1);
   __pyx_v_18hydro_model_cython_glspar = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "hydro_model_cython.pyx":77
+  /* "hydro_model_cython.pyx":82
  * cdef double[:,:] gltopopar=_gltopopar
  * cdef double[:,:] glspar=_glspar
  * cdef double[:] glsv_init=_glsv_init             # <<<<<<<<<<<<<<
  * cdef double[:,:] glfv_init=_glfv_init
  * cdef double[:,:] gliv_init=_gliv_init
  */
-  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__glsv_init), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__glsv_init), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 82, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glsv_init, 1);
   __pyx_v_18hydro_model_cython_glsv_init = __pyx_t_8;
   __pyx_t_8.memview = NULL;
   __pyx_t_8.data = NULL;
 
-  /* "hydro_model_cython.pyx":78
+  /* "hydro_model_cython.pyx":83
  * cdef double[:,:] glspar=_glspar
  * cdef double[:] glsv_init=_glsv_init
  * cdef double[:,:] glfv_init=_glfv_init             # <<<<<<<<<<<<<<
  * cdef double[:,:] gliv_init=_gliv_init
  * cdef double[:] glfa=_glfa
  */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfv_init), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfv_init), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 83, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfv_init, 1);
   __pyx_v_18hydro_model_cython_glfv_init = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "hydro_model_cython.pyx":79
+  /* "hydro_model_cython.pyx":84
  * cdef double[:] glsv_init=_glsv_init
  * cdef double[:,:] glfv_init=_glfv_init
  * cdef double[:,:] gliv_init=_gliv_init             # <<<<<<<<<<<<<<
  * cdef double[:] glfa=_glfa
  * cdef double[:] glia=_glia
  */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__gliv_init), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dsds_double(((PyObject *)__pyx_v_18hydro_model_cython__gliv_init), PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 84, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_gliv_init, 1);
   __pyx_v_18hydro_model_cython_gliv_init = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "hydro_model_cython.pyx":80
+  /* "hydro_model_cython.pyx":85
  * cdef double[:,:] glfv_init=_glfv_init
  * cdef double[:,:] gliv_init=_gliv_init
  * cdef double[:] glfa=_glfa             # <<<<<<<<<<<<<<
  * cdef double[:] glia=_glia
  * cdef double[:] glkgw=_glkgw
  */
-  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfa), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__glfa), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 85, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glfa, 1);
   __pyx_v_18hydro_model_cython_glfa = __pyx_t_8;
   __pyx_t_8.memview = NULL;
   __pyx_t_8.data = NULL;
 
-  /* "hydro_model_cython.pyx":81
+  /* "hydro_model_cython.pyx":86
  * cdef double[:,:] gliv_init=_gliv_init
  * cdef double[:] glfa=_glfa
  * cdef double[:] glia=_glia             # <<<<<<<<<<<<<<
  * cdef double[:] glkgw=_glkgw
  * 
  */
-  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__glia), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__glia), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 86, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glia, 1);
   __pyx_v_18hydro_model_cython_glia = __pyx_t_8;
   __pyx_t_8.memview = NULL;
   __pyx_t_8.data = NULL;
 
-  /* "hydro_model_cython.pyx":82
+  /* "hydro_model_cython.pyx":87
  * cdef double[:] glfa=_glfa
  * cdef double[:] glia=_glia
  * cdef double[:] glkgw=_glkgw             # <<<<<<<<<<<<<<
  * 
  * # for surf iteration
  */
-  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__glkgw), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__glkgw), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 87, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_glkgw, 1);
   __pyx_v_18hydro_model_cython_glkgw = __pyx_t_8;
   __pyx_t_8.memview = NULL;
   __pyx_t_8.data = NULL;
 
-  /* "hydro_model_cython.pyx":85
+  /* "hydro_model_cython.pyx":90
  * 
  * # for surf iteration
  * cdef cnp.ndarray _celloutflows = np.zeros([10], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef cnp.ndarray _fa_frac = np.zeros([5,], dtype=np.float)
- * cdef double[:] celloutflows=_celloutflows
+ * cdef cnp.ndarray _fa_frac = np.zeros([ngw,], dtype=np.float)
+ * cdef cnp.ndarray _fa_incrfrac = np.zeros([ngw,], dtype=np.float)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyList_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_int_10);
   __Pyx_GIVEREF(__pyx_int_10);
-  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_int_10);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
-  __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__celloutflows));
-  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__celloutflows, ((PyArrayObject *)__pyx_t_4));
-  __Pyx_GIVEREF(__pyx_t_4);
-  __pyx_t_4 = 0;
-
-  /* "hydro_model_cython.pyx":86
- * # for surf iteration
- * cdef cnp.ndarray _celloutflows = np.zeros([10], dtype=np.float)
- * cdef cnp.ndarray _fa_frac = np.zeros([5,], dtype=np.float)             # <<<<<<<<<<<<<<
- * cdef double[:] celloutflows=_celloutflows
- * cdef double[:] fa_frac=_fa_frac
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 86, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 86, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 86, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_int_5);
-  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
+  PyList_SET_ITEM(__pyx_t_4, 0, __pyx_int_10);
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_4);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4);
   __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 86, __pyx_L1_error)
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 90, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__celloutflows));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__celloutflows, ((PyArrayObject *)__pyx_t_5));
+  __Pyx_GIVEREF(__pyx_t_5);
+  __pyx_t_5 = 0;
+
+  /* "hydro_model_cython.pyx":91
+ * # for surf iteration
+ * cdef cnp.ndarray _celloutflows = np.zeros([10], dtype=np.float)
+ * cdef cnp.ndarray _fa_frac = np.zeros([ngw,], dtype=np.float)             # <<<<<<<<<<<<<<
+ * cdef cnp.ndarray _fa_incrfrac = np.zeros([ngw,], dtype=np.float)
+ * 
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_zeros); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_5);
+  __pyx_t_5 = 0;
+  __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3);
+  __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__fa_frac));
   __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__fa_frac, ((PyArrayObject *)__pyx_t_2));
   __Pyx_GIVEREF(__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "hydro_model_cython.pyx":87
+  /* "hydro_model_cython.pyx":92
  * cdef cnp.ndarray _celloutflows = np.zeros([10], dtype=np.float)
- * cdef cnp.ndarray _fa_frac = np.zeros([5,], dtype=np.float)
+ * cdef cnp.ndarray _fa_frac = np.zeros([ngw,], dtype=np.float)
+ * cdef cnp.ndarray _fa_incrfrac = np.zeros([ngw,], dtype=np.float)             # <<<<<<<<<<<<<<
+ * 
+ * cdef double[:] celloutflows=_celloutflows
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = PyInt_FromSsize_t(__pyx_v_18hydro_model_cython_ngw); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = PyList_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_5);
+  __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 92, __pyx_L1_error)
+  __Pyx_XGOTREF(((PyObject *)__pyx_v_18hydro_model_cython__fa_incrfrac));
+  __Pyx_DECREF_SET(__pyx_v_18hydro_model_cython__fa_incrfrac, ((PyArrayObject *)__pyx_t_1));
+  __Pyx_GIVEREF(__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "hydro_model_cython.pyx":94
+ * cdef cnp.ndarray _fa_incrfrac = np.zeros([ngw,], dtype=np.float)
+ * 
  * cdef double[:] celloutflows=_celloutflows             # <<<<<<<<<<<<<<
  * cdef double[:] fa_frac=_fa_frac
- * 
+ * cdef double[:] fa_incrfrac=_fa_incrfrac
  */
-  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__celloutflows), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 87, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__celloutflows), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 94, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_celloutflows, 1);
   __pyx_v_18hydro_model_cython_celloutflows = __pyx_t_8;
   __pyx_t_8.memview = NULL;
   __pyx_t_8.data = NULL;
 
-  /* "hydro_model_cython.pyx":88
- * cdef cnp.ndarray _fa_frac = np.zeros([5,], dtype=np.float)
+  /* "hydro_model_cython.pyx":95
+ * 
  * cdef double[:] celloutflows=_celloutflows
  * cdef double[:] fa_frac=_fa_frac             # <<<<<<<<<<<<<<
+ * cdef double[:] fa_incrfrac=_fa_incrfrac
  * 
- * cdef float glrain, glsa_beg, glsa_end, glipv, gliev, glfev, glfpv, glfdet, glidet, glfpor, \
  */
-  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__fa_frac), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__fa_frac), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 95, __pyx_L1_error)
   __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_fa_frac, 1);
   __pyx_v_18hydro_model_cython_fa_frac = __pyx_t_8;
   __pyx_t_8.memview = NULL;
   __pyx_t_8.data = NULL;
 
-  /* "hydro_model_cython.pyx":106
+  /* "hydro_model_cython.pyx":96
+ * cdef double[:] celloutflows=_celloutflows
+ * cdef double[:] fa_frac=_fa_frac
+ * cdef double[:] fa_incrfrac=_fa_incrfrac             # <<<<<<<<<<<<<<
+ * 
+ * cdef float glrain, glsa_beg, glsa_end, glipv, gliev, glfev, glfpv, glfdet, glidet, glfpor, \
+ */
+  __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(((PyObject *)__pyx_v_18hydro_model_cython__fa_incrfrac), PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __PYX_XDEC_MEMVIEW(&__pyx_v_18hydro_model_cython_fa_incrfrac, 1);
+  __pyx_v_18hydro_model_cython_fa_incrfrac = __pyx_t_8;
+  __pyx_t_8.memview = NULL;
+  __pyx_t_8.data = NULL;
+
+  /* "hydro_model_cython.pyx":113
  * 
  * #***************************************************************************
  * def model_calc(double[:] _inflow, double[:,:] _precip, double[:] _pet, double[:] _glsv_init, double[:,:] _glfv_init, double[:,:] _gliv_init, double[:,:] _unitpar, double[:] _gwpar):             # <<<<<<<<<<<<<<
  *     global glfin_sqin, glfin_sqout, glfin_spre, glfin_sev, glfin_sinf, glfin_fpre, glfin_finf, glfin_fev
  *     global glfin_fgwout,glfin_ipre,glfin_iev,glfin_sa,glfin_sv,glfin_fv, glfin_iv, glfdet, glfpor, glidet, glipor
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_18hydro_model_cython_1model_calc, NULL, __pyx_n_s_hydro_model_cython); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 106, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_model_calc, __pyx_t_2) < 0) __PYX_ERR(0, 106, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_18hydro_model_cython_1model_calc, NULL, __pyx_n_s_hydro_model_cython); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_model_calc, __pyx_t_1) < 0) __PYX_ERR(0, 113, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "hydro_model_cython.pyx":1
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as cnp
  * import sys
  */
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "View.MemoryView":209
  *         info.obj = self
@@ -26904,10 +26779,10 @@ if (!__Pyx_RefNanny) {
  * 
  *     def __dealloc__(array self):
  */
-  __pyx_t_2 = __pyx_capsule_create(((void *)(&__pyx_array_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 209, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem((PyObject *)__pyx_array_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_2) < 0) __PYX_ERR(2, 209, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_1 = __pyx_capsule_create(((void *)(&__pyx_array_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 209, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem((PyObject *)__pyx_array_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_1) < 0) __PYX_ERR(2, 209, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   PyType_Modified(__pyx_array_type);
 
   /* "View.MemoryView":286
@@ -26917,12 +26792,12 @@ if (!__Pyx_RefNanny) {
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__28, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 286, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__28, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 286, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(generic);
-  __Pyx_DECREF_SET(generic, __pyx_t_2);
-  __Pyx_GIVEREF(__pyx_t_2);
-  __pyx_t_2 = 0;
+  __Pyx_DECREF_SET(generic, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_1);
+  __pyx_t_1 = 0;
 
   /* "View.MemoryView":287
  * 
@@ -26931,12 +26806,12 @@ if (!__Pyx_RefNanny) {
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__29, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 287, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__29, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 287, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(strided);
-  __Pyx_DECREF_SET(strided, __pyx_t_2);
-  __Pyx_GIVEREF(__pyx_t_2);
-  __pyx_t_2 = 0;
+  __Pyx_DECREF_SET(strided, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_1);
+  __pyx_t_1 = 0;
 
   /* "View.MemoryView":288
  * cdef generic = Enum("<strided and direct or indirect>")
@@ -26945,12 +26820,12 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__30, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 288, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__30, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 288, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(indirect);
-  __Pyx_DECREF_SET(indirect, __pyx_t_2);
-  __Pyx_GIVEREF(__pyx_t_2);
-  __pyx_t_2 = 0;
+  __Pyx_DECREF_SET(indirect, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_1);
+  __pyx_t_1 = 0;
 
   /* "View.MemoryView":291
  * 
@@ -26959,12 +26834,12 @@ if (!__Pyx_RefNanny) {
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__31, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 291, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__31, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 291, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(contiguous);
-  __Pyx_DECREF_SET(contiguous, __pyx_t_2);
-  __Pyx_GIVEREF(__pyx_t_2);
-  __pyx_t_2 = 0;
+  __Pyx_DECREF_SET(contiguous, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_1);
+  __pyx_t_1 = 0;
 
   /* "View.MemoryView":292
  * 
@@ -26973,12 +26848,12 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__32, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 292, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__32, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 292, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_XGOTREF(indirect_contiguous);
-  __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_2);
-  __Pyx_GIVEREF(__pyx_t_2);
-  __pyx_t_2 = 0;
+  __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_1);
+  __pyx_t_1 = 0;
 
   /* "View.MemoryView":316
  * 
@@ -27013,10 +26888,10 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_2 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 549, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem((PyObject *)__pyx_memoryview_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_2) < 0) __PYX_ERR(2, 549, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_1 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 549, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem((PyObject *)__pyx_memoryview_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_1) < 0) __PYX_ERR(2, 549, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   PyType_Modified(__pyx_memoryview_type);
 
   /* "View.MemoryView":995
@@ -27026,10 +26901,10 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_2 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 995, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem((PyObject *)__pyx_memoryviewslice_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_2) < 0) __PYX_ERR(2, 995, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_1 = __pyx_capsule_create(((void *)(&__pyx_memoryview_getbuffer)), ((char *)"getbuffer(obj, view, flags)")); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 995, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem((PyObject *)__pyx_memoryviewslice_type->tp_dict, __pyx_n_s_pyx_getbuffer, __pyx_t_1) < 0) __PYX_ERR(2, 995, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   PyType_Modified(__pyx_memoryviewslice_type);
 
   /* "(tree fragment)":1
@@ -27037,10 +26912,10 @@ if (!__Pyx_RefNanny) {
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_15View_dot_MemoryView_1__pyx_unpickle_Enum, NULL, __pyx_n_s_View_MemoryView); if (unlikely(!__pyx_t_2)) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Enum, __pyx_t_2) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_15View_dot_MemoryView_1__pyx_unpickle_Enum, NULL, __pyx_n_s_View_MemoryView); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Enum, __pyx_t_1) < 0) __PYX_ERR(2, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "(tree fragment)":11
  *         __pyx_unpickle_Enum__set_state(<Enum> __pyx_result, __pyx_state)
@@ -29479,6 +29354,37 @@ __pyx_capsule_create(void *p, CYTHON_UNUSED const char *sig)
     return cobj;
 }
 
+/* CIntToPy */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
+    const int neg_one = (int) ((int) 0 - (int) 1), const_zero = (int) 0;
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(int) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(int) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(int),
+                                     little, !is_unsigned);
+    }
+}
+
 /* IsLittleEndian */
 static CYTHON_INLINE int __Pyx_Is_Little_Endian(void)
 {
@@ -30405,37 +30311,6 @@ static CYTHON_INLINE int __pyx_memview_set_double(const char *itemp, PyObject *o
         int one = 1; int little = (int)*(unsigned char *)&one;
         unsigned char *bytes = (unsigned char *)&value;
         return _PyLong_FromByteArray(bytes, sizeof(long),
-                                     little, !is_unsigned);
-    }
-}
-
-/* CIntToPy */
-  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
-    const int neg_one = (int) ((int) 0 - (int) 1), const_zero = (int) 0;
-    const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(int) < sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(int) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(int) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
-#endif
-        }
-    } else {
-        if (sizeof(int) <= sizeof(long)) {
-            return PyInt_FromLong((long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(int) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-#endif
-        }
-    }
-    {
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        unsigned char *bytes = (unsigned char *)&value;
-        return _PyLong_FromByteArray(bytes, sizeof(int),
                                      little, !is_unsigned);
     }
 }

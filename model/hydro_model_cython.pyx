@@ -2,13 +2,24 @@ import numpy as np
 cimport numpy as cnp
 import sys
 
-cdef cnp.ndarray _glfin_sqin = np.zeros([600,16], dtype=np.float)
-cdef cnp.ndarray _glfin_sqout = np.zeros([600,16], dtype=np.float)
-cdef cnp.ndarray _glfin_spre = np.zeros([600,16], dtype=np.float)
-cdef cnp.ndarray _glfin_sev = np.zeros([600,16], dtype=np.float)
-cdef cnp.ndarray _glfin_sinf = np.zeros([600,16], dtype=np.float)
-cdef cnp.ndarray _glfin_sa = np.zeros([600,16], dtype=np.float)
-cdef cnp.ndarray _glfin_sv = np.zeros([600,16], dtype=np.float)
+cdef int nn=1200
+cdef Py_ssize_t nsu=15
+cdef Py_ssize_t ngw=10
+cdef Py_ssize_t nts=1200
+cdef Py_ssize_t n
+cdef Py_ssize_t ts, sur, gw, isl,delayindex
+cdef float glconvcrit=0.001
+cdef int glmaxiter=100
+cdef int glfarea=250
+cdef float gliarea
+
+cdef cnp.ndarray _glfin_sqin = np.zeros([nts,nsu], dtype=np.float)
+cdef cnp.ndarray _glfin_sqout = np.zeros([nts,nsu], dtype=np.float)
+cdef cnp.ndarray _glfin_spre = np.zeros([nts,nsu], dtype=np.float)
+cdef cnp.ndarray _glfin_sev = np.zeros([nts,nsu], dtype=np.float)
+cdef cnp.ndarray _glfin_sinf = np.zeros([nts,nsu], dtype=np.float)
+cdef cnp.ndarray _glfin_sa = np.zeros([nts,nsu], dtype=np.float)
+cdef cnp.ndarray _glfin_sv = np.zeros([nts,nsu], dtype=np.float)
 
 cdef double[:,:] glfin_sqin=_glfin_sqin
 cdef double[:,:] glfin_sqout=_glfin_sqout
@@ -18,11 +29,11 @@ cdef double[:,:] glfin_sinf=_glfin_sinf
 cdef double[:,:] glfin_sa=_glfin_sa
 cdef double[:,:] glfin_sv=_glfin_sv
 
-cdef cnp.ndarray _glfin_fpre = np.zeros([600,16,5], dtype=np.float)
-cdef cnp.ndarray _glfin_fev = np.zeros([600,16,5], dtype=np.float)
-cdef cnp.ndarray _glfin_finf = np.zeros([600,16,5], dtype=np.float)
-cdef cnp.ndarray _glfin_fgwout = np.zeros([600,16,5], dtype=np.float)
-cdef cnp.ndarray _glfin_fv = np.zeros([600,16,5], dtype=np.float)
+cdef cnp.ndarray _glfin_fpre = np.zeros([nts,nsu,ngw], dtype=np.float)
+cdef cnp.ndarray _glfin_fev = np.zeros([nts,nsu,ngw], dtype=np.float)
+cdef cnp.ndarray _glfin_finf = np.zeros([nts,nsu,ngw], dtype=np.float)
+cdef cnp.ndarray _glfin_fgwout = np.zeros([nts,nsu,ngw], dtype=np.float)
+cdef cnp.ndarray _glfin_fv = np.zeros([nts,nsu,ngw], dtype=np.float)
 
 cdef double[:,:,:] glfin_fpre=_glfin_fpre
 cdef double[:,:,:] glfin_fev=_glfin_fev
@@ -30,46 +41,40 @@ cdef double[:,:,:] glfin_finf=_glfin_finf
 cdef double[:,:,:] glfin_fgwout=_glfin_fgwout
 cdef double[:,:,:] glfin_fv=_glfin_fv
 
-cdef cnp.ndarray _glfin_ipre = np.zeros([600,16,5], dtype=np.float)
-cdef cnp.ndarray _glfin_iev = np.zeros([600,16,5], dtype=np.float)
-cdef cnp.ndarray _glfin_iv = np.zeros([600,16,5], dtype=np.float)
+cdef cnp.ndarray _glfin_ipre = np.zeros([nts,nsu,ngw], dtype=np.float)
+cdef cnp.ndarray _glfin_iev = np.zeros([nts,nsu,ngw], dtype=np.float)
+cdef cnp.ndarray _glfin_iv = np.zeros([nts,nsu,ngw], dtype=np.float)
 
 cdef double[:,:,:] glfin_ipre=_glfin_ipre
 cdef double[:,:,:] glfin_iev=_glfin_iev
 cdef double[:,:,:] glfin_iv=_glfin_iv
 
-cdef cnp.ndarray _glfa_frac_start = np.zeros([16,5], dtype=np.float)
-cdef cnp.ndarray _glfa_frac_finish = np.zeros([16,5], dtype=np.float)
-cdef cnp.ndarray _glfa_frac_avg = np.zeros([5,], dtype=np.float)
+cdef cnp.ndarray _glfa_frac_start = np.zeros([nsu,ngw], dtype=np.float)
+cdef cnp.ndarray _glfa_frac_finish = np.zeros([nsu,ngw], dtype=np.float)
+cdef cnp.ndarray _glfa_frac_avg = np.zeros([ngw,], dtype=np.float)
 
 cdef double[:,:] glfa_frac_start=_glfa_frac_start
 cdef double[:,:] glfa_frac_finish=_glfa_frac_finish
 cdef double[:] glfa_frac_avg=_glfa_frac_avg
 
 
-cdef cnp.ndarray _glprecip = np.zeros([600,16], dtype=np.float)
-cdef cnp.ndarray _glpet = np.zeros([600,], dtype=np.float)
+cdef cnp.ndarray _glprecip = np.zeros([nn,nsu], dtype=np.float)
+cdef cnp.ndarray _glpet = np.zeros([nn,], dtype=np.float)
 
 cdef double[:,:] glprecip=_glprecip
 cdef double[:] glpet=_glpet
 
-cdef Py_ssize_t nsu=16
-cdef Py_ssize_t ngw=5
-cdef Py_ssize_t nts
-cdef Py_ssize_t n
-cdef Py_ssize_t ts, sur, gw, isl, delayindex
-cdef float glconvcrit=0.001
-cdef int glmaxiter=100
 
-cdef cnp.ndarray _gldelay = np.zeros([16,], dtype=np.float)
-cdef cnp.ndarray _gltopopar = np.zeros([16,2], dtype=np.float)
-cdef cnp.ndarray _glspar = np.zeros([16,30], dtype=np.float)
-cdef cnp.ndarray _glsv_init = np.zeros([16,], dtype=np.float)
-cdef cnp.ndarray _glfv_init = np.zeros([16,5], dtype=np.float)
-cdef cnp.ndarray _gliv_init = np.zeros([16,5], dtype=np.float)
-cdef cnp.ndarray _glfa = np.zeros([16,], dtype=np.float)
-cdef cnp.ndarray _glia = np.zeros([16,], dtype=np.float)
-cdef cnp.ndarray _glkgw = np.zeros([16,], dtype=np.float)
+
+cdef cnp.ndarray _gldelay = np.zeros([nsu,], dtype=np.float)
+cdef cnp.ndarray _gltopopar = np.zeros([nsu,2], dtype=np.float)
+cdef cnp.ndarray _glspar = np.zeros([nsu,30], dtype=np.float)
+cdef cnp.ndarray _glsv_init = np.zeros([nsu,], dtype=np.float)
+cdef cnp.ndarray _glfv_init = np.zeros([nsu,ngw], dtype=np.float)
+cdef cnp.ndarray _gliv_init = np.zeros([nsu,ngw], dtype=np.float)
+cdef cnp.ndarray _glfa = np.zeros([nsu,], dtype=np.float)
+cdef cnp.ndarray _glia = np.zeros([nsu,], dtype=np.float)
+cdef cnp.ndarray _glkgw = np.zeros([nsu,], dtype=np.float)
 
 cdef double[:] gldelay=_gldelay
 cdef double[:,:] gltopopar=_gltopopar
@@ -83,31 +88,33 @@ cdef double[:] glkgw=_glkgw
 
 # for surf iteration
 cdef cnp.ndarray _celloutflows = np.zeros([10], dtype=np.float)
-cdef cnp.ndarray _fa_frac = np.zeros([5,], dtype=np.float)
+cdef cnp.ndarray _fa_frac = np.zeros([ngw,], dtype=np.float)
+cdef cnp.ndarray _fa_incrfrac = np.zeros([ngw,], dtype=np.float)
+
 cdef double[:] celloutflows=_celloutflows
 cdef double[:] fa_frac=_fa_frac
+cdef double[:] fa_incrfrac=_fa_incrfrac
 
 cdef float glrain, glsa_beg, glsa_end, glipv, gliev, glfev, glfpv, glfdet, glidet, glfpor, \
 glipor, glfq, gliv_end, glsinf
-cdef int glsv_isincr
+
 
 cdef int iitern, iiter_flag
-cdef float iv_endmin, iv_endmax, evapi, iv_endc
+cdef float iv_endmin, iv_endmax, evapi, evapf, iv_endc
 
 cdef float sqin, sv_beg, sv_end, sv_av, sv_endmin, sv_endmax, sa_av, spre, sev, sv_endc
 cdef int sitern, siter_flag, cellno
-cdef float fa_cum, fa_incrfrac, fa_cumprev
+cdef float fa_cum, fa_cumprev, fincr
 cdef int fiter_flag, fitern
 cdef float fv_endmin, fv_endmax
 cdef int debug, dts, last
-
 
 #***************************************************************************
 def model_calc(double[:] _inflow, double[:,:] _precip, double[:] _pet, double[:] _glsv_init, double[:,:] _glfv_init, double[:,:] _gliv_init, double[:,:] _unitpar, double[:] _gwpar):
     global glfin_sqin, glfin_sqout, glfin_spre, glfin_sev, glfin_sinf, glfin_fpre, glfin_finf, glfin_fev
     global glfin_fgwout,glfin_ipre,glfin_iev,glfin_sa,glfin_sv,glfin_fv, glfin_iv, glfdet, glfpor, glidet, glipor
     global glfa_frac_start, glfa_frac_finish, glfa_frac_avg
-    global nsu, ngw, nts, ts, sur, flo, isl
+    global nsu, ngw, nts, ts, sur, flo, isl, glfarea
     global celloutflows, debug
     print ("running model..")
     #adjusting dimensions
@@ -156,7 +163,7 @@ def model_calc(double[:] _inflow, double[:,:] _precip, double[:] _pet, double[:]
              _glfin_fv[0:nts,:], _glfin_fev[0:nts,:],_glfin_fpre[0:nts,:], _glfin_fgwout[0:nts,:],\
              _glfin_finf[0:nts,:,:],\
              _glfin_iv[0:nts,:], _glfin_iev[0:nts,:],_glfin_ipre[0:nts,:]]
-    
+    print ("success")
     return results
     
 
@@ -167,13 +174,13 @@ cdef calc_surface_iter():
     global glprecip, gldelay, glrainfrac, glrain, gltopopar, glspar, glfa
     global glfa_frac_start, glfa_frac_finish, glfa_frac_avg
     global glsv_init, glsinf, glfin_sa
-    global nsu, ngw, nts, n, delayindex
-    global glsv_isincr, glsa_end, glsa_beg
+    global nsu, ngw, nts, n,delayindex
+    global glsa_end, glsa_beg
     global sqin, sv_beg, sv_end, sv_av, sv_endmin, sv_endmax, sa_av, spre, sev, sv_endc
-    global sitern, siter_flag, cellno, debug
+    global sitern, siter_flag, cellno, debug, glfarea
     
     # this calculates surface reservoir
-    # global variables: gldelay, glfin_sqin, glsv_init, glfin_sv, glV, glk
+    # global variables: gldelay, glfin_sqin, glsv_init, glfin_sv
     # local variables: sqin, celloutflows, sv_av, sa_av, spre, sev, sqout
     # sv_beg, sv_end, glsa_end, glsa_beg, glsinf
     
@@ -187,7 +194,7 @@ cdef calc_surface_iter():
     # delay
     #Panhandle 1 Nqoga-1a 0 Nqoga-1b 0 Thaoge 0 Xudum 1 Boro 1 Nqoga-2a 0 Nqoga-2b 0
     #Selinda 0 Empty 0 Toteng 0 Maun 0 Shashe 0 Mboroga 1 Khwai 1 out 0
-    delayindex=(max(0, ts - int(gldelay[sur])))
+    delayindex=max(0, ts-int(gldelay[sur]))
     sqin = glfin_sqin[delayindex,sur]    #this delay makes sense
 
     #initial condition
@@ -210,11 +217,9 @@ cdef calc_surface_iter():
         sv_av = (sv_end + sv_beg) / 2
         glsa_beg = (gltopopar[sur,0] * sv_beg)**gltopopar[sur,1]
         glsa_end = (gltopopar[sur,0] * sv_end)**gltopopar[sur,1]
+        #print(sv_beg, glsa_beg, gltopopar[sur,0], gltopopar[sur,1])
         #check if flood is increasing in the sw cell
-        if sv_end > sv_beg:
-            glsv_isincr = 1
-        else:
-            glsv_isincr = 0
+
 
         #############################################################################################
         # special rules
@@ -222,23 +227,25 @@ cdef calc_surface_iter():
         #Selinda 8 Empty 9 Toteng 10 Maun 11 Shashe 12 Mboroga 13 Khwai 14 out 15
 
         #change shape of volume-area curve
-        if sur==0:
+#        if sur==0:
             #Panhandle
+#            sv_beg=sv_beg
             #Case 1
-            if sv_beg < 1500:
-                glsa_beg = (0.006 * sv_beg)**3
+#            if sv_beg < 1500:
+#                glsa_beg = (0.006 * sv_beg)**3
 
-            if sv_end < 1500:
-                glsa_end = (0.006 * sv_end)**3
+#            if sv_end < 1500:
+#                glsa_end = (0.006 * sv_end)**3
 
         #constrain the extent of inundation
-        elif sur==1 or sur==6 or sur==5 or sur==13 or sur==14:  
+#        elif sur==1 or sur==6 or sur==5 or sur==13 or sur==14:  
+#        elif sur==1 or sur==6 or sur==13 or sur==14:  
             #Case 2, 7, 6, 14, 15
-            if glsa_beg > glfa[sur]*ngw:
-                glsa_beg = glfa[sur]*ngw
+#            if glsa_beg > glfa[sur]*ngw:
+#                glsa_beg = glfa[sur]*ngw
         
-            if glsa_end > glfa[sur]*ngw:
-                glsa_end = glfa[sur]*ngw
+#            if glsa_end > glfa[sur]*ngw:
+#                glsa_end = glfa[sur]*ngw
         
         #############################################################################################
         
@@ -250,7 +257,7 @@ cdef calc_surface_iter():
         # this delay does not make sense
         # and this was a bug... it was ==0
 #        if ts - gldelay[sur] < 0:
-        sev = glpet[ts] * sa_av / 1000
+        sev = glpet[ts] * sa_av /1000
 #        else:
 #            sev = glpet[ts - int(gldelay[sur])] * sa_av / 1000
 #            sev = kc(Month(inp(ts - delay(scell)).recdate)) * inp(ts - delay(scell)).evap * sa_av / 1000
@@ -330,14 +337,13 @@ cdef calc_surface_iter():
 cdef calc_gw_iter():
     
     global glsa_end, glsa_beg, glfv_beg, gliv_beg, glfv_end, glfpv, glfev, flpv, gliev, gliv_end, glsinf
-    global ngw, fa_frac, gw, glfv_init, glfq
-    global fa_cum, fa_incrfrac, fa_cumprev, debug
+    global ngw, fa_frac, fa_incrfrac, gw, glfv_init, glfq, fincr
+    global fa_cum,  fa_cumprev, debug, glfv_max, glfarea
     # this calculates a coupled groundwater reservoir, but here, only infitration phase, gw flow is calculated within iteration_1 and 2
     # prepare data
     #-----------------------------------------------------------------------------
     #get initial values of variables
     fa_cum=0
-    fa_incrfrac=0
     fa_cumprev=0
     glsinf = 0
 
@@ -345,34 +351,31 @@ cdef calc_gw_iter():
     #-----------------------------------------------------------------------------
     # calculate status of gwcells flooding at the end of the time step
     # this is done for calculating rapid infiltration  
-    fa_frac[:]=0 #it is fraction of cell flooded at the end of the timestep
     
+    fa_frac[:]=0 #it is fraction of cell flooded at the end of the timestep
+    fa_incrfrac[:]=0
+
     for gw in range(ngw):
         fa_cumprev = fa_cum #it's ok, because on the first cell fa_cum is 0
-        fa_cum = fa_cum + glfa[sur]
+        fa_cum = fa_cum + glfarea #glfa[sur]
         if fa_cum <= glsa_end:
             #cell entirely flooded
             fa_frac[gw] = 1
         elif fa_cum > glsa_end and fa_cumprev <= glsa_end:
             #cell partially flooded
-            fa_frac[gw] = (glsa_end - fa_cumprev) / glfa[sur]
-            if glsa_beg > fa_cumprev and glsa_end > glsa_beg:
-                #if cell partially flooded previously
-                 fa_incrfrac = (glsa_end - glsa_beg) / (fa_cum - glsa_beg) #this is ok, because incrfac is fraction of the part that is not flooded yet
-            else:
-                #if cell not flooded previously
-                fa_incrfrac = fa_frac[gw]
-        else:
-            #cell not flooded
-            fa_frac[gw] = 0
-        #this is correct fraction ONLY if there is no expansion of flood
+            fa_frac[gw] = (glsa_end - fa_cumprev) / glfarea#glfa[sur]
+        
+        fincr=fa_frac[gw] - glfa_frac_start[sur, gw]
+        if fincr<0:
+            fincr=0
+        fa_incrfrac[gw] =  fincr#incrfac is fraction of the cell that is flooded during this time step
         glfa_frac_avg[gw] = (fa_frac[gw] + glfa_frac_start[sur, gw]) / 2 
         glfa_frac_finish[sur,gw] = fa_frac[gw]
 
     #*****************************************************************************
     #calculate groundwater flow between floodplains and islands
     for gw in range(ngw):
-        glfv_max = glidet * glfpor * glfa[sur] 
+        glfv_max = glidet * glfpor * glfarea #glfa[sur] 
        #-----------------------------------------------------------------------------
 #        if debug:
 #            print "\tgwcell",gwcell
@@ -390,7 +393,8 @@ cdef calc_gw_iter():
         #if not flooded it will be 0, if flooded all the time it will be 1
         siv_adv = glfa_frac_avg[gw] * glfq
         
-        siv_front = ((glidet * glfpor * glfa[sur]) - glfv_end) * fa_incrfrac
+#        siv_front = ((glidet * glfpor * glfa[sur]) - glfv_end) * fa_incrfrac[gw]
+        siv_front = ((glidet * glfpor * glfarea) - glfv_end) * fa_incrfrac[gw]
         
         #-----------------------------------------------------------------------------
         #sets initial values for the next time step
@@ -416,7 +420,7 @@ cdef calc_gw_iter():
 cdef iteration_1():
     global glrain, glfv_av, glfv_end, glfpv, glfev, glfa, glfq
     global sur, gw, t, glconvcrit, glmaxiter, ngw
-    global fiter_flag, fitern, fv_endmin, fv_endmax, debug
+    global fiter_flag, fitern, fv_endmin, fv_endmax, debug, evapf,glfv_max, glfarea
     
     # this calculates the floodplain groundwater reservoir
     #**********************************************************************************
@@ -433,15 +437,19 @@ cdef iteration_1():
     while fiter_flag:
         glfv_av = (glfv_end + glfv_beg) / 2
         glfev = 0
-        if glfv_av > ((glidet - glfdet) * glfa[sur] * glfpor):
+#        if glfv_av > ((glidet - glfdet) * glfa[sur] * glfpor):
+        if glfv_av > ((glidet - glfdet) * glfarea * glfpor):
             #if average volume greater than something???
-            temp = ((glfv_av - ((glidet - glfdet) * glfa[sur] * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
-            if temp > 1:
-                temp = 1
-            glfev = (glpet[ts] / 1000 * glfa[sur] * temp)
+#            evapf = ((glfv_av - ((glidet - glfdet) * glfa[sur] * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
+            evapf = ((glfv_av - ((glidet - glfdet) * glfarea * glfpor)) / (glfdet * glfa[sur] * glfpor)) * (1 - glfa_frac_avg[gw])
+            if evapf > 1:
+                evapf = 1
+#            glfev = (glpet[ts] / 1000 * glfa[sur] * evapf)
+            glfev = (glpet[ts] / 1000 * glfarea * evapf)
             
 #            glfpv = (glrain / 1000 * glfa[scell]) * (1 - glfa_frac_avg[gwcell])    
-        glfpv = (glrain / 1000 * glfa[sur]) * (1 - glfa_frac_avg[gw])
+#        glfpv = (glrain / 1000 * glfa[sur]) * (1 - glfa_frac_avg[gw])
+        glfpv = (glrain / 1000 * glfarea) * (1 - glfa_frac_avg[gw])
     
 #        if debug==1 and ts==dts:
 #            print("i1-0",glfv_beg, glfv_end,glfv_av,glfpv,glfev,glfq,glfa_frac_avg[gw])
@@ -485,7 +493,7 @@ cdef iteration_1():
 cdef iteration_2():
     global glfv_av, glfin_iv, gliv_init, glidif, glfq, gliev, glipv, gliv_end, glipor, glidet, glfpor, glfdet
     global sur, gw, t, glconvcrit, glmaxiter, ngw
-    global iitern,iiter_flag,iv_endmin,iv_endmax,evapi, iv_endc, debug
+    global iitern,iiter_flag,iv_endmin,iv_endmax,evapi, iv_endc, debug, glfarea, gliarea
     #
     #uses: glfv_av
     #
@@ -508,18 +516,23 @@ cdef iteration_2():
     #inner iteration start
     while iiter_flag: 
         iv_av = (gliv_end + iv_beg) / 2
-        glfq = ((glfv_av / (glfa[sur] * glfpor)) - (iv_av / ((glia[sur]) * glipor))) * glkgw[sur]
-        evapi = iv_av / (glipor * glidet * glia[sur])    
+        gliarea=glfarea*glia[sur]/glfa[sur]
+#        glfq = ((glfv_av / (glfa[sur] * glfpor)) - (iv_av / ((glia[sur]) * glipor))) * glkgw[sur]
+        glfq = ((glfv_av / (glfarea * glfpor)) - (iv_av / ((gliarea) * glipor))) * glkgw[sur]
+#        evapi = iv_av / (glipor * glidet * glia[sur]) 
+        evapi = iv_av / (glipor * glidet * (gliarea)) 
         if evapi > 0.6:
             evapi = 0.6
-        gliev = glpet[ts]  / 1000 * (glia[sur]) * evapi
-        glipv = glrain / 1000 * glia[sur]
+#        gliev = glpet[ts]  / 1000 * (glia[sur]) * evapi
+#        glipv = glrain / 1000 * glia[sur]
+        gliev = glpet[ts]  / 1000 * (gliarea) * evapi
+        glipv = glrain / 1000 * gliarea
         
 
         iv_endc = iv_beg + glfq - gliev + glipv
         
         if debug and ts==dts:
-            print "iter2", iv_beg, iv_av, glfq, gliev, glipv, evapi, glfv_av,iv_endmax, iv_endmin
+            print ("iter2", iv_beg, iv_av, glfq, gliev, glipv, evapi, glfv_av,iv_endmax, iv_endmin)
     
         #-----------------------------------------------------------------------------
         #check if inner iteration convergence is achieved
@@ -557,4 +570,4 @@ cdef iteration_2():
 #    if debug==1:
 #        print "\t\t\t i_iter2:",iitern
 
-
+        
