@@ -1,1 +1,1 @@
-<p>Outflows from all model units
+<p><em>Total inundated area</em> is a single time series illustrating the total area (in km <sup>2</sup>) under inundation in the entire modelled system (Delta or Boteti) over the entire period of simulations. Data do not include spinup years (if any). Inundated area is simply area covered by water, and the model does not distinguish open water from water covered by vegetation. 

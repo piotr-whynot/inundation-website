@@ -7,13 +7,14 @@ $outputs= $_GET['outputs'];
 $spinup = $_GET['spinup'];
 $expID = $_GET['expID'];
 $expCode = $_GET['expCode'];
+$domain = $_GET['domain'];
 
 if(isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST"){
     if($paramFile=="default"){
-        $paramFile="model/config/modpar.dat";
+        $paramFile="model/config/modpar_".$domain.".csv";
     }
     if($initcondFile=="default"){
-        $initcondFile="model/config/init.dat";
+        $initcondFile="model/config/init_".$domain.".csv";
     }
 
 
@@ -21,15 +22,11 @@ if(isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST"){
     $outputs=explode(",",$outputs);
     $outfiles="";
     foreach($outputs as $output){
-        $outfiles=$outfiles." ../public/".$expID."/".$expCode."-".$output.".csv";
+        $outfiles=$outfiles." ../public/".$expID."/".$domain."_".$expCode."_".$output;
     }
 
-    #$outfile="results/".$sessionID."-".$runID."_alloutflows.csv";
-
     chdir("./model");
-    $command = escapeshellcmd("/home/piotr/anaconda3/bin/python ./hydro_model.py ../".$paramFile." ../".$initcondFile." ../".$inputFile." ".$spinup.$outfiles)." 2>&1";
-#    $command= escapeshellcmd("python ./hydro_model.py ../model/config/modpar.dat ../model/config/init.dat ../uploads/31279404-input_1967-2014.csv 0 ../results/31279404-yy_alloutflows.csv");
-    #$command= escapeshellcmd("./run.sh");
+    $command = escapeshellcmd("/home/piotr/anaconda3/bin/python ./model_".$domain.".py ../".$paramFile." ../".$initcondFile." ../".$inputFile." ".$spinup.$outfiles)." 2>&1";
 
     $outcome = exec($command, $response);
 

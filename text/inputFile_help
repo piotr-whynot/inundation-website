@@ -1,1 +1,2 @@
-<p>Input file contains model input data, i.e. data on rainfall, air temperature (or evaporation) and monthly discharges of the Okavango River at Mohembo. 
+<p><em>Input file </em>contains model input data, i.e. data on rainfall, air temperature (or evaporation) and monthly discharges of the Okavango River at Mohembo.
+<p> Read about the exact format of input files <a href=# class='clickable docs inpopover' data-target='tech-format-inputs' > here</a>

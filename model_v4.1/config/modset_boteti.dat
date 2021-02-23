@@ -1,0 +1,15 @@
+convcrit,0.001
+maxiter,100
+nscells,2
+ngwcells,5
+nofoutlets,2
+0-Boteti,1
+Boteti-Out,  1
+1-Out,0
+outputflag0,1
+outputflag1,0
+finalsum0,1
+finalsum1,0
+unitname0,Boteti
+unitname1,Out
+

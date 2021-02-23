@@ -1,1 +1,1 @@
-run buttons
+<p>The model can be run only when all necessary inputs are provided, and when all inputs are appropriate. The "run model" button is deactivated until the inputs are checked. If check reveals no errors - Run button will become active. 

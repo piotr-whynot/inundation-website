@@ -6,6 +6,7 @@ if(isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST"){
 
     $expID=$_GET['expID'];
     $expCode=$_GET['expCode'];
+    $domain=$_GET['domain'];
 
     $path = "public/".$expID."/";
 
@@ -19,7 +20,7 @@ if(isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST"){
         list($txt, $ext) = explode(".", $name);
         if(in_array($ext,$valid_file_formats)) {
             if($size<(1024*1024)) {
-                $file_name = $expCode."-".$txt.".".$ext;
+                $file_name = $domain."_".$expCode."_".$txt.".".$ext;
                 $tmp = $_FILES[$key]['tmp_name'];
                 $response=$tmp." ".$path.$file_name." ";
                 if(move_uploaded_file($tmp, $path.$file_name)){

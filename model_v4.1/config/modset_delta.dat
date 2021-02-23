@@ -1,0 +1,70 @@
+convcrit,0.001
+maxiter,100
+nscells,11
+ngwcells,5
+nofoutlets,7
+0-Pan,2
+Pan-Nqo1,  1
+Pan-Nqo1,  1
+1-Nqo1,10
+Nqo1-Mch1, 6
+Nqo1-Mch1, 6
+Nqo1-Mch1, 6
+Nqo1-Sel,  8
+Nqo1-Bor,  5
+Nqo1-Bor,  5
+Nqo1-Xud,  4
+Nqo1-Xud,  4
+Nqo1-Tha,  3
+Nqo1-Nqo2, 2
+2-Nqo2,0
+3-Tha,0
+4-Xud,2
+Xud-Tot,  -99
+Xud-Tot,  -99
+5-Bor,2
+Bor-Mau,  -99
+Bor-Mau,  -99
+6-Mch1,3
+Mch1-Mch2, 7
+Mch1-Mbo, 9
+Mch1-Khw, 10
+7-Mch2,0
+8-Sel,0
+9-Mbo,1
+Mbo-Gom,  -99
+10-Khw,1
+Khw-Mab,  -99
+outputflag0,1
+outputflag1,1
+outputflag2,1
+outputflag3,1
+outputflag4,1
+outputflag5,1
+outputflag6,1
+outputflag7,1
+outputflag8,1
+outputflag9,1
+outputflag10,1
+finalsum0,1
+finalsum1,1
+finalsum2,1
+finalsum3,1
+finalsum4,1
+finalsum5,1
+finalsum6,1
+finalsum7,1
+finalsum8,1
+finalsum9,1
+finalsum10,1
+unitname0,Panhandle
+unitname1,Nqoga1
+unitname2,Nqoga2
+unitname3,Thaoge
+unitname4,Xudum
+unitname5,Boro
+unitname6,Maunachira1
+unitname7,Maunachira2
+unitname8,Selinda
+unitname9,Mboroga
+unitname10,Khwai

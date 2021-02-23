@@ -1,0 +1,10 @@
+<p><em>Hydrological regions</em> in the Boteti system model, characterize hydrological conditions along the Boteti River. Three "classes" are distinguished:
+<ul><li>permanent inundation
+<li>pools
+<li>dry
+</ul>
+These classes are determined for each hydrologial year (which for the Boteti model is considered to be identical to the calendar year, i.e. it spans January to December).
+<p>Permanent inundation region is characterized by inundation during all 12 months of the hydrological year.
+<p>Pools region is a region charcterized by the presence of disconnected pools of water, fed by flood in previous years. That region represents conditions of "receding" flood and spans area that is not under permanent inundation, but was inundated at least for one month in the last three years.
+<p> Dry region has not been inundated in the last three years.
+<p>Hydrological regions are given as a time series of the three variables spanning the entire period of simulations (excluding the spinup period, if any).

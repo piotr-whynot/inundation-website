@@ -1,4 +1,13 @@
-saving initial condition file
-saving simulation results
-fix and expand output
-fix behaviour on reset of model
+validation of eperiment code field
+
+download for input files
+saving simulation log
+
+add world file for tif images
+error if something wrong with the php file
+
+hydro-eco units map as ouptut
+
+initial condition for hydro-eco
+
+

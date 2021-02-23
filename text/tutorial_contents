@@ -1,0 +1,21 @@
+<div class="row">
+<div class=col-sm-2></div>
+<div class=col-sm-8>
+
+<h1>Tutorial</h1>
+
+<h2>Navigating model website</h2>
+<p> The model website has four pages that can be accessed through navigation links at the top of the page.
+<p>Navigating in and out of the Home page and the Documentation page can be done at any time without any implications.
+<p>Selecting one of the two models - i.e. either the Okavango or the Boteti model, activates the selected model. This is indicated by the orange underscore of the model link.
+<p> Attempting to change the active model, i.e. selecting the “non-active” model, causes a warning message. 
+
+<p>Selecting Cancel stops the process, and the active model is not changed. Selecting “Yes”, however, changes the active model. The implication of the change is that any selections made in the original active model page, including any selected files, are cleared, and cannot be recovered. Coming back to that model will show empty model form.
+
+<h2> Getting help</h2>
+<p> Well... the documentation page is always worth exploring...
+<p> The model form page includes a number of help icons:
+<p> Clicking on the icon opens a short contextual explanation of the associated element of the model form. Some of those explanations contain links to more extensive explanations present in the documentation page. On clicking on them - the documentation page opens in the relevant place. One can then return to the model form by selecting that model from the navigation bar. That operation will not result in resetting the contents of the form, provided one returns to the currently active model form. Attempting to open the non-active model form will result in the warning message described above.
+
+</div>
+</div>

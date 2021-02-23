@@ -1,57 +1,95 @@
-var debug=true;
-var inputColNames={"PET":["Date", "Inflow-Mohembo", "Rainfall-Maun", "Rainfall-Shakawe", "PET-Maun"], "Temp":["Date", "Inflow", "Rainfall-Maun", "Rainfall-Shakawe", "MinTemp-Maun", "MaxTemp-Maun"]};
+var debug=false;
 var serverparamFile;
 var serverinputFile;
 var serverinitcondFile;
-var expID=Math.floor(Math.random()*100000000);
+//var expID=Math.floor(Math.random()*100000000);
+var expID=Date.now();
 var resultsDir="public/";
 var uploadsDir="public/";
 var maxfileSize=1000000;
-var maxts=600;
-var inputQC=false;
+var maxts=1200;
 var modelRun=false;
 var modelChecked=false;
-var modelUnits=15
 var modelsubUnits=10
+var domain="";
+var outputsList;
 
-var outputsList=JSON.parse('{"alloutflows": ["Outflows from all model units", "checked", "csv", "Mm3/month","timeseries"],\
+var modelUnits={"delta":11, "boteti":2};
+
+var inputColNamesDelta={"PET":["Date", "Inflow-Mohembo", "Rainfall-Maun", "Rainfall-Shakawe", "PET-Maun"], "Temp":["Date", "Inflow-Mohembo", "Rainfall-Maun", "Rainfall-Shakawe", "MinTemp-Maun", "MaxTemp-Maun"]};
+
+var inputColNamesBoteti={"PET":["Date", "Inflow-Maun", "Rainfall-Maun", "PET-Maun"], "Temp":["Date", "Inflow-Maun", "Rainfall-Maun", "MinTemp-Maun", "MaxTemp-Maun"]};
+
+var outputsListDelta=JSON.parse('{"alloutflows": ["Outflows from all model units", "checked", "csv", "Mm3/month","timeseries"],\
 "allinundation":["Inundated area of all model units", "checked", "csv", "km2","timeseries"],\
 "totalinundation":["Total inundated area", "checked", "csv", "km2","timeseries"],\
 "allvolumes":["storages of all model units", "checked", "csv", "Mm3","timeseries"],\
 "totalecoregions":["Eco-hydrological regions for the entire system", "", "csv", "km2","timeseries"],\
 "allecoregions":["Eco-hydrological regions for each of model units", "", "csv", "km2","timeseries"],\
-"animatedinundation": ["Animation of inundated area", "", "gif", "km2","none"],\
+"totalecoregions2018":["Eco-hydrological regions for the entire system, 2018 method", "", "csv", "km2","timeseries"],\
+"allecoregions2018":["Eco-hydrological regions for each of model units, 2018 method", "", "csv", "km2","timeseries"],\
+"animatedinundation": ["Animation of inundated area", "", "gif", "km2","timeseries"],\
+"inundationmaps-one": ["GIS-readable Maps of inundated area, all-in-one", "", "tif", "km2","none"],\
+"inundationmaps-all": ["GIS-readable Maps of inundated area, one-by-one", "", "zip", "km2","none"],\
+"finalcond": ["Final storages in all units (to be used as initial condition for a different run)", "", "csv", "various","none"],\
+"botetiinput": ["Boteti model inputs (to be used to run the Boteti model)", "", "csv", "various","none"]\
+}');
+
+var outputsListBoteti=JSON.parse('{\
+"totalinundation":["Total inundated area", "checked", "csv", "km2","timeseries"],\
+"inundateddistance":["Inundated distance", "checked", "csv", "km","timeseries"],\
+"hydroregions":["Hydrological regions for the entire system", "", "csv", "fraction of river length","timeseries"],\
+"allvolumes":["Volume of water in the system", "checked", "csv", "Mm3","timeseries"],\
 "finalcond": ["Final storages in all units (to be used as initial condition for a different run)", "", "csv", "various","none"]}');
 
 
 
-function initialize () {
+// initialization
+function initialize(){
+    readFile("./text/docs_contents",function(data){
+        $("#docsContents").html(data);
+    });
+
+//    readFile("./text/tutorial_contents",function(data){
+//        $("#tutorialContents").html(data);
+//    });
+    readFile("./text/home_contents",function(data){
+        $("#homeContents").html(data);
+    });
+
+
+    if (debug){
+        //$("[data-domain=boteti]").trigger('click') //opens model tab
+        $("[data-target=docs]").trigger('click') //opens home tab
+    }else{
+        $("[data-target=home]").trigger('click') //opens home tab
+    }
+   console.log("starting", domain)
+
+}
+
+
+// filling up model inputs form
+function initializeModel (newdomain) {
+    domain=newdomain;
     txt="";
-    txt+="<form id='expForm' method='post' enctype='multipart/form-data' action='upload.php' autocomplete='off'>";
+    txt+="<form id='expForm' method='post' enctype='multipart/form-data' action='#' autocomplete='off'>";
     txt+="<div class=form-group>";
-    txt+="<label for=sessionID>Experiment ID (automatically assigned):</label><a href='#' class=help data-pload='expID_help'>?</a>";
-    txt+="<input type=text class='form-control contained' id=expID value="+expID+" disabled hidden>";
+    txt+="<div class=form-group>";
+    //txt+="<label for=sessionID>Experiment ID (automatically assigned):</label><a href='#' class=help data-pload='expID_help'>?</a>";
+    txt+="<input type=hidden class='form-control contained' id=expID value="+expID+" disabled hidden>";
     txt+="</div>";
     txt+="<div class=form-group>";
     txt+="<label for=expCode>Experiment code: </label><a href='#' class=help data-pload='expCode_help'>?</a>";
     txt+="<input type=text class='form-control contained activeInput' id=expCode value=test1>";
     txt+="</div>";
-//    txt+="<div class=form-group>";
-//    txt+="<label for=expDescription>Experiment description: </label>";
-//    txt+="<textarea class='form-control contained' rows=5 id=expDescription></textarea>";
-//    txt+="</div>";
-//    txt+="<div class=form-group>";
-//    txt+="<label for=userName>User name: </label>";
-//    txt+="<input class='form-control contained' id=userName>";
-//    txt+="</div>";
-//    txt+="<input type=button class='btn btn-info' value='Load previous experiment'>";
     txt+="</form>";
 
     $("#experimentContainer").html(txt);
 
 
     txt="" 
-    txt+="<form id='inputForm' method='post' enctype='multipart/form-data' action='upload.php' autocomplete='off'>";
+    txt+="<form id='inputForm' method='post' enctype='multipart/form-data' action='#' autocomplete='off'>";
     txt+="<label>Input data file:</label><a href='#' class=help data-pload='inputFile_help'>?</a>";
     txt+="<div class='input-group'>";
     txt+="<input class='form-control fileName activeInput' type='text' id=inputFileName name=input>";
@@ -71,7 +109,7 @@ function initialize () {
 
 
     txt="";
-    txt+="<form id='paramForm' method='post' enctype='multipart/form-data' action='upload.php' autocomplete='off'>";
+    txt+="<form id='paramForm' method='post' enctype='multipart/form-data' action='#' autocomplete='off'>";
     txt+="<label>Model parameters:</label><a href='#' class=help data-pload='paramFile_help'>?</a>";
     txt+=" <div class='radio'>";
     txt+="  <label><input class=activeInput type='radio' name='paramFileOpt' checked value=default>Use default</label>";
@@ -97,7 +135,7 @@ function initialize () {
 
     
     txt="";
-    txt+="<form id='initcondForm' method='post' enctype='multipart/form-data' action='upload.php' autocomplete='off'>";
+    txt+="<form id='initcondForm' method='post' enctype='multipart/form-data' action='#' autocomplete='off'>";
     txt+="<label>Model initial conditions:</label><a href='#' class=help data-pload='initcondFile_help'>?</a>";
     txt+=" <div class='radio'>";
     txt+="  <label><input class=activeInput type='radio' name='initcondFileOpt' value=default checked>Use default</label>";
@@ -119,6 +157,8 @@ function initialize () {
     txt+="<div id=initcondOutcome></div>";
     $("#initcondContainer").html(txt);
     $("#initcondFileLoader").hide();
+
+
   
     txt="";
     txt+="<form id='optForm' method='post' enctype='multipart/form-data' action='#' autocomplete='off'>";
@@ -128,8 +168,13 @@ function initialize () {
     txt+="</div>";
     txt+="<label>Model output</label><a href='#' class=help data-pload='modeloutput_help'>?</a>";
     txt+="<div class='input-group' id=outputs>";
+    if (domain=="delta"){
+        outputsList=outputsListDelta;
+    }else{
+        outputsList=outputsListBoteti;
+    }
     for (var key in outputsList){
-        txt+="<div class=checkbox><label><input class=activeInput type=checkbox name=outputs[] value="+key+" id="+key+" "+outputsList[key][1]+">"+outputsList[key][0]+"</label><a href='#' class=help data-pload='"+key+"_help'>?</a></div>";
+        txt+="<div class=checkbox><label><input class=activeInput type=checkbox name=outputs[] value="+key+" id="+key+" "+outputsList[key][1]+">"+outputsList[key][0]+"</label><a href=# class=help data-pload='"+key+"_help'>?</a></div>";
     }
     txt+="</div>";
     txt+="</form>";
@@ -139,9 +184,9 @@ function initialize () {
 
  
     txt="";
-    txt+="<form id='runForm' method='post' enctype='multipart/form-data' action='upload.php' autocomplete='off'>";
+    txt+="<form id='runForm' method='post' enctype='multipart/form-data' action='#' autocomplete='off'>";
     txt+="<div class='input-group'>";
-    txt+="<input type=button class='btn btn-primary mx-1 my-1' id=checkrunButton value='Validate simulation inputs'>";
+    txt+="<input type=button class='btn btn-primary mx-1 my-1' id=checkrunButton value='Check all inputs'>";
     txt+="<input type=button class='btn btn-primary mx-1 my-1 disabled' id=runmodelButton value='Run model' disabled>";
     txt+="<a href='#' class=help data-pload='runbuttons_help'>?</a></div>";
     txt+="</form>";
@@ -149,97 +194,15 @@ function initialize () {
     txt+="<div id=runOutcome></div>";
     $("#runContainer").html(txt);
 
+
+
     txt="";
     txt+="<div id=resultsAlert></div>";
     txt+="<div id=resultsOutcome>Nothing to see here yet. Run the model first</div>";
     $("#resultsContainer").html(txt);
 
-    if (debug){ 
-        showModel(); //opens model tab
-    }
+    modelChecked=false;
 }
-
-
-// switching between default and file source of parameters and initial conditions
-$(document).on('change','input[type=radio]', function(event){
-    if (this.name=="initcondFileOpt"){
-        if (this.value=="file"){
-            $("#initcondFileLoader").show();
-        }else{
-            $("#initcondFileLoader").hide();
-            $("#initcondFileName").val("");
-            $("#initcondFileSelector").val("");
-            $("#initcondAlert").html("");
-            $("#initcondOutcome").html("");
-        }
-    }
-    if (this.name=="paramFileOpt"){
-        if (this.value=="file"){
-            $("#paramFileLoader").show();
-        }else{
-            $("#paramFileLoader").hide();
-            $("#paramFileName").val("");
-            $("#paramFileSelector").val("");
-            $("#paramAlert").html("");
-            $("#paramOutcome").html("");
-        }
-    }
-});
-
-
-//binding exposed file input field to the proper but hidden file selector element
-$(document).on('click','.fileName', function(event){
-    fileType=this.name;
-    console.log(fileType);
-    $('#'+fileType+'FileSelector').trigger('click');
-});
-
-
-// file loading event
-$(document).on('change','.fileSelector', function(event){
-    //console.log("checking");
-    var file=event.target.files[0];
-    if(event.target.files.length>0){
-        fileType=event.target.name;
-        //resetting fields
-        $("#"+fileType+"Alert").html("");
-        $("#"+fileType+"Outcome").html("");
-        $("#"+fileType+"FileName").val("");
-        size=file.size;
-        tmp=file.name.split(".");
-        ext=tmp[tmp.length-1];
-        if(size>maxfileSize){
-            showAlert(fileType, "File size too large. Expected <"+maxfileSize+" Bytes, file "+file.name+" is "+size+ "Bytes large", "danger");
-            $("#"+fileType+"FileSelector").val(null);
-            return false
-        }
-        if (ext!="csv"){
-            showAlert(fileType, "Wrong file type (extension). Expected csv, file "+file.name+" has "+ext, "danger");
-            $("#"+fileType+"FileSelector").val(null);
-            return false
-        }
-        // reading file
-        getAsText(file, fileType);
-        //reset error in run check, if any
-        $("#runAlert").html("");
-    }
-});
-
-
-
-
-function showAlert(alertField, message, alertType){
-    txt="<div class='alert alert-"+alertType+" alert-dismissible'>";
-    if (alertType=="danger"){
-        alertType="Error";
-    }
-    txt+="<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
-    txt+="<strong>"+alertType+": "+message;
-    txt+="</div>";
-    $("#"+alertField+"Alert").html(txt);
-}
-
-
 
 
 
@@ -277,7 +240,6 @@ function getAsText(aFile, fileType) {
 
 function parseParam(rawdata){
     arraydata=parseCSV(rawdata);
-    //console.log(arraydata.length)
     //checking if values numeric and in numbers corresponding to expectations
     nrows=arraydata.length
     for(var r=0, lenr=nrows; r < lenr; r++){
@@ -286,7 +248,6 @@ function parseParam(rawdata){
         nvals=0
         for(var c=0, lenc=ncol; c < lenc; c++){
             curval=rowdata[c];
-            //console.log(curval);
             if(curval===""){
                 if (nvals>=2){
                     //allwell
@@ -329,11 +290,10 @@ function parseParam(rawdata){
 function parseinitCond(rawdata){
     arraydata=parseCSV(rawdata);
     //console.log(arraydata.length)
-
     //checking number of rows
     nrow=arraydata.length;
-    if (nrow!=modelUnits*3){
-        message="expected "+modelUnits+" rows in csv file, this one has "+nrow;
+    if (nrow!=modelUnits[domain]*3){
+        message="expected "+modelUnits[domain]*3+" rows in csv file, this one has "+nrow;
         error=true;
         showAlert("initcond",message,"danger");
         $("#initcondOutcome").html("");
@@ -341,10 +301,10 @@ function parseinitCond(rawdata){
     }
 
     //checking if values numeric and in numbers corresponding to expectations
-    for(var r=0, lenr=modelUnits*3; r < lenr; r++){
+    for(var r=0, lenr=modelUnits[domain]*3; r < lenr; r++){
         rowdata=arraydata[r];
         ncol=rowdata.length;
-        if (r<modelUnits){
+        if (r<modelUnits[domain]){
             expCol=2;
         }else{
             expCol=(modelsubUnits+1);
@@ -385,10 +345,11 @@ function parseinitCond(rawdata){
         }
     }
 
+
     message="File appears to be correct";
     showAlert("initcond",message,"success");
     txt="";
-    for(var r=0, lenr=modelUnits*3; r < lenr; r++){
+    for(var r=0, lenr=modelUnits[domain]*3; r < lenr; r++){
         rowdata=arraydata[r];
         txt+=rowdata+"</br>";
     }
@@ -402,39 +363,60 @@ function parseinitCond(rawdata){
 function parseInput(rawdata, filename){
     arraydata=parseCSV(rawdata);
 
-    //QC of csv data;
     //checking number of columns
     ncol=arraydata[0].length;
     nts=arraydata.length-1; //because of header
-
-//    $("#inputOutcome").html("");
-//    $("#inputFileName").val(null);
-//    $("#inputFileSelector").val(null);
     //resetting run form
     $("#firstDate").html("undefined");
     $("#lastDate").html("undefined");
     $("#nts").html("undefined");
-    $("#runmodelButton").addClass("disabled");
+//    $("#runmodelButton").addClass("disabled");
     $('#inputFileInfo').addClass("hidden");
 
-
-    if (ncol==5){
-        colnames=inputColNames['PET'];
-    }else if(ncol==6){
-        colnames=inputColNames['Temp'];
-    }else{
-        message="expected 5 or 6 columns in csv file, "+filename+" has "+ncol;
-        showAlert("input", message, "danger");
-        return false;
-    }
-
-    //checking if columns named as expected
-    for(var c=0, len=ncol; c < len; c++){
-        if(colnames[c]!=arraydata[0][c]){
-            col=c+1;
-            message="in column "+col+" expected "+colnames[c]+", "+filename+" has "+arraydata[0][c];
+    if (domain=="delta"){
+        if (ncol==5){
+            colnames=inputColNamesDelta['PET'];
+        }else if(ncol==6){
+            colnames=inputColNamesDelta['Temp'];
+        }else{
+            message="expected 5 or 6 columns in csv file, "+filename+" has "+ncol;
             showAlert("input", message, "danger");
+            $("#inputOutcome").html("");
             return false;
+        }
+
+        //checking if columns named as expected
+        for(var c=0, len=ncol; c < len; c++){
+            if(colnames[c]!=arraydata[0][c]){
+                col=c+1;
+                message="in column "+col+" expected "+colnames[c]+", "+filename+" has "+arraydata[0][c];
+                showAlert("input", message, "danger");
+                $("#inputOutcome").html("");
+                return false;
+            }
+        }
+    }else{
+    // domain = boteti
+        if (ncol==4){
+            colnames=inputColNamesBoteti['PET'];
+        }else if(ncol==5){
+            colnames=inputColNamesBoteti['Temp'];
+        }else{
+            message="expected 4 or 5 columns in csv file, "+filename+" has "+ncol;
+            showAlert("input", message, "danger");
+            $("#inputOutcome").html("");
+            return false;
+        }
+
+        //checking if columns named as expected
+        for(var c=0, len=ncol; c < len; c++){
+            if(colnames[c]!=arraydata[0][c]){
+                col=c+1;
+                message="in column "+col+" expected "+colnames[c]+", "+filename+" has "+arraydata[0][c];
+                showAlert("input", message, "danger");
+                $("#inputOutcome").html("");
+                return false;
+            }
         }
     }
 
@@ -442,6 +424,7 @@ function parseInput(rawdata, filename){
     if(nts>maxts){
         message="there are "+nts+" time steps in "+filename+". Maximum allowed is"+maxts;
         showAlert("input", message, "danger");
+        $("#inputOutcome").html("");
         return false;
     }
 
@@ -452,6 +435,7 @@ function parseInput(rawdata, filename){
             if(isNaN(curval) | curval==""){
                 message="in row "+r+" column "+c+" of "+filename+" there is a non-numeric or empty value";
                 showAlert("input", message, "danger");
+                $("#inputOutcome").html("");
                 return false;
             }
         }
@@ -463,9 +447,11 @@ function parseInput(rawdata, filename){
          if(isNaN(curdate)){
             message="in row "+r+" of "+filename+" there is a non valid date, "+arraydata[r][0];
             showAlert("input", message, "danger");
+            $("#inputOutcome").html("");
             return false;
          }
     }
+
 
     //success
     showAlert("input", "file read successfuly", "success"); 
@@ -634,7 +620,7 @@ function uploadFile(fileType){
         return (JSON.stringify(responsearray));
     }else{
         return $.ajax({
-            url: "upload.php?expID="+expID+"&expCode="+expCode,
+            url: "upload.php?expID="+expID+"&expCode="+expCode+"&domain="+domain,
             method: "POST",
             data: formdata,
             processData: false,
@@ -663,19 +649,22 @@ $(document).on('click','#runmodelButton', function(event){
     spinup=$("#spinup").val();
     var outputs="";
     $('#outputs input:checked').each(function() {
-        outputs=outputs+","+$(this).attr('value');
+        out=$(this).attr('value');
+        console.log(out);
+        outputs=outputs+","+out+"."+outputsList[out][2];
     });
     //console.log(outputs)
     $("#runOutcome").html('<img src="./img/ajax-loader.gif" alt="Calculating...." class=centered>');
+    $("#resultsOutcome").html("");
+    $("#resultsAlert").html("");
     $.ajax({
-        url: "runmodel.php?expID="+expID+"&expCode="+expCode+"&spinup="+spinup+"&input="+serverinputFile+"&initcond="+serverinitcondFile+"&param="+serverparamFile+"&outputs="+outputs,
+        url: "runmodel.php?domain="+domain+"&expID="+expID+"&expCode="+expCode+"&spinup="+spinup+"&input="+serverinputFile+"&initcond="+serverinitcondFile+"&param="+serverparamFile+"&outputs="+outputs,
         method: "POST",
         data: formdata,
         processData: false,
         contentType: false,
         success: function (data) {
         // success callback
-            console.log(data);
             data=JSON.parse(data);
             outcome=data[0]['outcome'];
             response=data[0]['response'];
@@ -705,7 +694,6 @@ $(document).on('click','#runmodelButton', function(event){
 
 function populateResults(expCode){
     txt="";
-    console.log("populate");
     files=$("input[name='outputs[]']:checked");
     nfiles=files.length;
     for(var c=0, len=nfiles; c < len; c++){
@@ -713,13 +701,15 @@ function populateResults(expCode){
         key=fileCode.split(".")[0];
         ext=outputsList[key][2];
         plotType=outputsList[key][4];
-        resultFile=resultsDir+"/"+expID+"/"+expCode+"-"+key+"."+ext;
+        resultFile=resultsDir+"/"+expID+"/"+domain+"_"+expCode+"_"+key+"."+ext;
         txtin="";
         txtin="<div class='input-group'>";
         if(plotType=="timeseries"){
             txtin+="<input type=button class='btn btn-default mx-1 my-1 plotResults btn-custom btn-"+key+"' data-file="+resultFile+" data-key="+key+" id=plot-"+key+" value='Plot data'>";
         }
-        txtin+="<input type=button class='btn btn-default mx-1 my-1 previewResults' data-file="+resultFile+" data-key="+key+" id=download-"+key+" value='Preview data'>";
+        if(ext=="csv"){
+            txtin+="<input type=button class='btn btn-default mx-1 my-1 previewResults' data-file="+resultFile+" data-key="+key+" id=download-"+key+" value='Preview data'>";
+        }
         txtin+="<input type=button class='btn btn-default mx-1 my-1 downloadResults' data-file="+resultFile+" data-key="+key+" id=download-"+key+" value=Download file>";
         txtin+="</div>";
         txtin+="<div id=resultsOutcome-"+key+" class=outcome>";
@@ -734,20 +724,36 @@ function populateResults(expCode){
 }
 
 
+//*****************************************************************************************************************
+//
+// interaction
+//
+//*****************************************************************************************************************
+
+
 $(document).on('click','.downloadResults', function(event){
+    $('#resultsAlert').html("");
     resID=this.getAttribute('data-key');
     $(this).blur();
     resultFile=this.getAttribute('data-file');
     var retVal = confirm("Downloading "+resultFile+". Do you want to continue ?");
     if( retVal == true ) {
-        window.location.href = resultFile;
-        return true;
+        //checking if file exists
+        $.get(resultFile)
+        .fail(function(){
+            showAlert("results","The file appears to be missing. Please run the model again, and if you still get this error - report it.","danger");
+            $('#resultsOutcome-'+resID+"-data").html("");
+        })
+        .done(function(){
+            window.open(resultFile, "_blank");
+        });
     }else{
         return false;
     }
 });
 
 $(document).on('click','.previewResults', function(event){
+    $('#resultsAlert').html("");
     resID=this.getAttribute('data-key');
     $(this).toggleClass("active");
     $(this).blur();
@@ -759,6 +765,11 @@ $(document).on('click','.previewResults', function(event){
         ext=tmp[tmp.length-1];
         if(ext=="csv"){
             readFile(resultFile, function(rawdata){
+                if(rawdata=="error"){
+                    showAlert("results","The file appears to be missing. Please run the model again, and if you still get this error - report it.","danger");
+                    $('#resultsOutcome-'+resID+"-data").html("");
+                    return false
+                }
                 arraydata=parseCSV(rawdata);
                 txt="";
                 for(var r=0, lenr=arraydata.length; r < lenr; r++){
@@ -787,8 +798,14 @@ $(document).on('click','.plotResults', function(event){
         ext=tmp[tmp.length-1];
         if(ext=="csv"){
             readFile(resultFile, function(rawdata){
+                if(rawdata=="error"){
+                    showAlert("results","The file appears to be missing. Please run the model again, and if you still get this error - report it.","danger");
+                    $('#resultsOutcome-'+resID+"-graph").html("");
+                    return false
+                }
+
                 arraydata=parseCSV(rawdata);
-                console.log(arraydata);
+                //console.log(arraydata);
                 seriesData=[];
                 allData=[];
                 seriesNames=[];
@@ -860,9 +877,168 @@ function resetRun(){
 
 
 
+$(document).on('click','.navbarItem', function(e) {
+    e.preventDefault();
+    var target= $(this).data("target");
+    console.log(target);
+    if(target=="model"){
+        newdomain= $(this).data("domain");
+        if(domain==""){
+            domain=newdomain;
+            $(this).addClass("activeModel");
+            initializeModel(domain);
+        }else if(newdomain!=domain){
+            response=confirm("This changes the active model, and will reset all inputs/edits made on the model inputs/setup page. Are you sure?");
+            if (response==false){
+                return false;
+            }else{
+                domain=newdomain;
+                $(".navbarItem").removeClass("activeModel");
+                $(this).addClass("activeModel");
+                initializeModel(domain);
+            }
+        }
+    }
+
+    $(".contentsDiv").hide();
+    $("#"+target+"Contents").show();
+
+    $(".navbarItem").removeClass("selectedNav");
+    $(this).addClass("selectedNav");
+});
+ 
+
+function showinDocs(target){
+    $("[data-target=docs]").trigger('click') //opens home tab
+    $(document).scrollTop($("#"+target).offset().top);
+}
+
+$(document).on('click','*[data-pload]', function(e) {
+    var ev = $(this);
+    e.preventDefault();
+    ev.off('hover');
+    page="./text/"+this.dataset.pload;
+    $.get(page, function(data){
+        ev.popover({
+            html: true,
+            content: data,
+            sanitize: false,
+            container: 'body',
+            trigger: "focus"
+        }).popover('show')
+    })
+    .fail(function(){
+        ev.popover({
+            html: true,
+            content: "Oops!. Cannot find info for this entry. Sorry.",
+            trigger: "focus"
+        }).popover("show");
+    });
+});
+
+
+$(document).on("click", ".inpopover", function(e) {
+     e.preventDefault();
+    var target = $(this).data("target");
+    if($(this).hasClass("docs")){
+        showinDocs(target);
+    }else{
+        pageinModal(target,'');
+    }
+});
+
+// switching between default and file source of parameters and initial conditions
+$(document).on('change','input[type=radio]', function(event){
+    if (this.name=="initcondFileOpt"){
+        if (this.value=="file"){
+            $("#initcondFileLoader").show();
+        }else{
+            $("#initcondFileLoader").hide();
+            $("#initcondFileName").val("");
+            $("#initcondFileSelector").val("");
+            $("#initcondAlert").html("");
+            $("#initcondOutcome").html("");
+        }
+    }
+    if (this.name=="paramFileOpt"){
+        if (this.value=="file"){
+            $("#paramFileLoader").show();
+        }else{
+            $("#paramFileLoader").hide();
+            $("#paramFileName").val("");
+            $("#paramFileSelector").val("");
+            $("#paramAlert").html("");
+            $("#paramOutcome").html("");
+        }
+    }
+});
+
+
+//binding exposed file input field to the proper but hidden file selector element
+$(document).on('click','.fileName', function(event){
+    fileType=this.name;
+    console.log(fileType);
+    $('#'+fileType+'FileSelector').trigger('click');
+});
+
+
+// file loading event
+$(document).on('change','.fileSelector', function(event){
+    //console.log("checking");
+    var file=event.target.files[0];
+    if(event.target.files.length>0){
+        fileType=event.target.name;
+        //resetting fields
+        $("#"+fileType+"Alert").html("");
+        $("#"+fileType+"Outcome").html("");
+        $("#"+fileType+"FileName").val("");
+        size=file.size;
+        tmp=file.name.split(".");
+        ext=tmp[tmp.length-1];
+        if(size>maxfileSize){
+            showAlert(fileType, "File size too large. Expected <"+maxfileSize+" Bytes, file "+file.name+" is "+size+ "Bytes large", "danger");
+            $("#"+fileType+"FileSelector").val(null);
+            return false
+        }
+        if (ext!="csv"){
+            showAlert(fileType, "Wrong file type (extension). Expected csv, file "+file.name+" has "+ext, "danger");
+            $("#"+fileType+"FileSelector").val(null);
+            return false
+        }
+        // reading file
+        getAsText(file, fileType);
+        //reset error in run check, if any
+        $("#runAlert").html("");
+    }
+});
+
+
+//*****************************************************************************************************************
+//
+// helpers
+//
+//*****************************************************************************************************************
+
+
+function showAlert(alertField, message, alertType){
+    txt="<div class='alert alert-"+alertType+" alert-dismissible'>";
+    if (alertType=="danger"){
+        alertType="Error";
+    }
+    txt+="<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+    txt+="<strong>"+alertType+": "+message;
+    txt+="</div>";
+    $("#"+alertField+"Alert").html(txt);
+}
+
+
+
 function readFile(_file, callback){
     $.get(_file,function(data){
         callback(data);
+    })
+    .fail(function(){
+        callback("error");
     });
 }
 
@@ -904,34 +1080,6 @@ function parseCSV(str) {
     return arr;
 }
 
-function showHome(){
-    $("#docsContents").hide()
-    $("#modelContents").hide()
-    $("#homeContents").show()
-    $("#modelbotContents").hide()
-}
-
-function showDocs(){
-    $("#docsContents").show()
-    $("#modelContents").hide()
-    $("#homeContents").hide()
-    $("#modelbotContents").hide()
-}
-
-function showModel(){
-    $("#docsContents").hide()
-    $("#modelbotContents").hide()
-    $("#modelContents").show()
-    $("#homeContents").hide()
-}
-
-function showBotModel(){
-    $("#docsContents").hide()
-    $("#modelbotContents").show()
-    $("#modelContents").hide()
-    $("#homeContents").hide()
-}
-
 
 function pageinModal(page,title){ 
     $.get("./text/"+page, function(data){
@@ -941,42 +1089,7 @@ function pageinModal(page,title){
     });
 }
 
-function textinModal(txt,title){ 
-    $(".modal-title").html(title);
-    $(".modal-body").html(txt);
-    $('#myModal').modal('show');
-}
-
-
-$(document).on('click','*[data-pload]', function(e) {
-    var ev = $(this);
-    e.preventDefault();
-    ev.off('hover');
-    page="./text/"+this.dataset.pload;
-    $.get(page, function(data){
-        ev.popover({
-            html: true,
-            content: data,
-            trigger: "focus"
-        }).popover('show').parent().on('click', 'a', function(e) {
-            e.preventDefault();
-            var target = $(this).attr("id");
-            pageinModal(target,'');
-        });
-    });
-});
-
-
-function listsavedExp(){
-    txt="<div>";
-    txt+="<a>User run ID: <input type=text name=runID id=runID class=activeInput>";
-    txt+="</div>";
-    $("#selectexpDiv").html(txt).show();
-}
-
-
 $(document).on('keypress', 'form', function(e) {
-  console.log("test");
   if (e.keyCode == 13) {               
     e.preventDefault();
     return false;
@@ -1002,6 +1115,5 @@ function generatePanel(text, panelID, isin, title){
 
     return _txt;
 }
-
 
 

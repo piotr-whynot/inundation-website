@@ -1,2 +1,5 @@
-<p><em>Initial conditions</em>
+<p><em>Initial conditions</em> is a set of values that describe state of storages in the model at the start of the calculations. By default, the model uses a generic set of initial conditions, which is acceptable in most of the situations, particularly if one performs simulations with a couple of spinup years.
+<p> While one can potentially prepare the file with initial conditons "by hand", it is difficult to think about a context when it would be necessary. 
+<p>Normally, the initial condition file is generated from a separate model run - it can be done by selecting the relevant output option while setting up that run. Once the file is downloaded - one can then upload it to a different simulation. Doing so will allow "stringing" the two simulations together - they storages be in balance with the inputs exactly, there will be continuity of the simulation, and there will be no transient adjustment of storages at the start of the seond simulation. You can read more about this process <a class='clickable docs' data-target='initial-condition-explained' >here</a>. 
+<p>The file has to have a very specific format, and it is described <a class='clickable docs' data-target='initcond-file-format' >here</a>. 
 

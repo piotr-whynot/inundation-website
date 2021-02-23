@@ -1,1 +1,2 @@
-model outputs
+<p><em>Model outputs</em> are a set of files that will be generated during the model simulation. Some of them take some time to generate, so select only those ones that you are interested in.
+

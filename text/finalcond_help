@@ -1,0 +1,2 @@
+<p><em>Final storages</em> are values of each of the model storages at the end of the last month of simulations.
+<p> The final storages data are not that interesting by themselves, but they can be used as initial condtions for another simulation. The file created here has exactly the format of the initial condition file. Read more about the process of initializing model simulations <a class='clickable docs inpopover' data-target='initial-condition-explained'> here </a>.

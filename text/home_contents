@@ -1,0 +1,20 @@
+
+<div class="row">
+<div class=col-sm-2></div>
+<div class=col-sm-8>
+
+<h1> Okavango Delta Inundation model</h1>
+
+<img class=centered style='max-width:50%' loading=lazy class=centere src=./img/home-pulse.gif>
+<div style='position: fixed; bottom:10px'>
+<p> brought to you by:
+<div id=logos style='padding:0 50px 0 50px;'>
+<img style='width:300px; padding-top:20px' loading=lazy class=centere src=./img/logo-okacom.png>
+<img style='width:250px' loading=lazy class=centere src=./img/logo-usaid2.png>
+<img style='width:150px' loading=lazy class=centere src=./img/logo-ori.png>
+</div>
+
+</div><!--end of contents body-->
+</div><!--end of bootstrap formatting-->
+</div><!--end of bootstrap formatting-->
+

@@ -1,0 +1,1390 @@
+
+<div id=uplink><a href=#top>back to top</a></div>
+
+<div class="row">
+<div class=col-sm-2></div>
+<div class=col-sm-8>
+
+
+
+<span id=top class=docstgt></span>
+<div id=tableofcontents>
+<h1>Contents</h1>
+<ul>
+    <li><a href='#first'>First things first</a>
+    <ul>
+	    <li><a href='#first-funct'>Functionality of the website</a>
+	    <li><a href='#first-nav'>Navigating the website</a>
+	    <li><a href='#first-help'>Help?</a>
+	    <li><a href='#first-graphs'>Interactive graphs</a>
+	</ul>
+	<!--
+    <li><a href='#under'>Understanding the Okavango Delta hydrology and dynamics</a>
+    <ul>
+	    <li><a href='#under-flood'>The annual flood</a>
+	    <li><a href='#under-balance'>Water balance</a>
+	    <li><a href='#under-swgw'>Surface water-groundwater interactions</a>
+	    <li><a href='#under-balance'>Time scales of variability</a>
+	    <li><a href='#under-nonst'>Non-stationarity</a>
+	    <li><a href='#under-eco'>Hydro-ecology of the Okavango</a>
+    </ul>
+    -->
+	<li><a href='#model'>Okavango Delta Inundation model - what is it and what does it do?</a>
+	<ul>
+		<li><a href='#model-oka-bot'>Why is Boteti singled out as a separate "model"?</a>
+		<li><a href='#model-oka-component'>Inundation Model components</a>
+            <ul>
+                <li><a href='#model-oka-hydro'>Hydrology and water balance component</a>
+                <li><a href='#model-oka-inund'>Spatial inundation component</a>
+                <li><a href='#model-oka-eco'>Eco-hydrological component</a>
+            </ul>
+		<li><a href='#model-oka-features'>Main features</a>
+            <ul>
+                <li><a href='#model-oka-features-time'>Monthly time step</a>
+                <li><a href='#model-oka-features-empirical'>Semi-empirical</a>
+                <li><a href='#model-oka-features-space'>Semi-distributed</a>
+            </ul>
+		<li><a href='#model-oka-applicability'>Model applicability, strenghts, weaknesses and limitations</a>
+		<li><a href='#model-oka-history'>History of use and publications</a>
+	</ul>
+	<li><a href='#tech'>Technical documentation</a>
+	<ul>
+		<li><a href='#tech-hydro'>Hydrology and Water balance component</a>
+		<ul>
+			<li><a href='#tech-hydro-concept'>Basic concept</a> 
+			<li><a href='#tech-hydro-spatialunits'>Spatial units</a>
+			<li><a href='#tech-hydro-compunits'>Computational units</a> 
+			<li><a href='#tech-hydro-watbal'>Water balance units</a> 
+			<li><a href='#tech-hydro-formula'>Water balance and continuity formulae</a> 
+			<li><a href='#tech-hydro-algo'>Computational algorithm</a> 
+	    </ul>		
+		<li><a href='#tech-inund'>Spatial Inundation component</a>
+		<ul>
+			<li><a href='#tech-inund-concept'>Basic concept</a>
+			<li><a href='#tech-inund-algo'>Algorithms</a>
+		</ul> 
+		<li><a href='#tech-eco'>Eco-hydrological component</a>
+		<ul>
+			<li><a href='#tech-eco-concept'>Basic concept</a> 
+			<li><a href='#tech-eco-algo'>Algoritms</a> 
+		</ul>
+		<li><a href='#tech-format'>Format of input and output files</a>
+        <ul>
+            <li><a href='#tech-format-inputs'>Inputs (forcing variables) file</a>
+	        <ul>
+	            <li><a href='#tech-format-inputs-format'>File format</a>
+	            <li><a href='#tech-format-inputs-contents'>File contents</a>
+	            <li><a href='#tech-format-inputs-variables'>Definition of variables</a>
+	            <li><a href='#tech-format-inputs-excel'>Creating inputs file in MS Excel</a>
+	            <li><a href='#tech-format-inputs-dates'>Formatting dates</a>
+	            <li><a href='#tech-format-inputs-example'>Example files</a>
+	        </ul>
+            <li><a href='#tech-format-param'>Model parameters</a>
+            <ul>
+	            <li><a href='#tech-format-param-format'>File format</a>
+	            <li><a href='#tech-format-param-contents'>File contents</a>
+	            <li><a href='#tech-format-param-example'>Example files</a>
+	        </ul>
+            <li><a href='#tech-format-initcond'>Initial conditions</a>
+            <ul>
+	            <li><a href='#tech-format-initcond-format'>File format</a>
+	            <li><a href='#tech-format-initcond-contents'>File contents</a>
+	            <li><a href='#tech-format-initcond-example'>Example files</a>
+	        </ul>
+            <li><a href='#tech-format-outputs'>Model-generated outputs</a>
+        </ul>
+	</ul>
+	<li><a href='#tutor'>Tutorial - how to run the model?</a>
+	<ul>
+		<li><a href='#tutor-implementation'>Implementing Okavango model through the website</a>
+		<li><a href='#tutor-flows'>Typical work flows</a>
+		<ul>
+			<li><a href='#tutor-flows-basic'>Basic simulation with the model</a> 
+			<li><a href='#tutor-flows-scenarios'>Simulations of input scenarios</a> 
+			<li><a href='#tutor-flows-linking'>Linking Boteti and Okavango models</a> 
+			<li><a href='#tutor-flows-initialized'>Merging simulations into one time series</a> 
+			<li><a href='#tutor-flows-recalibration'>Model recalibration</a> 
+			<li><a href='#tutor-flows-timesplit'>Using period-specific parameter sets</a> 
+		</ul>
+		<li><a href='#tutor-initcond-explained'>Role of initial conditions and spinup</a>
+		<li><a href='#tutor-outputs-analysis'>Interpretability of model result</a>
+	</ul>
+	<li><a href='#gloss'>Glossary of terms</a>
+<hr>
+</div><!--end of table of contents-->
+<div id=docsbody>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+********************************************************************************************
+First things first
+
+-->
+<p>&nbsp</p>
+
+<!-- ------------------------- -->
+<span class='docstgt' id="first" ></span>
+<h1>First things first</h1>
+
+<!-- ------------------------- -->
+<span class='docstgt' id="first-funct" ></span>
+<h2>Functionality of the website</h2>
+
+<p>The website is not using cookies (i.e. it does not attempt to store any information on your computer when you are using it)
+
+<p> It does also not require users to log in, or to provide any personal information.
+
+<p> The consequences of the above are that the process or running the model is volatile, i.e. it is done within a single web-browsing session. It is important because:
+
+<p> <mark> You will lose all input information and access to model results if you reload the page by:</mark>
+
+<ul> <li> pressing the reload page button in the web browser (<span class="glyphicon glyphicon-repeat"></span>), 
+<li> pressing the back button of the web browser (<span class="glyphicon glyphicon-arrow-left"></span>)
+<li> closing and reopening the browser tab
+<li> or by pressing <kbd>Ctrl-R</kbd> on the keyboard
+</ul>
+<mark>
+If you do any of the above - you will have to start from the scratch.
+</mark>
+</p>
+
+<!-- ------------------------- -->
+<span class='docstgt' id="first-nav" ></span>
+<h2>Navigating the website</h2>
+
+<p> The model website has four pages that can be accessed through navigation links at the top of the page.
+
+<br><img loading=lazy class=docsimage src=./img/func-menu.png>
+
+<p>Navigating in and out of the Home page and the Documentation page can be done at any time without any implications.
+
+<p>Selecting one of the two models - i.e. either the Okavango or the Boteti model, activates the selected model. This is indicated by the orange underscore of the model tab in the top menu.
+
+<p> Attempting to change the active model, i.e. selecting the “non-active” model, causes a warning message. 
+<br><img loading=lazy class=docsimage src=./img/func-warning.png>
+
+
+<p>Selecting <kbd>Cancel</kbd> stops the process, and the active model is not changed. Selecting <kbd>OK</kbd>, however, changes the active model. <mark>The implication of the change is that any selections made in the original active model page, including any selected files, are cleared, and cannot be recovered.</mark> Coming back to that model will show an empty model form.
+
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="first-help" ></span>
+<h2> Help?</h2>
+
+<p> Help needed? Well... the documentation (this) page is always worth exploring...
+
+<p> The model form page includes a number of help icons:
+<div class=centered><a href='#' class=help data-pload='sample_help'>?</a></div>
+<br>
+
+<p> Clicking on the icon opens a short contextual explanation of the associated element of the model page. Some of those explanations contain links to more extensive explanations present in the documentation page. On clicking on them - the documentation page opens in the relevant place. One can then return to the model form by selecting that model from the navigation bar. That operation will not result in resetting the contents of the model form, provided one returns to the <em>currently active </em> model page. Attempting to open the non-active model form will result in the warning message described above.
+</p>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="first-graphs" ></span>
+<h2> Interactive graphs</h2>
+
+<p>Model pages include functionality to display time series graphs for model input variables and model outputs. The graphs are interactive, and it is possible to:
+<ul>
+<li> see individual values in the graph by hovering over markers.
+<br><img loading=lazy class=docsimage src=./img/func-hover.png>
+<li> switch on and off an individual series - by clicking on that series label in the graph legend
+<br><img loading=lazy class=docsimage src=./img/func-series.png>
+<li> zoom in on a section of the graph - by "click and drag" in the graph. To zoom back to the entire graph - one can then click on the "Reset Zoom" button.
+<br><img loading=lazy class=docsimage src=./img/func-zoom.png>
+</ul>
+
+<p>The functionality for downloading graphs is not provided, however. This is because the graphs are shown in the page with the objective of <em>inspecting</em> the data rather than using them as output. Graphs can alwasy be created from input (which you have already) and output data (which you can download) on your computer, using your preferred graphing software.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+********************************************************************************************
+Okavango Delta hydrology
+
+-->
+
+<!--
+
+</p><span class='docstgt' id="under" ></span>
+<h1>Understanding the Okavango Delta hydrology and dynamicss</h1>
+
+</p><span class='docstgt' id="under-flood" ></span>
+<h2>The annual flood</h2>
+
+</p><span class='docstgt' id="under-balance" ></span>
+<h2>Water balance</h2>
+
+</p><span class='docstgt' id="under-swgw" ></span>
+<h2>Surface water-groundwater interactions</h2>
+
+</p><span class='docstgt' id="under-nonst" ></span>
+<h2>Non-stationarity</h2>
+
+</p><span class='docstgt' id="under-eco" ></span>
+<h2>Basics of hydro-ecology of the Okavango</h2>
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+********************************************************************************************
+Okavango Delta Inundation Model
+
+-->
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="model" ></span>
+<h1> Okavango Delta Inundation model - what is it and what does it do?</h1>
+
+
+<p> In the most simple terms - the inundation model of the Okavango Delta is a set of equations that allow calculating the size (in km<sup>2</sup>) and spatial distribution of flood or inundation (as a map) in the Okavango Delta based on data on rainfall and evaporation over the Delta and Okavango River flow. 
+
+<p> Apart from the size and distribution of inundation, the model also calculates outflows from the Delta through the Boteti and Kunyere Rivers.
+
+<p>A component of the model allows “translation” of inundation data into data on the size and distribution of the main hydro-ecological units in the Okavango Delta: permanent swamp, sedgeland, inundated grassland and dryland.  
+
+<p>All the above is achieved with three different, somewhat independent components of the overall “Inundation model”:
+<ul>
+<li>water balance or hydrological component
+<li>spatial distribution of inundation component
+<li>eco-hydrological component
+</ul>
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="model-oka-bot" ></span>
+<h2>Why is the Boteti singled out?</h2>
+
+<p>The Boteti River model is essentally an extension of the Okavango Delta model. It is introduced here because the Botet is one of the "indicator" regions used in the process of evaluation of environmental integrity of the Okavango system. And because the Boteti is somewhat different than the Okavango Delta proper, the Boteti model uses neiter the inundation component nor the eco-hydrological component. The water balance and hydrology component of the Boteti model is, however, identical to that of the Okavango model. 
+
+<p>The inundation component is not really suitable for the Boteti River, as the river flows through a narrow valley, and does not create complicated spatial patterns of inundation. They key information about the extent of inundation in the Boteti system is thus simply the lenght of the reach that is under inundation. As a result, the inundation model is substituted by calcuations of the length of the Boteti river reach that is under inundation.
+
+<p>Similarly, the eco-hydrological classification that is used to describe the Okavango Delta is not applicable to the Boteti system. Instead, a simpler classification was developed - into three functional hydrological units (or reaches): all-year-round inundation ("inundated reach"), recently inundated, but currently drying (or "drying pools reach") and a dry reach. These represent functional classes that have bearing to the ecosystem functioning and human activity along the Boteti River.
+</p>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="model-oka-component" ></span>
+<h2>Model components</h2>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="model-oka-hydro" ></span>
+<h3>Hydrology and water balances component</h3>
+
+<p> The hydrological sub-model calculates water balances of a number of large sections of the Delta - the so called distributaries. By distinguishing these distributaries, the model is able to represent differences in dynamics of the flood in each of them. For example, it is able to represent the spreading, expansion of the flood in the (downstream) Boro system at the same time as the shrinking, subsiding of the flood in the (upstream) Panhandle, and vice versa. It is also able to capture differences in the expansion of the annual flood between the various downstream distributaries. For example - it is able to capture a large expansion of flood in the Boro distributary, and much smaller expansion in the Khwai distributary.
+ 
+<p>Water balances are calculated in the model for three “reservoirs” or “storages” in each of the distributaries:
+<ul><li>surface water
+<li>groundwater under floodplains and 
+<li>groundwater under islands
+</ul>
+By doing so, the model explicitly captures infiltration (flow of water between surface and subsurface within floodplains), lateral groundwater flow between floodplains and islands, evaporation from surface water and evaporation from floodplain and from island groundwater. It also distinguishes rainfall contribution to each of these three storages.
+
+<p>An important implication of the consderation of the three storages is that the model has a clear distinction of two land units:
+<ul><li>floodplains and
+<li> islands
+</ul>
+In the model, islands remain islands, no matter how large the flood is, i.e. they cannot be inundated. Floodplains, however, have a constantly changing proportion of inundated and dry, depending on the magnitude of the flood. 
+<p>Details of this conceptualization are presented in the technical section below.
+</p>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="model-oka-inund" ></span>
+<h3>Spatial inundation component</h3>
+
+<p>The sub-model of spatial distribution of inundation is based on historical inundation maps derived from historical satellite images. Analysis of these maps allows for translating the output of the hydrological model into a seres of inundation maps. So, if the hydrological model gives the inundated area in the Boro distributary at the given month to be, for example,  1250 km<sup>2</sup>, the model of spatial distribution of inundation analyses the historical inundation maps to determine which areas are (most likely) flooded by flood of that magnitude and generates a map showing distribution of those areas.
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="model-oka-eco" ></span>
+<h3>Eco-hydrological component</h3>
+
+<p>The eco-hydrological component translates inundation information into the size and distribution of the main eco-hydrological units (or ecoregions): permanent swamp, sedgeland, inundated grassland and dryland. The rationale behind this component is that because of the dynamical nature of the Okavango Delta, the ecoregions migrate from year to year and from decade to decade, depending on the prevalent flood conditions. This is because each of the ecoregions is associated with a particular hydroperiod - i.e. duration, depth and frequency of inundation, and these change in any particular location in the Okavango. So the area that was completely dry during a sequence of dry years, may receive an intermittent flooding during a wetter decade, and may even be under permanent inundation during a sequence of very dry years. Although it's not the best example, just look at the Thamalakane River in Maun - there are periods when the river does not dry for a number of years, and there are periods when the river remains dry for several years.   
+
+<p>The eco-hydrological sub-model utilizes a set of rules that allocate hydroperiod (or duration and frequency of inundation derived from the inundation sub-model) over a particular location into classes that are characteristic to each of these units.
+
+<p> Details of each of the components are presented in the technical section below.
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="model-oka-features" ></span>
+<h3>General characteristics of the Okavango Inundation Model</h3>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="model-oka-features-time" ></span>
+<h4>Monthy time step</h4>
+
+<p> All the sub-models operate on the monthly time step, i.e. they do their calculations separately for each month in a modelled period, and they are not capturing or representing in any way day-to-day differences. Outputs  - variables characterizing water balance of the Okavango Delta and inundation maps - are generated for each month. The size and distribution of eco-hydrological units are, however, due to the nauture ot this component, output on the annual basis, i.e. for each year of the simulation.
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="model-oka-features-empirical" ></span>
+<h4>Semi-empirical</h4>
+
+<p> All the sub-models are <em> semi-empirical</em>. This means that while some elements of the sub-models are a direct representation of the actual physical system of the Okavango Delta, some are not. The latter do not represent measurable physical properties of the system, but rather, some aggregate, perceived behaviour. So, for example, water flow between the hydrological sub-model units is not based on equations describing fluid flow such as Navier-Stokes or Bussinesq equations, but rather on a simple idea of flow through a linear reservoir. Flow through a linear reservoir is parameterized (described) using a single coefficient representing "resistance" of that reservoir, and this coefficient cannot be measured in the field in any way. That coefficient has to be calibrated in the model - i.e. adjusted in such a way that the model simulates observed time series of flows.
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="model-oka-features-space" ></span>
+<h4>Semi-distributed</h4>
+
+<p> The model is semi-distributed. A semi-distributed model captures only some aspect of the spatial heterogeneity of the system it represents. In this case, the model captures the large distributaries, their dynamics and interactions resulting from their spatial relationships (i.e. water flows from one to another distributary, and and the model explicitly takes into account the relative position of each of the distributaries. The model does not, however, resolve processes happening <em> within</em> these distributaries in a spatially-explicit manner.
+
+<p>This may appear contradictory to the fact that each of the distributaries is modelled using three "reservoirs" (surface water, floodplain groundwater and island groundwater), and thus in a way, the main spatial units of each of the distriburaries, i.e. floodplains and islands are represented as separate model units. What is important here, however, is the fact that the only information the model has about those spatial units is their size, or area. It does not account in any way for the actual shape and distribution of the island and floodplain units within each distributary.
+Also, it is important to realize that although some outputs of the model, i.e. inundation maps and maps of distribution of the hydro-ecological units, are spatially-explicit (they are maps, after all), they are only <em> visualizations </em> of the "bulk" inundated area generated by the hydrological model for each of the distributaries. The model does not, in any way, represent the interactions between individual "pixels" or "grid cells" shown in these maps. Only a fully-distributed model would be able to do that. But the Okavango Delta Inundation model does not do that, and it remains semi-distributed. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+********************************************************************************************
+Technical documentation
+-->
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech" ></span>
+<h1> Technical documentation</h1>
+
+
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-hydro" ></span>
+<h2>Hydrology and water balance component</h2>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-hydro-concept" ></span>
+<h3>Basic concept of the hydrological component of the Okavango inundation model</h3>
+
+<p> The hydrological and water balance component of the Okavango Inundation model is based on the concept of interlinked quasi-linear reservoirs, which is illustrated below. <i>Note that this figure just illustrates a concept, and it does not show the configuration of reservoirs actually implemented in the model to represent the Okavango Delta</i>.
+<br><img loading=lazy class=docsimage src=./img/tech-interlinkedres.png>
+<p>The behaviour of the hydrological system is simulated as flow through a cascade of reservoirs or "buckets". Each reservoir has one or more outlets, and water draining through each outlet is directed to another, downstream reservoir. 
+<p> Reservoirs are principally "linear", which means that the outlet's flow rate is directly proportional to reservoir's volume - the more water there is in a reservoir, the faster it will drain. That relationship is expressed by a simple equation: 
+<p class=centered><em>(flow rate) = k * (reservoir volume)</em>
+<p> This relationship, when plotted in a figure forms a straight line - thus a reservoir described by it is called <em>linear</em>.
+<p> In the case of the Okavango Inundation model, the reservoirs are <em>quasi-linear</em>, because more than one outlet is allowed, and thus the water stored in the reservoir does not drain "linearly" in a strict meaning of the word.
+<p>Linear reservoirs are used as a basis of hydrological models, and were used in several water balance models of the Okavango Delta in the 1970-2000 period.
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-hydro-spatialunits" ></span>
+<h3>Spatial units represented by the model</h3>
+
+<p>The Okavango Inundation model represents the Okavango Delta as a system of nine large units, or distributaries, as illustrated below.
+<br><img loading=lazy class=docsimage src=./img/tech-spatialunits.png>
+<p> Altough some of these units are represented by two reservoirs (see below), in principle, they represent the level at which spatial information about hydrological processes is available in the model. So, if one wants to look at volume of water, or inundated area or flow rate at a given moment - each of the units will have a <em>single</em> value describing that property, and that value cannot in principle be disaggregated into smaller spatial units. 
+<p>In other words - the model does not provide information on flow rate near Xakanaxa. It only provides information about flow rate between the Maunachira and Khwai reservoirs. 
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-hydro-compunits" ></span>
+<h3>Computational units</h3>
+
+<p>As mentioned above, the model operates using nine spatial units. However, to represent them, the model has 11 computational units, illustrated below.
+<p><mark>Note that this is the <em> actual</em> representation of the configuration of reservoirs in the Okavango Inundation model.</mark>
+
+<br><img loading=lazy class=docsimage src=./img/tech-spatial-comp-units.png>
+
+<p>In the model, two of the units - Nqoga and Maunachira, have two reservoirs each. The addition of an extra reservoir was a result of inability to simulate certain aspects of the hydrological dynamics of these units, and in fact of the entire Okavango Delta system when using a single reservoir to represent these units.  
+<p>This is because, on closer inspection, these two units do not behave exaclty like linear reservoirs. In a linear reservoir, increase in outflow is accompanied by an incrase in volume of the reservoir, and consequently, by an incrase in the extent of inundation.  However, it appears that the two reservoirs allow for transfer of large amounts of water without a significant change in their inundated area. This likely expresses the specific role of the sytem of large channels interacting with large floodplains.
+<p> That system is expressed in the model by two reservoirs - one representing the active storage,i.e storage that actively contributes to downstream reservoirs, and is able to accomodate a large volume of water without causing expansion of inundated area, and a passive storage, that stores water, driving the expansion of inundation in these units, but not influencing downstream reservoirs (units) in any way. 
+
+<br><img loading=lazy class=docsimage src=./img/tech-passivestorage.png>
+
+<p> This solution effectively detaches the inundation extent in each of these two units from the stored volume. It is somewhat "crude", but effective. 
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-hydro-watbal" ></span>
+
+<h3> Water balance units or "storages"</h3>
+<p>The computational unit described above represents surface water storage. But because of the essentilly unconstrained interactions between surface water and groundwater in the Okavango Delta, the dynamics of surface water flows cannot be considered separately from the dynamics of groundwater. The hydrological component of the Okavango Inundation model has quite a deliberate way of accounting for groundwater. This element is, in fact, an element that distinquishes this model from the earlier models built on the principle of linear reservoirs.
+<p> There are three <em> types </em> of water balance units in the Okavango:
+<ul><li>surface water reservoir
+<li>floodplain groundwater reservoir
+<li>island groundwater reservoir
+</ul>
+
+<p> 
+<p><em>Surface water</em>
+<p> Surface water reservoir is relatively simple. It is basically a classical "linear" reservoir (save for the fact that it can have more than one outlet). It receives input from an upstream surface water reservoir, but also from rainfall. It loses water to evaporation, infiltration and flow to a downstream surface water reservoir (or reservoirs) through an outlet (or outlets).
+<p>
+<br><img loading=lazy class=docsimage src=./img/tech-sw.png>
+
+<p> 
+<p><em>Floodplain and island groundwater reservoirs</em>
+<p>Groundwater reservoirs are more complex, and it's easier to describe them through the description of how interaction of surface water and groundwater is represented. 
+
+<p><em>Surface water-groundwater interactions</em>
+<p>Surface water-groundwater interactions are represented by an interaction between a reservoir representing surface water, and a set of reservoirs representing floodplain groundwater, as in the figure below:
+<p> 
+<br><img loading=lazy class=docsimage src=./img/tech-sw-gw.png>
+<p> The surface water reservoir was described earlier, and one of its characteristics is that "exposed" area is a function of stored volume - the more water there is in that reservoir, the larger the exposed (or inundated area). In other words - the "bucket" that is the surface water reservoir is not really a bucket - it is more like a flat "bowl".
+
+<p>In the model - there are 10 floodplain groundwater reservoirs "underlying" each of the surface water "bowls", and water is allowed to flow from surface water to groundwater. Floodplain groundwater reservoirs that underlay the currently inundated section of the surface water reservoir are always full - they get filled up immediately after they get flooded. In those reservoirs that are not "covered" by surface water - groundwater slowly evaporates. An "exposed" floodplain groundwater reservoir can also receive water from rainfall. There is no interaction of any kind between different floodlplain groundwater reservoirs. Each of the floodplain groundwater reservoir interacts, however, with an associated island groundwater reservoir, as in the figure below:
+<p>
+<br><img loading=lazy class=docsimage src=./img/tech-fg-ig.png>
+<p> There is a groundwater flow between these two reservoirs, and that flow is driven by the difference in water levels between these two reservoirs. In contrast to interaction between any other reservoirs in the model, where water can flow only in the "downstream" direction, flow between the floodplain and island groundwater reservoirs can occur in either direction.
+<p>Apart from flow from (to) the associated floodplain groundwater reservoir, the island groundwater reservoir receives water from rainfall, and loses water to evaporation.
+<p>Similartly to the floodplain groundwater reservoirs, the island groundater reservoirs do not interact between each other. 
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-hydro-formula" ></span>
+<h3> Water balance and continuity equations</h3>
+</p><span class='docstgt' id="tech-hydro-formula-sw" ></span>
+<h4> Surface water reservoir water balance</h4>
+<p>
+<br><img loading=lazy class=docsimage src=./img/tech-equat-swwbal.png>
+
+<p> where: 
+<ul>
+<li>&#916S<sub>surface</sub> is change in surface water reservoir storage
+<li> P<sub>surface</sub> is rainfall
+<li> Q<sub>inflow</sub> is inflow from upstream surface reservoir
+<li> Q<sub>outflow</sub> is outflow to downstream surface reservoir(s)
+<li> E<sub>surface</sub> is evaporation
+<li> Q<sub>infiltration</sub> is infiltration to floodplain groundater reservoir(s)
+</ul>
+
+</p><span class='docstgt' id="tech-hydro-formula-fg" ></span>
+<h4> Floodplain groundwater reservoir water balance</h4>
+<p>
+<br><img loading=lazy class=docsimage src=./img/tech-equat-fgwwbal.png>
+
+<p> where: 
+<ul>
+<li>&#916S<sub>floodplain</sub> is change in floodplain groundwater reservoir storage
+<li> P<sub>floodplain</sub> is rainfall
+<li> Q<sub>infiltration</sub> is infiltration from surface reservoir
+<li> Q<sub>floodplain-island</sub> is flow to island groundwater reservoir
+<li> E<sub>floodplain</sub> is evaporation
+</ul>
+
+</p><span class='docstgt' id="tech-hydro-formula-ig" ></span>
+<h4> Island groundwater reservoir water balance</h4>
+<p>
+<br><img loading=lazy class=docsimage src=./img/tech-equat-igwwbal.png>
+<p> where: 
+<ul>
+<li>&#916S<sub>island</sub> is change in island groundwater reservoir storage
+<li> P<sub>island</sub> is rainfall
+<li> Q<sub>floodplain-island</sub> is flow from island groundwater reservoir
+<li> E<sub>island</sub> is evaporation
+</ul>
+
+
+</p><span class='docstgt' id="tech-hydro-formula-sw-gw" ></span>
+<h4> Outflow from surface water reservoir</h4>
+<p class=centered style='color:black'><i>Q<sub>outflow,i</sub> = &#945<sub>i</sub> * ( V<sub>surface</sub> - V<sub>surface,i</sub> )</i>
+<p> where: 
+<ul>
+<li> Q<sub>outflow,i</sub> is outflow from surface reservoir through outlet <i>i</i>. It is a model variable.
+<li> V<sub>surface</sub> is volume stored in the reservoir in given time step. It is a model variable.
+<li> V<sub>surface,i</sub> is volume stored below outlet <i>i</i>. It is one of model parameters provided in model parameters file.
+<li> &#945<sub>i</sub> is a coefficient characterizing "resistance" of outlet <i>i</i>. It is one of model parameters provided in model parameters file.
+</ul>
+
+</p><span class='docstgt' id="tech-hydro-formula-swet" ></span>
+<h4> Evaporation from surface water</h4>
+<p class=centered style='color:black'><i>E<sub>surface</sub> = k<sub>M</sub> * PET * A<sub>surface</sub> </i>
+<p> where: 
+<ul>
+<li> k<sub>M</sub> is a seasonally-varying coeffient (different for each calendar month M) that reduces evaporative demand to reflect the fact that input PET is measured over dryland and not over wetland. It's value is built into the model code, and cannot be changed by the user.
+<li> PET is the potential evaporation provided as an input. PET is not differentiated between model computational units. 
+<li> A<sub>surface</sub> is the inunated area corresponding to the volume stored in the reservoir in a given time step. It is a model variable, defined below.
+</ul>
+
+<h4> Area-volume relationship for surface water reservoir</h4>
+<br>
+<p class=centered style='color:black'><i>A<sub>surface</sub> = ( a * V<sub>surface</sub> ) <sup>b</sub> </i>
+<p> where: 
+<ul>
+<li> A<sub>surface</sub> is the inunated area corresponding to the volume stored in the reservoir in given time step. It is a model variable.
+<li> V<sub>surface</sub> is the volume stored in the reservoir in given time step. It is a model variable.
+<li> a and b are parameters of the volume-area relationship, provided in the model parameters file, separately for each computational unit. 
+</ul>
+
+</p><span class='docstgt' id="tech-hydro-formula-fget" ></span>
+<h4> Evaporation from floodplain groundwater reservoir</h4>
+<br>
+<p> There are three "cases":
+
+<ul><li>Case 1:
+
+<p>when <i>V<sub>floodplain</sub> = V<sub>floodplain,max</sub></i> 
+<p class=centered style='color:black'><i>E<sub>floodplain</sub> = 0 </i>
+
+<p>This case occurs when the floodplain reservoir is full, and this can only occur when the entire floodplain reservoir is inundated. In such a situation, evaporation from island groundater is zero, because evaporation takes place from surface water, not from groundwater.
+
+<li>Case 2:
+<p>when <i> V<sub>floodplain</sub> <  V<sub>floodplain,evap</sub></i>
+
+<p class=centered style='color:black'><i>E<sub>floodplain</sub> = 0 </i> 
+
+<p>This case occurs when volume of the floodplain reservoir is lower than the volume corresponding to the maximum depth from which water can be extracted by floodplain vegetation for transpiration (see below for formula). In this case evaporation is zero, because water can no longer be exctracted by transpiration below that depth.
+
+<li> Case3:
+<p> when <i> V<sub>floodplain,max</sub> > V<sub>floodplain</sub> >  V<sub>floodplain,evap</sub></i>
+
+<p class=centered><span  style='color:black'><i>E<sub>floodplain</sub> = k<sub>M</sub> * PET * A<sub>floodplain</sub> * ( V<sub>floodplain</sub> - V<sub>floodplain,evap</sub> ) / ( V<sub>floodplain,max</sub> - V<sub>floodplain,evap</sub> )</i> 
+
+<p> This case occurs when volume of floodplain groundater reservoir is larger than the volume corresponding to the evapo-transpiration "extraction" depth (see below for formula).
+
+</ul>
+
+<p> In the above: 
+<ul>
+<li> E<sub>floodplain</sub> is the evaporation from floodplain reservoir. It is a model variable.
+<li> V<sub>floodplain</sub> is the volume currently stored in the floodplain reservoir. It is a model variable.
+<li> V<sub>floodplain,max</sub> is the maximum volume of the floodplain reservoir, defined below. It is a model parameter defined in the parameters file.
+<li> V<sub>floodplain,evap</sub> is the volume of the floodplain reservoir below which water can no-longer be extracted by evapotranspiration by floodplain vegetation, defined below. It is a paramter-like value derived from other model paramters.
+<li> k<sub>M</sub> is a seasonally-varying coeffient (different for each calendar month M) that reduces evaporative demand to reflect the fact that input PET is measured over dryland and not over wetland. It's value is built into the model code, and cannot be changed by the user.
+<li> A<sub>floodplain</sub> is the area of the single floodplain reservoir that is inundated in a given time step. It is a model variable.
+<li> A<sub>floodplain,max</sub> is the total area of the single floodplain reservoir in the computational unit. It is a model parameter given in the model parameters file.
+<li> PET is the potential evaporation provided as an input. PET is not differentiated between model computational units.
+
+</ul>
+
+</p><span class='docstgt' id="tech-hydro-formula-iget" ></span>
+<h4> Evaporation from island groundwater reservoir</h4>
+<br>
+<p class=centered style='color:black'><i>E<sub>island</sub> = k<sub>M</sub> * PET * A<sub>island</sub> * ( V<sub>island</sub> / V<sub>island, max</sub> )</i>
+<p> where: 
+<ul>
+<li> k<sub>M</sub> is a seasonally-varying coeffient (different for each calendar month M) that reduces evaporative demand to reflect the fact that input PET is measured over dryland and not over wetland. It's value is built into the model code, and cannot be changed by the user.
+<li> A<sub>island</sub> is the area of "islands" in the computational unit. It is a model parameter given in the model parameters file.
+<li> PET is the potential evaporation provided as an input. PET is not differentiated between model computational units.
+<li> V<sub>island</sub> is the volume currently stored in the island reservoir
+<li> V<sub>island, max</sub> is the maximum volume of the island reservoir, defined below.
+</ul>
+
+<h4> Maximum volume of island groundwater reservoir</h4>
+<br>
+<p class=centered style='color:black'><i>V<sub>island,max</sub> = A<sub>island</sub> * D<sub>island</sub> * n<sub>island</sub></i>
+<p> where: 
+<ul>
+<li> D<sub>island</sub> is maximum depth from which water under islands can be extracted by transpiration. It is one of the model parameters provided in the parameters file. The implicit assumption here is that there is no other driver in the model to reduce the island groundwater storage than transpirative uptake. The maximum island groundwater volume is thus the volume that can be stored within the reach of island vegetation, defined by this parameter.
+<li> n<sub>island</sub> is the effective porosity of the island groundwater aquifer. It is one of model paramteres provided in the parameters file.
+</ul>
+
+<h4> Maximum volume of floodplain groundwater reservoir</h4>
+<br>
+<p class=centered style='color:black'><i>V<sub>floodplain,max</sub> = A<sub>floodplain</sub> * D<sub>island</sub> * n<sub>floodplain</sub></i>
+<p> where: 
+<ul>
+<li> n<sub>floodplain</sub> is the effective porosity of the floodplain groundwater aquifer. It is one of model paramteres provided in the parameters file.
+<li>Note that <em> D<sub>island</sub> is used here instead of D<sub>floodplain</sub></em>. The maximum volume of water stored in floodplain groundater reservoir is determined by the depth from which water under islands can be extracted by transpiration. The implicit assumption here is that there is no other driver in the model to reduce the floodplain groundwater storage <em> when it is below depth from which it can be extracted by floodplain vegetation transpiration </em>  than <em>lateral groundwater flow towards islands</em>. The maximum floodplain groundwater volume is thus the volume that can be stored "above" the depth that is within the reach of <em>island</em> vegetation, as this is the maximum depth that floodplain groundwater reservoir can possibly attain.
+
+</ul>
+
+
+<h4> "Evaporation extinction" volume of floodplain groundwater reservoir</h4>
+<br>
+<p class=centered style='color:black'><i>V<sub>floodplain,evap</sub> = A<sub>floodplain</sub> * (D<sub>island</sub> - D<sub>floodplain</sub> ) * n<sub>floodplain</sub></i>
+<p> where:
+<ul>
+<li> D<sub>island</sub> is maximum depth from which water under islands can be extracted by transpiration. It is one of the model parameters provided in the parameters file. 
+<li> D<sub>floodplain</sub> is the effective porosity of the floodplain groundwater aquifer. It is one of model paramteres provided in the parameters file.
+</ul>
+
+
+</p><span class='docstgt' id="tech-hydro-formula-inf" ></span>
+<h4> Infiltration</h4>
+<br>
+<p> There are five "cases":
+
+<ul><li>Case 1:
+<p>when floodplain reservoir is not inundated: 
+<p class=centered style='color:black'><i>Q<sub>infiltration</sub> = 0 </i>
+
+
+<li>Case 2: 
+<p>when floodplain reservoir is fully inundated: 
+<p class=centered style='color:black'><i>Q<sub>infiltration</sub> = Q<sub>floodplain-island</sub> </i>
+
+<li>Case 3: 
+<p>when floodplain reservoir gets fully inundated (but it was not previously): 
+
+<p class=centered style='color:black'><i>Q<sub>infiltration</sub> = V<sub>floodplain,max</sub>-V<sub>floodplain</sub></i>
+
+<p> This case expresses "rapid infiltration" that effectively fills the entire empty volume of the floodplain groundater reservoir.
+
+<li>Case 4: 
+<p>when floodplain reservoir is partly inundated during a receding inundation:
+ <p class=centered style='color:black'><i>Q<sub>infiltration</sub> = Q<sub>floodplain-island</sub> * A<sub>floodplain</sub> / A<sub>floodplain,max</sub> </i>
+
+<p>In this case, infiltration satisfies a fraction of the floodplain-island groundwater flow that is proportional to the inundated fraction of the floodplain reservoir.
+
+<li>Case 5: 
+<p>when floodplain reservoir is partly inundated during an expanding inundation:
+<p class=centered style='color:black'><i>Q<sub>infiltration</sub> = Q<sub>floodplain-island</sub> * A<sub>floodplain</sub> / A<sub>floodplain,max</sub> + ( V<sub>floodplain,max</sub>-V<sub>floodplain</sub> ) * A<sub>floodplain,increase</sub> / A<sub>floodplain,max</sub></i>
+
+<p> In this case the "rapid infiltration" fills the fraction of the entire empty volume of the floodplain groundater reservoir that is proportional to the ratio of the "newly flooded" area to the entire area of the reservoir. "Slow" infiltration component satisfies the fraction of total floodplain-groundwater flow that is proporational to the inundated fraction of the floodplain reservoir. 
+
+
+</ul>
+
+</p><span class='docstgt' id="tech-hydro-formula-gwflow" ></span>
+<h4> Groundwater flow between floodplain and island reservoirs</h4>
+
+ <p class=centered style='color:black'><i>Q<sub>floodplain-island</sub> = T * ( ( V<sub>floodplain</sub> / A<sub>floodplain</sub> ) - ( V<sub>island</sub> / A<sub>island</sub> ) )</i>
+
+<p>where:
+<ul>
+<li> T is a coefficient, akin to hydraulic transmissivity, that expresses resistance to groundwater flow between floodplains and islands. This is a model parameter given in the parameters file.
+</ul>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-hydro-algo" ></span>
+<h3> Computational algorithm</h3>
+<p>Because of the complexity of reservoirs and their interactions, no analytical formluae could be derived for computational units in the model. 
+<p>Becuase of the inherent non-linearity of model elements, when tried, the forward explicit (Euler) algorithm, even with a large number of sub-steps, was not providing a good closure of water balances in the groundwater reservoirs.
+
+<p> The computations are thus carried out using an iterative approach. In this approach, in every time step, a final value of reservoir storage is "guessed", fluxes depended on the storage are calculated, and closure of water balance is assessed. If water balance does not close, the final value of storage is adjusted in the direction allowing a better water balance closure, and calculations are repeated. That process is carried out till water balance closure (within certain tolerance) is achieved.
+<p>Because of the interaction of three sets of reservoirs (surface water, floodplain and island groundwater), the iterative procedure is nested, as in the figure below:
+
+<br><img loading=lazy class=docsimage src=./img/tech-algo-flowchart.png>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-inund" ></span>
+<h2>Spatial inundation component</h2>
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-inund-concept" ></span>
+<h3>Basic concept</h3>
+
+<p> The spatial inundation component allows for generating maps of spatial distribution of inundation for each time step of the time series simulated by the hydrological and water balance component of the Okavango Inundation model.
+<p> This is achieved by analysing a time series of historical inundation maps obtained from satellite images. 
+<p> The basic premise of this process is that: 
+<ul><li><em>inundation of similar extent is similarly distributed in space</em>. In other words, it is considered that distribution of inundation, when inundation extent is, say 3525 km<sup>2</sup> is similar every year. 
+<li>for each location in the Okavango Delta, <em>there is a certain inundation extent that "triggers" inundation </em> at that location.
+</ul>
+<p> In reality - these assumptions hold, but there is some uncertainty about them. The figure below shows distribution of inundation of the same extent but in three different years. These three inundation maps do not overlap very well, indicating that there are, indeed, some differences in distribution of inundation between these years.
+
+<br><img loading=lazy class=docsimage src=./img/tech-inund-differentdistribution.png>
+
+<p>Regarding the second point above, ideally, one would want a situation as illustrated in the figure below:
+<br><img loading=lazy class=docsimage src=./img/tech-inund-explained2.png>
+<p>This figure shows the inundation status as a function of the extent of inundation (expressed in km<sup>2</sup>) in one of the distributaries. Each point represents a month in a 10-year time series. It is clear that this location gets inundated when inundation extent in that distributary is about 390 km<sup>2</sup>.
+
+<p> A different (and actually more common) situation is illustrated in the figure below:  
+<br><img loading=lazy class=docsimage src=./img/tech-inund-explained1.png>
+<p>Here, there is no clear "trigger" inundation extent. The location remains dry when inundation extent is less than ~275km<sup>2</sup>, and is always inundated when inundation extent is greater than ~380km<sup>2</sup>. But in between, the location can be either dry or inundated.
+<p> In fact, the situation shown in the figure above can be described in terms of probabilty: 
+<ul><li>there is a 0% probability that the location is inundated when inundation extent is less than ~275km<sup>2</sup>
+<li> there is a 100% probability of inundation when inundation extent is greater than ~380km<sup>2</sup> and
+<li> there is a probability of between 0% and 100% that the location is inundated when inundation extent is between ~275km<sup>2</sup> and ~380km<sup>2</sup>. For exapmle, there is a 50% probability of inundation when inundation extent is about 325km<sup>2</sup>.
+</ul>
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-inund-algo" ></span>
+<h3>Algorithm</h3>
+
+<p>In the spatial inundation component of the Okavango Inundation Model, probability of inundation is described by the so-called <em> logistic</em> function:
+<br><img loading=lazy class=docsimage src=./img/tech-inund-logisticfunc.png>
+<p>where:
+<ul><li>m and s are parameters
+<li> x is inundation extent in km<sup>2</sup>
+<li> p(x) is probability of being inundated.
+</ul>
+
+<p> The function has two parameters, <i>s</i> and <i>m</i>, and these are fitted for each pixel in a series of inundation maps obtained from the analysis of satellite images, as in the figure below:
+
+<br><img loading=lazy class=docsimage src=./img/tech-inund-explained3.png>
+
+<p> Two different datasets can be used for this purpose:
+<ul><li> 1984-2006 NOAA AVHRR-based dataset, at 1km resolution
+<li>2000-2020 MODIS-based dataset, with 250m resolution.
+</ul>
+
+<p>Inundation status of each pixe is then obtained by quantizing the probability with a threshold. By default, threshold of <em>60% </em>is used, i.e. pixels that have probability of being inundated under given inundation extent of 60% or more, are mapped as inundated.
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-eco" ></span>
+<h2>Eco-hydrological component</h2>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-eco-concept" ></span>
+<h3>Basic concept</h3>
+<p> The hydro-ecological component of the Okavango Inundation Model is based on
+<em>functional hydro-ecological classes </em>, which do not have a strict scientific definition, but can perhaps be best described as <em>classes of ecologically-relevant hydroperiod conditions</em>.
+<p>The functional hydro-ecological units are <em>different</em> from vegetation classes that would be based on dominant species or species composition. 
+<p>They are <em>similar to, but somewhat different from</em> the simple hydroperiod classes that are frequently used to illustrate the flood-pulsed nature of the Okavango Delta, i.e. classes such as "permanent swamp", "regularly inundated floodplains", "occasionally inundated floodplains". That difference arises because the hydro-ecological units are considered here to be dynamic at shorter time scales - 1-5 years rather than reflect long-term hydroperiod conditions.
+<p> The rationale for distinguishing the short-term conditions is based on two factors:
+<ul><li> observations from the field, indicating a relatively fast transitions between vegetation assemblages in response to the changing hydroperiod
+<li> presence of multi-decadal variability in the Okavango system, with diametrically different hydroperiod conditions dominating the system over extended periods of time - the well recognized "wet 1970s - dry 1990s - wet 2010s" sequence.
+</ul>
+<p> The first quantification of the hydroperiod-vegetation assemblage relationshp was done during the 1970s FAO project in the form of simple set of rules, for example <em>"IF duration of inundation > 10 months for longer than 3 years THEN vegetation of typical permanent swamp" </em>.
+<p> That classification was used in the early (pre 2010) versions of the Okavango Inundation Model. Subsequently, the rules were refined (~2010) based on M.Murray-Hudson's PhD work, and these refined rules are used here.
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-eco-algo" ></span>
+<h3>Algorithms</h3>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format" ></span>
+<h2>Format of input and output files</h2>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-inputs" ></span>
+<h3>Inputs (forcing variables) file</h3>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-inputs-format" ></span>
+<h4>File format</h4>
+<p> csv (comma separated value)
+<p> CSV format is a plain text format. This means that the file contains just data, without any formatting information. Data in a csv file are written in lines, and in each line, indidual values are separated by a comma (,). Such a file can be created, opened and edited in a plain text editor such as Notepad (on Windows), TextEdit (on a Mac), or Text Editor (on a Linux).
+<p>It is, however, much easier to create, open and edit the csv file in MS Excel (or LibreOffice) (see below).
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-inputs-contents" ></span>
+<h4>File contents</h4>
+<p>Inputs (forcing variables) file contains:
+<ul><li>one header line
+<li>a line per month of data, with no more than <em>1200</em> lines (which is equivalent to 100 years of monthly data).
+</ul>
+
+<p> The inputs file for the <em>Okavango model</em> can contain either 5 or 6 columns
+<p> A 5-column file has to have the following headings (and corresponding data):
+<ul><li>Date
+<li>Inflow-Mohembo
+<li>Rainfall-Maun
+<li>Rainfall-Shakawe
+<li>PET-Maun
+</ul>
+
+<p> A 6-column file has to have the following headings (and corresponding data):
+<ul><li>Date
+<li>Inflow-Mohembo
+<li>Rainfall-Maun
+<li>Rainfall-Shakawe
+<li>MinTemperature-Maun
+<li>MaxTemperature-Maun
+</ul>
+<p>Note that it is either-or, i.e. <em>either</em> the file contains 5 columns with the last column being PET-Maun, <em>or</em> it contains 6 columns, with the last two columns being MinTemperature-Maun and MaxTemperature-Maun. The 6 column file cannot contain PET-Maun data
+
+<p>Inputs file for the <em>Boteti model</em> may contain either 4 or 5 columns:
+
+<p> A 4-column file has to have the following headings (and corresponding data):
+<ul><li>Date
+<li>Inflow-Maun
+<li>Rainfall-Maun
+<li>PET-Maun
+</ul>
+
+<p> A 5-column file has to have the following headings (and corresponding data):
+<ul><li>Date
+<li>Inflow-Maun
+<li>Rainfall-Maun
+<li>MinTemperature-Maun
+<li>MaxTemperature-Maun
+</ul>
+
+<p>Data for each of the variables should be <em>numeric</em> and <em> non-empty</em>. <mark>There is no provision for missing data </mark>. I.e. if any data value is missing or non-numeric, the model will not run. If you have any missing data - you have to come up with a way of filling the missing data gaps before using these data as input to the Okavango Model.
+</p>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-inputs-variables" ></span>
+<h4>Definition of variables</h4>
+
+<table width=100% class=table>
+<tr><th>Variable name<th>Data<th>Unit
+<tr><td>Inflow-Mohembo<td>total monthly flow of the Okavango River at Mohembo<td> Mm<sup>3</sup>/month
+<tr><td>Inflow-Maun<td>total monthly flow of the Thamalakane River at Maun Old (Maun Lodge) Bridge<td> Mm<sup>3</sup>/month
+<tr><td>Rainfall-Maun<td>total monthly rainfall in Maun Airport<td>mm/month 
+<tr><td>Rainfall-Shakawe<td>total monthly rainfall in Shakawe<td>mm/month 
+<tr><td>PET-Maun<td>total monthly potential evapotranspiration at Maun Airport<td>mm/month 
+<tr><td>MinTemperature-Maun<td>monthly mean of minimum daily temperature at Maun Airport<td>deg C 
+<tr><td>MaxTemperature-Maun<td>monthly mean of maximum daily temperature at Maun Airport<td>deg C 
+</table>
+
+
+
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-inputs-excel" ></span>
+<h4>Creating the inputs .csv file in MS Excel</h4>
+
+<p>MS Excel should open a file with the csv extension automatically, and the contents of such a file will be shown as an Excel spreadsheet. After editing, the file can be saved back in the csv format by selecting <kbd>File</kbd>, and then <kbd>Save as</kbd> from the main menu, and selecting csv format from the file format drop-down.
+
+<p><mark>Do not attempt to open and save the csv file using text editor such as MS Word. MS Word does not save files in a plain text format, and file saved from MS Word will not be readable by the model.</mark>
+</p>
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-inputs-dates" ></span>
+<h4>Formatting dates</h4>
+<p>Date format has to be either:
+<ul>
+<li> <em>YYYY/MM/DD</em>  (e.g. 2021/01/01 or 1987/12/01) or
+<li> <em>YYYY-MM-DD</em>  (e.g. 2021-01-01 or 1987-12-01)
+</ul>
+<p>Note that since data are monthly, the exact day value does not matter. It can be 01, or 15, or any <em>valid</em> day of the given month (it cannot be 2021-02-30, because such a date does not exist).
+
+<p>Editing/creating input files in MS Excel may require setting up the format of the Date column, so that the dates written there have one of the formats accepted by the model (YYYY/MM/DD or YYYY-MM-DD). If you have problems with that - read <a href=https://support.microsoft.com/en-us/office/format-a-date-the-way-you-want-8e10019e-d5d8-47a1-ba95-db95123d273e target=_blank>this</a>.
+</p>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-inputs-example" ></span>
+<h4> Example inputs (forcing variables) file:</h4>
+<a target=_blank href=./model/input_okavango_1967-2020.csv>for the Okavango model</a><br>
+<a target=_blank href=./model/input_boteti_1971-2019.csv>for the Boteti model</a>
+
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-param" ></span>
+<h3> Parameter files</h3>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-param-format" ></span>
+<h4>File format</h4>
+<p> csv (comma separated value)
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-param-contents" ></span>
+<h4>File contents</h4>
+<p> The parameters file is the most complicated of all user-provided files, as it contains a number of parameter values that are universal, i.e. apply to all computational units and all reservoirs in the model, as well as parameters that describe an individual computational unit, and individual reservoirs. The complexity arises because the latter parameters vary in number between reservoirs. For example, the Panhandle surface water reservoir has two outlets, while the Nqoga resrvoir has 10 outlets.
+<p> The contents of the parameters file for the Okavango model is as follows:
+<ul>
+<li>Row 1: floodplain groundwater reservoir evaporation extinction depth (universal, one value)
+<li>Row 2: island groundwater reservoir evaporation extinction depth (universal, one value)
+<li>Row 3: floodplain groundwater reservoir porosity (universal, one value)
+<li>Row 4: island groundwater reservoir porosity (universal, one value)
+<li>Rows 5-15: (11 rows) surface reservoirs volume-area parameters for each of the 11 computational units (two values in each row)
+<li>Rows 16-17: (2 rows) Panhandle reservoir outlets parameters (two values)
+<li>Rows 18-27: (10 rows) Nqoga reservoir outlets parameters (two values)
+<li>Rows 28-29: (2 rows) Xudum reservoir outlets parameters (two values)
+<li>Rows 30-31: (2 rows) Boro reservoir outlets parameters (two values)
+<li>Rows 32-34: (3 rows) Maunachira reservoir outlets parameters (two values)
+<li>Row 35: Mboroga reservoir outlets parameters (two values)
+<li>Row 36: Khwai reservoir outlets parameters (two values)
+<li>Rows 37-47: (11 rows) delay parameter for each computational unit (one value)
+<li>Rows 48-58: (11 rows) rainfall weighting parameter for each computational unit (one value)
+<li>Rows 59-69: (11 rows) floodplain-island area ratio and groundwater flow transmissivity parameter for each computational unit (two values)
+</ul>
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-param-example" ></span>
+<h4> Parameter files examples </h4>
+<a target=_blank href=./model/config/modpar_delta.csv>for the Okavango model</a><br>
+<a target=_blank href=./model/config/modpar_boteti.csv>for the Boteti model</a>
+
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-initcond" ></span>
+<h3> Initial condition files</h3>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-initcond-format" ></span>
+<h4>File format</h4>
+<p> csv (comma separated value)
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-initcond-contents" ></span>
+<h4>File contents</h4>
+<p> The initial conditions file contains values of volumes of each of the  reservoirs of the model. Just as a reminder from the techinical section - there are 11 computational units in the Okavango model, and each of the units has a surface water reservoir, 10 floodplain groundwater reservoirs and 10 island groundwater reservoirs.
+
+<p> The inintial condition file stores these data in the following way:
+<ul>
+<li> Row 1: svol_1
+<li> Row 2: svol_2
+<li> Row 3: svol_3
+<li> ...
+<li> Row 11: svol_11
+<li> Row 12: fvol_1_1, fvol_1_2, fvol_1_3,... fvol_1_10
+<li> Row 13: fvol_2_1, fvol_2_2, fvol_2_3,... fvol_2_10
+<li> ...
+<li> Row 22: fvol_11_1, fvol_11_2, fvol_11_3,... fvol_11_10
+<li> Row 23: ivol_1_1, ivol_1_2, ivol_1_3,... ivol_1_10
+<li> ...
+<li> Row 33: ivol_15_1, ivol_11_2, ivol_11_3,... ivol_11_10
+</ul>
+
+<p> So, simply, there are 15 rows containing the initial volume of surface reservoirs, followed by 15 rows containing 10 values each, for floodplain groundwater reservoirs, followed by 15 rows containing 10 values each for the island groundwater reservoirs.
+
+<p> In the Boteti model - there are only two computational units. The initial conditions file will thus have:
+<ul><li>two rows with volumes of the surface reservoir (one value each)
+<li> two rows with volumes of floodplain groundwatwer reservoirs (10 values each) and 
+<li> two rows with volumes of dryland (island) groundwater reservoirs (10 values each)
+</ul>
+
+<p>In order to maintain "readability" of the file, each row starts with a label (a string of alphanumeric characters - e.g. s_1, s_2 etc.)
+<p> The model code will not read the labels, they are purely for "human" readibility. So it does not matter, really, what the labels are <mark> provided they do not contain a comma</mark>. The code will simply skip the first field (i.e. everything before the first comma) and read values in the next fields of each of the rows.
+
+<p>For the Okavngo model, the code is thus expecting 15 rows with two fields each, followed by 30 rows containing 11 fields each. For the Boteti model, the code expecting 2 rows with two fields each, followed by 4 rows containing 11 fields each.
+
+<p>It is worthwhile noting that it is possible to create the initial conditions file "by hand", i.e. by typing in appropriately formatted values in a text editor or in MS Excel. However, it is difficult to find a use case for doing so. Instead, the initial conditions file can be created from a model simulation, by selecting an appropriate output option. So created file will be "consistent" or "in balance" with all internal fluxes, forcing variables and parameters in the model.
+</p> 
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-initcond-example" ></span>
+<h4> Initial condition files examples </h4>
+<a target=_blank href=./model/config/init_delta.csv>for the Okavango model</a><br>
+<a target=_blank href=./model/config/init_boteti.csv>for the Boteti model</a>
+
+
+
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tech-format-outputs" ></span>
+<h3>Model-generated outputs</h3>
+<p> Output data are written in several formats, depending, of course, on the type of data:
+<ul>
+<li>Time series data are written into a .csv file. 
+<ul><li>Csv files can be opened directly in MS Excel, and can also be imported directly to statistical and graphing sofware (e.g. Statistica or SPSS).
+<li> each row stores data for a particular month of the output time series
+<li> the first column stores date
+<li> the remaining columns store a set of variables (these differ, depending on which of the outputs the file represents - it may be storage volumes, total flows, mean area).
+<li> names of all variables are present in the first or header line of the file
+</ul>
+<li>Inundation maps and hydro-ecological units distribution maps are written into either:
+<ul><li> a single multi-layer .tif file. Geographic coordinates are provided in the accompanying "world file" with extension ".tfw".
+<li> or to a set of .tif files, each corresponding to an individual month of the simulation. Each file will have an accompanying .twf file. All the files are compressed to a single ZIP file (with extension .zip). That zip file requires unzipping. 
+</ul>
+The .tif file together with .tfw file can be opened in a GIS software - QGIS, ArcGIS etc.
+<li>Inundation animation is written into a .gif file. The file of this type can be "played" directly on a computer, or embedded in a web-page.
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+********************************************************************************************
+Tutorial
+-->
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tutor" ></span>
+<h1>Tutorial - how to run the model?</h1>
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tutor-implementation" ></span>
+<h2>Implementing Okavango model through the website</h2>
+<p> The model website (this website) provides functionality to implement the Okavango inundation model as well as the Boteti model.
+<p> Read about why these two are separated <a href='#model-oka-bot'>here</a>
+<p> Each of the model pages is accessed (depending on need, of course) from the top menu:
+
+<br><img loading=lazy class=docsimage src=./img/tutorial-selectmodel.png>
+
+<p> Implementing either of the models is done in a series of steps, and the model page is conviniently organized to lead the user through these steps:
+
+<br><img loading=lazy class=docsimage src=./img/tutorial-allheaders.png>
+
+<p> <mark>Note that in the above screenshot only headers of panels with informtion are shown, and panels unfold on mouse click. Some of them will already be unfolded when you access the page.</mark>
+
+<ul>
+<li>Step 1: Prividing experiment information.
+<br><img loading=lazy class=docsimage src=./img/tutorial-expinfo.png>
+<p><em>Experiment code </em>is a user-defined identifier. This code will be prepended to the name of each of the files that you upload to the server (e.g. to the name of file with input data), as well as to each of the files that the model generates.
+<p>In this way, you can easily identify files that "belong" to a single model simulation.
+<p>NB. you don't have to include this code in the name of files you upload here, this code will be added automatically. You can, after model simulation is done, download your input file as it was used in that simulation. In this way - you will have all the files (input and output) named in a similar way.
+<p><mark>This code should be short (max. 20 characters) and should contain only alphanumeric characters (i.e. a-z, A-Z and 0-9) and characters such as "_" and "-", but no spaces.</mark>
+<p>Example: <em>climate-1</em> or <em>baseline</em>
+
+<br><br>
+<li>Step 2: Providing model inputs (forcing variables) data
+<br><img loading=lazy class=docsimage src=./img/tutorial-inputs.png>
+
+<p><em>Inputs file </em>contains model inputs data, i.e. data on rainfall, air temperature (or evaporation) and monthly discharges of the Okavango River at Mohembo (or Thamalakane River at Maun in case of the Boteti model). These variables are also known as "forcing" variables, as they "force" or "drive" the hydrological model.
+
+<p> Read about the exact format and contents of inputs files <a href='#tech-format-inputs' > here</a>
+
+<p> When a properly-formatted inputs file is loaded, the time series of all the variables is shown on a graph:
+
+<br><img loading=lazy class=docsimage src=./img/tutorial-inputs-loaded.png>
+
+<p> Attempting of loading a wrongly-formatted inputs file will result in an error message:
+<br><img loading=lazy class=docsimage src=./img/tutorial-inputs-error.png>
+
+
+<br><br>
+<li>Step 3: Providing model parameters
+<br><img loading=lazy class=docsimage src=./img/tutorial-param.png>
+
+<p><em>Model parameters</em> are a set of values that describe hydrological processes within the model.
+<p> A "regular" use of the model does not require any modifications or changes of model parameters, and the default values should be used. 
+<p> Only in a very specific situations, an advanced user may need to modify model parameters. If that is the case, a file with modified parameters can be uploaded and used instead of the default values. That file has to have a very specific format. Advanced users can read about that format <a href=#tech-format-param >here</a>.
+
+<p> Attempting of loading a wrongly-formatted parameters file will result in an error message.
+
+
+<br><br>
+<li>Step 4: Providing model initial conditions data
+<br><img loading=lazy class=docsimage src=./img/tutorial-initcond.png>
+
+<p><em>Initial conditions</em> is a set of values that describe state of storages in the model at the start of the calculations. By default, the model uses a generic set of initial conditions, which is acceptable in most of the situations, particularly if one performs simulations with a couple of spinup years.
+
+<p> While one can potentially prepare the file with initial conditons "by hand", it is difficult to think about a context when it would be necessary. 
+
+<p>Normally, the initial condition file is generated from a separate model run - it can be done by selecting the relevant output option while setting up that run. Once the file is downloaded - one can then upload it to a different simulation. Doing so will allow "stringing" the two simulations together - they storages be in balance with the inputs exactly, there will be continuity of the simulation, and there will be no transient adjustment of storages at the start of the seond simulation. You can read more about this process <a href=#tutor-initcond-explained >here</a>.
+
+<p>The file has to have a very specific format, and it is described <a href='#tech-format-initcond' >here</a>.
+
+<p> Attempting of loading a wrongly-formatted initial conditions file will result in an error message.
+
+<br><br>
+<li>Step 5: Providing simulation options
+
+<p>There are two final pieces of information that need to be provided in order to run the model:
+<ul><li>number of spinup years and
+<li> list of required model outputs
+</ul>
+
+<br><img loading=lazy class=docsimage src=./img/tutorial-options.png>
+
+<p><em>Spinup</em> or a "warm-up" period is a period over which the model is run to allow "equilibriation" of conditions within the model. A spinup run might be necessary if model is initialized from conditions that are not in equilibrium with inputs. You can read more about the initial conditions and model equilibrium <a href=#tutor-initcond-explained>here</a>.
+
+<p>Spinup simulation is optional, i.e. it does not have to be implemented. It will not be implemented if spinup field has the value of 0. In any other case - a specified number of years (maximum possible value is 5, though) will be taken as the model spinup period.
+
+<p>The spinup model simulation is simply done by using the first year of input data and running model with these inputs for the specified number of times. After that, the state variables of the model (storages in each of the units) are used as a "new" initial condition for model simulation with the entire time series of inputs. <mark>Importantly, the spinup years are not reported in the output files</mark>.
+
+<p><em>Model outputs</em> are files that will be generated during the model simulation. Some of them take some time to generate, so select only those ones that you are interested in.
+<p>Descriptiom of each of the outputs is avaialble from the contextual help under the <div class=centered><a href='#' class=help data-pload='sample_help'>?</a></div>
+symbol in the Simulation Options panel.
+
+<br><br>
+<li>Step 6: Checking inputs
+<br><img loading=lazy class=docsimage src=./img/tutorial-run.png>
+
+p>The model can be run only when all necessary inputs are provided, and when all inputs are appropriate. The "run model" button is deactivated until the inputs are checked - by pressing <kbd>Click all inputs</kbd> button.
+<p>If check reveals no errors - Run button will become active:
+<br><img loading=lazy class=docsimage src=./img/tutorial-run-active.png>
+<p> If there are missing inputs or other errors - an error message will be shown:
+<br><img loading=lazy class=docsimage src=./img/tutorial-run-error.png>
+
+<br><br>
+<li>Step 7: Running the model
+<p>Pressing the <kbd>  Run model</kbd> button, will initiate model run. While the model code is executed, a progress indicator is shown:
+<br><img loading=lazy class=docsimage src=./img/tutorial-run-exec.png>
+
+<p> On completion of model code execution, a message is displayed, and a log recording activity and model progress becomes available:
+<br><img loading=lazy class=docsimage src=./img/tutorial-run-complete.png>
+
+<p>Model log can be inspected in any case, but particularly if the execution of the model code is unsucessful (yes, this migh happen, unfortunately).
+
+<br><br>
+<li>Step 7: Inspecting and downloading the results
+<p> Prior to running the model, results panel only shows a "placeholder" message:
+<br><img loading=lazy class=docsimage src=./img/tutorial-results.png>
+
+<p> On successful completion of model code execution, the results panel is populated, and each of the outputs can be accessed: 
+
+<br><img loading=lazy class=docsimage src=./img/tutorial-results-complete.png>
+
+
+<p><mark>Important: some outputs can be viewed in the graphical form (e.g. as a time series graph), or their numerical data can be previewed, but some can only be downloaded.
+</ul>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tutor-flows" ></span>
+<h2>Typical work flows</h2>
+
+</p><span class='docstgt' id="tutor-flows-basic" ></span>
+<h3>Basic model implementation</h3>
+
+<p> The most basic application of the model is to run the standard version of the water balance model of the Okavango (or Boteti) with a set of input (forcing) variables spanning a period of time.
+
+<p> In this application, the interest is in illustrating variability of the Okavango (or Boteti) in terms of either inundated area, or outflows under given inputs forcing).
+
+<p> In this application:
+<ul><li>inputs file is prepared offline. Note that in case of the Okavango model, the inputs will include flows of the Okavango River at Mohembo, but in case of the Boteti model - these will be flows of the Thamalakane River at Maun.
+<li>default parameters are used
+<li>default initial conditions are used
+<li>spinup is recommended
+<li>results are downloaded and analysed offline
+</ul> 
+<p>Workflow for this application is shown below:
+<br><img loading=lazy class=docsimage src=./img/tutorial-flows-basic.png>
+
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tutor-flows-scenarios" ></span>
+<h3>Simulating scenarios of different inputs</h3>
+
+<p> In this application, the interest is simulating variability of the Okavango under different scenarios of model forcing (or in other words, different climate and or different inflow scenarios).
+
+<p> In this application:
+<ul>
+<li>Okavango model is activated
+<li>"Baseline" inputs file for the Okavango model is prepared offline. This includes the presribed flows of the Okavango River at Mohembo, and climate forcing at Maun and Shakawe.
+<li> default parameters are used
+<li> default initial conditions are used
+<li> spinup is recommended
+<li> Outputs that are relevant to the task are requested as the Okavango model outputs
+<li> Okavango model is run for the first time
+<li> Results of the Okavango model are downloaded </ul>
+<li>"Scenario" inputs file for the Okavango model is prepared offline. This includes the baseline or modified flows of the Okavango River at Mohembo, and baseline or modified climate forcing at Maun and Shakawe.
+<li> default parameters are used
+<li> default initial conditions are used
+<li> spinup is recommended
+<li> Outputs that are relevant to the task are requested as the Okavango model outputs
+<li> Okavango model is run for the second time
+<li> Results of the Okavango model are downloaded </ul>
+<li> Results of the first and second run are compared against each other offline
+</ul>
+
+<p>Workflow for this application is shown below:
+<br><img loading=lazy class=docsimage src=./img/tutorial-flows-scenarios.png>
+
+
+
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tutor-flows-linking" ></span>
+<h3>Linking Boteti and Okavango models</h3>
+
+<p> The objective of this application is to  illustrate variability of the Boteti under given (presecribed) flows of the Okavango River. Such a situation occurs in any situation when one is interested in the responses of Boteti to inflows to the Okavango Delta.
+
+<p> This application involves the following steps:
+<ul>
+<li>Okavango model is activated
+<li>Inputs file for the Okavango model is prepared offline.This includes the presribed flows of the Okavango River at Mohembo.
+<li> Default parameters are used
+<li> Default initial conditions are used
+<li> Dpinup is recommended
+<li>"Boteti model inputs" are requested as one of the Okavango model outputs
+<li> Okavango model is run
+<li> Results of the Okavango model are downloaded </ul>
+<li> Boteti model is activated
+<li> The downloaded file "Boteti model inputs" is uploaded
+<li> Default parameters are used
+<li> Default initial conditions are used
+<li> Spinup is recommended
+<li> Boteti model is run
+<li> Results of the Boteti model are downloaded and analysed offline
+</ul>
+
+<p>Workflow for this application is shown below:
+<br><img loading=lazy class=docsimage src=./img/tutorial-flows-linking.png>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tutor-flows-initialized" ></span>
+<h3>Merging simulations into one time series</h3>
+<p>
+<p> The objective of this application is to generate a series of outputs of the Okavango model that merges two simulations. The need to do this might arise if one wants to simulate a time series that spans more than the maximum number of time steps permitted in the model (1200 months, or 100 years). Potentially, another use case could be forecast that has to be initialized from a particular state of the system,i.e. state of the system on a particular, pre-forecast date.
+<p>This application involves the following steps:
+<ul>
+<li> the first time series of inputs file for the Okavango model is prepared offline and uploaded to the model.
+<li> default parameters are used
+<li> default initial conditions are used
+<li> spinup is recommended
+<li>"Final storages in all units" are requested as one of the Okavango model outputs
+<li> Okavango model is run
+<li> Results are downloaded
+<li> the second time series of inputs file for the Okavango model is prepared offline and uploaded to the model. This file should be a continous extension of the first file. So, for example, if the first file ended in Dec 2020. the second file should start in Jan 2021.
+<li> The downloaded file "Final storages in all model units" is uploaded as initial conditions file.
+<li> default parameters are used
+<li> default initial conditions are used
+<li> spinup is set to 0.
+<li> The Okavango model is run again
+<li> The results of this model run are downloaded, and subsequently merged with the outputs of the first simulation while working offline.
+</ul>
+
+<p>Workflow for this application is shown below:
+<br><img loading=lazy class=docsimage src=./img/tutorial-flows-initialized.png>
+
+<!-- ------------------------- -->
+<!--</p><span class='docstgt' id="tutor-flows-timesplit" ></span>
+<h3>Using period-specific parameter sets</h3>
+-->
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tutor-flows-recalibration" ></span>
+<h3>Model recalibration</h3>
+<p> The objective of this application is to create a customized, bespoke version of the model that runs under a different parameter set than the default one. Such a situation may arise if in a couple of years, the model might need recalibration to reflect the new, most recent data. Alternatively, the model might be recalibrated to reflect a set of calibration criteria that are different to those used to calibrate the current version. 
+<p><mark>This way or another, this is a very specific operation on the model, and should be peformed only by advanced users of the model, and in situations where recalibration is absolutely justified.</mark>
+<p> This application involve the following steps:
+<ul>
+<li> a time series of inputs file for the Okavango model is prepared offline and uploaded to the model.
+<li> a parameter file is prepared offline and uploaded to the model.
+<li> default initial conditions are used
+<li> spinup is recommended
+<li> outputs are requested that correspond to calibration target
+<li> Okavango model is run
+<li> Results are downloaded
+<li> Results (calibration target) are compared against the observed data. 
+<li>If there is a good correspondence, the parameter set is accepted, and the process of calibration is finalized. 
+<li> If there is unacceptable correspondence - parameters are modified, parameter file is uploaded, and model is run again.
+</ul>
+
+<p>Workflow for this application is shown below:
+<br><img loading=lazy class=docsimage src=./img/tutorial-flows-recalibration.png>
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tutor-initcond-explained" ></span>
+<h2>Role of initial conditions and spinup</h2>
+
+<p><em>Initial conditions</em> is a set of values that describe state of storages in the model at the start of the calculations. Initial conditions data are required to run the model - simply all model storages have to have some initial volume. Even if one assumes that the volume is 0, that value has to be "given" to the model.
+
+<p> The importance of initial conditions in model simulations are illustrated in the figure below.
+
+<br><img loading=lazy class=docsimage src=./img/tutorial-initcond-explained1.png>
+
+<p> The figure shows one of the Okavango model outputs - the Thamalakane River flow in Maun, obtained in three simulations that differ only in the initial conditions. 
+<p>The results marked "original" are obtained using the "default" conditions used in the model.
+<p> The other two time series show flows that are generated by the model when the "default" initial conditions storage volumes are reduced by 5%, and by 50%.
+<p>A change in storage volume by just 5% impacts the first and the second year of simulations, and a stronger, 50% reduction, reverberates till the 8th year of simulations.
+<p>Why is that?
+<p>This is the effect of sensitivity of the model outputs to the status of model storages. As illustrated in the Technical Documentation, the model considers hydrological fluxes to be functions of stored volume. This means that the higher the storage, the higher the flux. So changing the initial value of the storage, changes the fluxes (and the Thamalakane River flow at Maun is one of the model fluxes). 
+<p>But why does the difference in fluxes arising from a difference in initial conditions lasts for so long? This is because the "excess" or "deficit" of stored volume arising due to a difference in the initial conditions cannot be compensated for within a single time step. Rather, it takes some time, depending on how fast storages can "shed" or "accumulate" water.
+<p> In a hydrological model (and in a real hydrological system), a balance develops between the magnitude of inputs (rainfall, inflows), the ability to release water (outflows) and the amount of water stored within a given storage. The volume stored may accumulate from month to month and from year to year if inputs are larger than average, and will be depleted if inputs are lower than average. The above-average or below-average volume will have an impact on fluxes at longer time scales. That is the mechanism behind the "memory" of the Okavango Delta. The initial conditions problem is a reflection of exactly that mechanism. 
+
+<p> In case of the Okavango and Boteti models, the initial conditions of the model cannot be determined <i>a-priori</i>. In theory it might be possible, if we were able to measure groundwater and surface water levels in a large number of locations (thousands, perhaps) across the Delta. It might also be possible through the GRACE satellite measurements which give estimates of changing water storage over land. However, these measurements give only a bulk change in water storage over the vertical profile (including in the atmosphere) and have a very low spatial resolution (in order of tens of thousands of km<sup>2</sup>). For them to be useful to initialize the Okavango model, these measurements would need to be disaggregated to individual distributaries, as well as into the three components: surface water, floodplain groundwater and island groundwater. This is not possible at this stage. We, therefore, have to use alternative ways of determination of initial conditions for the model.
+
+<p>There are two ways of dealing with the problem of initial conditions in practice:
+<ul>
+<li> using initial conditions that are "in balance" with inputs, obtained as a final state of model storages from a long model run.
+<li>using the spinup option
+</ul>
+
+<p> In principle, both appoaches are similar in nature, i.e. exactly the same process is taking place within both, it is just explicit in the first, and implicit in the second.
+<p>That process is simply running of the model under realistic inputs for some time, until the storage volumes equilibrate within the model.
+
+<p> When the first approach is used - the user in a way prescribes at what moment of the time series of model simulations should the initial conditions be picked up, and thus what conditions, what "level of wetness" of the system should the initial conditions represent.
+
+<p> The first approach is exactly how the "default" initial conditions that are embedded in the website version of the model were generated. This does not prevent, however, the user from generating and implementing their own set of initial conditions that might be suitable for a particular application. 
+
+<p>When the spinup approach is used, the model is run for a prescribed number of years using the same inputs - from the first year of inputs (forcing) data. In this case - the model "equilbrates" to the level of inputs from that year.
+
+<p> The efficacy of this approach is illustrated in the figure below:
+<br><img loading=lazy class=docsimage src=./img/tutorial-initcond-explained2.png>
+
+<p> In this figure, inital conditions of "default less 5%" are used in a simulation without spinup, and with a 5 year spinup. Although the 5 year spinup does not cause the simulation to be exactly like the "original" one, the model outputs in that simulation are much closer to the "original" simulation that the ones under no spinup.
+
+<p> 
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="tutor-outputs-analysis" ></span>
+<h2>Interpretability of model results</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+********************************************************************************************
+Glossary of terms
+-->
+
+<!-- ------------------------- -->
+</p><span class='docstgt' id="glossary" ></span>
+<h1>Glossary of terms</h1>
+
+csv file
+tif file
+world file
+model parameters
+initial conditions
+semi-distributed model
+fully-distributed model
+black box model
+pixel
+linear reservoir
+model calibration
+infitration
+groundwater flow
+
+
+</div><!--end of contents body-->
+</div><!--end of bootstrap formatting-->
+</div><!--end of bootstrap formatting-->

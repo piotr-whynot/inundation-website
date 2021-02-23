@@ -9,6 +9,16 @@ html, body, header, article, nav, section, aside, time, h1, h2, h3, p, a, ul, li
 /* BASICS */
 body{
     margin-bottom:300px;
+    color: grey;
+}
+
+mark{
+    color: grey;
+}
+
+
+#docsContents{
+    font-size: 14pt;
 }
 
 #input_outcome{
@@ -16,7 +26,7 @@ body{
 }
 
 .contained{
-    width:90%;
+    width:95%;
 }
 
 #shade {
@@ -40,7 +50,7 @@ body{
 
 .clickable {
     font-weight: bold;
-    color: black;
+    color: grey;
     cursor:pointer;
 }
 
@@ -74,6 +84,14 @@ th{
     cursor: pointer;
 }
 
+#uplink{
+    position: fixed;
+    margin-right:10px;
+    top:60px;
+    right:0px;
+    font-size:10pt;
+    cursor: pointer;
+}
 #allContents{
     padding-bottom:30px;
 }
@@ -110,7 +128,47 @@ th{
     height:18px;
     cursor: pointer;
 }
+
 .help:hover{
     color: orange;
 }
 
+.selectedNav{ 
+    background:#555 !important; 
+    color: orange !important;
+} 
+
+h1,h2, h3, h4{
+    margin-top:50px;
+    color: #444;
+}
+.activeModel{
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    border-bottom-color: orange;
+    padding-bottom: 12px !important;
+}
+
+.docstgt {
+    position: absolute;
+    transform: translateY(-5vh);
+}
+.docsimage {
+    display: block;
+    max-width: 100%;
+    margin-top:30px;
+    margin-bottom:30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+kbd {
+    border-radius: 3px;
+    padding: 1px 2px 0;
+    border: 1px solid grey;
+    background: white;
+    color: grey;
+}
+
+em{
+    color:#444;
+}
